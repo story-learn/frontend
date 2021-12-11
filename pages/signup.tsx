@@ -15,6 +15,8 @@ import { validateSignUpInfo } from "../utilities/validateSignUpInfo";
 import { BsFillPersonFill } from "react-icons/bs";
 import { HiOutlineMail } from "react-icons/hi";
 import { useAuth } from "../Hooks/useAuth";
+import { HeadTag } from "../components/head";
+import { PersonIcon } from "../public/assests/svgs/person";
 
 const Signup: NextPage = () => {
     let { signup } = useAuth();
@@ -154,6 +156,8 @@ const Signup: NextPage = () => {
 
     return (
         <>
+            <HeadTag title="Storylearn - Sign up" />
+
             <StyledAuthPage>
                 <header>
                     <h1>Create An Account</h1>
@@ -175,7 +179,7 @@ const Signup: NextPage = () => {
                             }}
                             Icon={
                                 <figure className="form__input-icon">
-                                    <BsFillPersonFill />
+                                    <PersonIcon color="#838383" />
                                 </figure>
                             }
                         />
@@ -194,7 +198,7 @@ const Signup: NextPage = () => {
                             error={inputErrors.lastName.msg}
                             Icon={
                                 <figure className="form__input-icon">
-                                    <BsFillPersonFill />
+                                    <PersonIcon color="#838383" />
                                 </figure>
                             }
                         />

@@ -1,6 +1,8 @@
 import { FC } from "react";
 import Link from "next/link";
 import { useDarkMode } from "../../Hooks/useDarkMode";
+import Image from "next/image";
+import Logo from "./../../public/logo.svg";
 
 const Index: FC = () => {
     let { darkTheme, handleToggle } = useDarkMode();
@@ -10,12 +12,21 @@ const Index: FC = () => {
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "space-between",
-                padding: "1rem",
+                padding: "1.5em calc(0.07 * 100vw)",
             }}
         >
             <div>
-                <div>NAVBAR</div>
-
+                <Image src={Logo} alt="Logo" height={24} />
+            </div>
+            <div
+                style={{
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "space-between",
+                    padding: "1rem",
+                    gap: "2rem",
+                }}
+            >
                 <div>
                     <label htmlFor="">
                         <input
@@ -27,16 +38,6 @@ const Index: FC = () => {
                         />
                     </label>
                 </div>
-            </div>
-            <div
-                style={{
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "space-between",
-                    padding: "1rem",
-                    gap: "2rem",
-                }}
-            >
                 <Link href="/signin">
                     <a>signin</a>
                 </Link>

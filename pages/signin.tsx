@@ -11,8 +11,13 @@ import { Button, Input, InputPassword } from "../components";
 import { StyledAuthPage } from "../components/Auth/AuthPageStyles";
 import { StyledForm } from "../components/Form/FormStyles";
 import { Authentication, AuthenticationError } from "../interfaces";
-import { BsFillPersonFill } from "react-icons/bs";
 import { validateSignInInfo } from "../utilities/validateSignInInfo";
+import { HeadTag } from "../components/head";
+import Icc from "./../public/assests/svgs/error.svg";
+// import {Next as Ioo} from "./../public/assests/svgs/error.svg";
+
+import Image from "next/image";
+import { PersonIcon } from "../public/assests/svgs/person";
 
 export type Auth = Pick<Authentication, "userName" | "password">;
 export type AuthError = Pick<AuthenticationError, "userName" | "password">;
@@ -101,11 +106,20 @@ const Signin: NextPage = () => {
         }
     };
 
+    const [theme, setTheme] = useState("");
+    useEffect(() => {
+        if (localStorage.getItem("theme") === "dark") {
+            setTheme("dark");
+        }
+        return () => {};
+    }, []);
     return (
         <>
+            <HeadTag title="Storylearn - Sign in" />
             <StyledAuthPage>
                 <header>
                     <h1>Log In</h1>
+                    {/* <Icc /> */}
                 </header>
                 <StyledForm autoComplete="off" onSubmit={handleSubmitForm}>
                     <Input
@@ -123,7 +137,7 @@ const Signin: NextPage = () => {
                         error={inputErrors.userName.msg}
                         Icon={
                             <figure className="form__input-icon">
-                                <BsFillPersonFill />
+                                <PersonIcon color={"#838383"} />
                             </figure>
                         }
                     />
