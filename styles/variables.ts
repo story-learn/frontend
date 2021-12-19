@@ -20,7 +20,7 @@ export const VariablesStyle = createGlobalStyle`
             --stark-2: #F0F0F0;
             --stark-3: #F7F2F4;
             
-            --input-bg-1: #202020;
+            --input-bg-1: #121211;
             --icon-1: #fff;
             
             --disabled-bg: #838383;
@@ -40,7 +40,7 @@ export const VariablesStyle = createGlobalStyle`
         --secondary-80: rgba(125, 188, 15, 0.8);
 
 
-        --error: #FF0058;
+        --error: #E85353bb;
 
         /* borders */
         --border-rad-xs: 0.8rem;

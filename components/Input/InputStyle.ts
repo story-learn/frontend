@@ -53,7 +53,7 @@ const InputStyle = styled.input<StyleProp>`
         display: block;
         width: 100%;
         color: red;
-        font-size: 1rem;
+        font-size: 1.2rem;
         line-height: 1.2;
         margin-top: 0.3rem;
         color: var(--error);

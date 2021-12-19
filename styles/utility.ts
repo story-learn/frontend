@@ -2,13 +2,13 @@ import { createGlobalStyle } from "styled-components";
 
 export const UtilityStyles = createGlobalStyle`
     .error {
-        background: red;
+        background: var(--error);
 
         &-border {
             &,
             &:hover,
             &:focus {
-                border-color: red;
+                border-color: var(--error);
             }
         }
     }

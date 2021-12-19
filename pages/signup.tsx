@@ -22,6 +22,9 @@ import {
 } from "../utilities/Auth";
 import router from "next/router";
 import { useAuth } from "../context/AuthContext";
+// import { useAuth } from "../Hooks/useAuth";
+import { HeadTag } from "../components/head";
+import { PersonIcon } from "../public/assests/svgs/person";
 
 const Signup: NextPage = () => {
     let { user } = useAuth();
@@ -209,6 +212,8 @@ const Signup: NextPage = () => {
 
     return (
         <>
+            <HeadTag title="Storylearn - Sign up" />
+
             <StyledAuthPage>
                 <header>
                     <h1>Create An Account</h1>
@@ -230,7 +235,7 @@ const Signup: NextPage = () => {
                             }}
                             Icon={
                                 <figure className="form__input-icon">
-                                    <BsFillPersonFill />
+                                    <PersonIcon color="#838383" />
                                 </figure>
                             }
                         />
@@ -249,7 +254,7 @@ const Signup: NextPage = () => {
                             error={inputErrors.lastName.msg}
                             Icon={
                                 <figure className="form__input-icon">
-                                    <BsFillPersonFill />
+                                    <PersonIcon color="#838383" />
                                 </figure>
                             }
                         />
