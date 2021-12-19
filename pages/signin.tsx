@@ -13,11 +13,17 @@ import { StyledForm } from "../components/Form/FormStyles";
 import { Authentication, AuthenticationError } from "../interfaces";
 import { BsFillPersonFill } from "react-icons/bs";
 import { validateSignInInfo } from "../utilities/validateSignInInfo";
+import { logIn } from "../utilities/Auth";
+import router from "next/router";
+import { useAuth } from "../context/AuthContext";
+import jwtDecode from "jwt-decode";
 
 export type Auth = Pick<Authentication, "userName" | "password">;
 export type AuthError = Pick<AuthenticationError, "userName" | "password">;
 
 const Signin: NextPage = () => {
+    let { setAuthTokens, setUser, user } = useAuth();
+
     const [authenticating, setAuthenticating] = useState(false);
     const [disableSignInBtn, setDisableSignInBtn] = useState(true);
 
@@ -88,13 +94,26 @@ const Signin: NextPage = () => {
 
     const handleSubmitForm: FormEventHandler<HTMLFormElement> = async (e) => {
         e.preventDefault();
-        console.log("yes");
+
+        if (user) {
+            // alert("You are currently signed in"); // toast notification
+            // return;
+        }
 
         try {
             setAuthenticating(true);
             setDisableSignInBtn(true);
+
+            let data = (await logIn(userDetail))!;
+            console.log(data);
+
+            localStorage.setItem("authTokens", JSON.stringify(data));
+            setAuthTokens(data);
+            setUser(jwtDecode(data.access));
+
+            router.replace("/");
         } catch (error) {
-            console.log(error);
+            alert(error); // use toast notification
         } finally {
             setAuthenticating(false);
             setDisableSignInBtn(false);

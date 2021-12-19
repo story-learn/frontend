@@ -1,7 +1,7 @@
 import { Authentication, AuthenticationError } from "../interfaces";
 import { validateUserName } from "./validateUserName";
 
-export const validateSignUpInfo = (
+export const validateSignUpInfo = async (
     name: keyof Authentication,
     value: string,
     errors: AuthenticationError
@@ -36,7 +36,11 @@ export const validateSignUpInfo = (
                     status: true,
                 };
             } else {
-                currentErrors[name] = noError;
+                // currentErrors[name] = noError;
+                currentErrors.email = {
+                    msg: "",
+                    status: true, // checking of email determines the finally error status
+                };
             }
             break;
 

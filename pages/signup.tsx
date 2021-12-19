@@ -14,14 +14,21 @@ import { Authentication, AuthenticationError } from "../interfaces";
 import { validateSignUpInfo } from "../utilities/validateSignUpInfo";
 import { BsFillPersonFill } from "react-icons/bs";
 import { HiOutlineMail } from "react-icons/hi";
-import { useAuth } from "../Hooks/useAuth";
+import {
+    emailExists,
+    ReturningError,
+    signup,
+    usernameExists,
+} from "../utilities/Auth";
+import router from "next/router";
+import { useAuth } from "../context/AuthContext";
 
 const Signup: NextPage = () => {
-    let { signup } = useAuth();
-
+    let { user } = useAuth();
     const [authenticating, setAuthenticating] = useState(false);
     const [disableSignUpBtn, setDisableSignUpBtn] = useState(true);
     const [checkingUserName, setCheckingUserName] = useState(false);
+    const [checkingEmail, setCheckingEmail] = useState(false);
 
     const [userDetail, setUserDetail] = useState<Authentication>({
         firstName: "",
@@ -67,12 +74,14 @@ const Signup: NextPage = () => {
         return hasError ? "invalid" : "valid";
     };
 
-    const handleFormDetail: ChangeEventHandler<HTMLInputElement> = (e) => {
+    const handleFormDetail: ChangeEventHandler<HTMLInputElement> = async (
+        e
+    ) => {
         let { name, value } = e.target;
         setUserDetail((prev) => ({ ...prev, [name]: value }));
 
         // update error
-        let newErrors = validateSignUpInfo(
+        let newErrors = await validateSignUpInfo(
             name as keyof Authentication,
             value,
             inputErrors
@@ -83,10 +92,10 @@ const Signup: NextPage = () => {
 
     // validate user input on blur
     // this specifically applies to when user leave an input field without changing its value
-    const handleOnBlur: FocusEventHandler<HTMLInputElement> = (e) => {
+    const handleOnBlur: FocusEventHandler<HTMLInputElement> = async (e) => {
         let { name, value } = e.target;
 
-        let newErrors = validateSignUpInfo(
+        let newErrors = await validateSignUpInfo(
             name as keyof Authentication,
             value,
             inputErrors
@@ -95,52 +104,98 @@ const Signup: NextPage = () => {
         setInputErrors({ ...newErrors });
     };
 
+    // check if username has been taken
+    // this determines the final error status of username field
     const handleUserNameBlur = async (username: string) => {
-        // check if username has been taken
-        // this determines the final error status of username field
+        console.log("got here....");
+        let { msg: userNameErrorMsg, status: userNameErrorStatus } =
+            inputErrors.userName;
 
-        let userNameError = inputErrors.userName.msg;
-
-        // do not bother to send a request if there is an error already
-        if (userNameError) {
+        // do not bother to send a request if there is an error already OR
+        // if status is still null. This happens because when the user hasn't interacted with the input and he leaves(triggers onBlur event)
+        if (userNameErrorMsg || userNameErrorStatus === null) {
             return;
         }
 
         try {
             setCheckingUserName(true);
 
-            // request will return a positive response if username has not been taken
+            let userNameTaken = await usernameExists(userDetail.userName);
+            let userName: AuthenticationError["userName"];
 
-            // throw new Error("username taken"); // testing purpose
+            if (userNameTaken) {
+                userName = {
+                    msg: `${username} is not available`,
+                    status: true,
+                };
+            } else {
+                userName = { msg: ``, status: false };
+            }
 
-            setInputErrors((prev) => ({
-                ...prev,
-                userName: { msg: ``, status: false },
-            }));
+            setInputErrors((prev) => ({ ...prev, userName }));
         } catch (error) {
-            setInputErrors((prev) => ({
-                ...prev,
-                userName: { msg: `${username} is not available`, status: true },
-            }));
+            console.log(error);
         } finally {
             setCheckingUserName(false);
+        }
+    };
+
+    // check if email has been taken
+    // this determines the final error status of email field
+    const handleEmailOnBlur = async (Email: string) => {
+        let { msg: emailErrorMsg, status: emailErrorStatus } =
+            inputErrors.email;
+
+        // do not bother to send a request if there is an error already
+        if (emailErrorMsg || emailErrorStatus === null) {
+            return;
+        }
+
+        try {
+            setCheckingEmail(true);
+
+            let emailTaken = await emailExists(userDetail.email);
+            let email: AuthenticationError["email"];
+
+            if (emailTaken) {
+                email = {
+                    msg: `${Email} is not available`,
+                    status: true,
+                };
+            } else {
+                email = { msg: ``, status: false };
+            }
+
+            setInputErrors((prev) => ({ ...prev, email }));
+        } catch (error) {
+            console.log(error);
+        } finally {
+            setCheckingEmail(false);
         }
     };
 
     const handleSubmitForm: FormEventHandler = async (e) => {
         e.preventDefault();
 
+        if (user) {
+            // alert("You are currently signed in."); // toast notification
+            // return;
+        }
+
         try {
             setAuthenticating(true);
             setDisableSignUpBtn(true);
 
             let auth = await signup(userDetail);
-            console.log("done");
+            router.replace(`/verify?email=${userDetail.email}`);
         } catch (error) {
-            console.log(error);
+            setInputErrors((prev) => ({
+                ...prev,
+                ...(error as ReturningError),
+            }));
+            setDisableSignUpBtn(true);
         } finally {
             setAuthenticating(false);
-            setDisableSignUpBtn(false);
         }
     };
 
@@ -211,12 +266,17 @@ const Signup: NextPage = () => {
                         handleBlur={(e) => {
                             handleUserHasFocused("email");
                             handleOnBlur(e);
+                            handleEmailOnBlur(e.target.value);
                         }}
                         handleChange={handleFormDetail}
                         error={inputErrors.email.msg}
                         Icon={
                             <figure className="form__input-icon">
-                                <HiOutlineMail />
+                                {checkingEmail ? (
+                                    <LoadingIndicator className="form__input-processing" />
+                                ) : (
+                                    <HiOutlineMail />
+                                )}
                             </figure>
                         }
                     />

@@ -13,3 +13,15 @@ export interface AuthenticationError {
     password: { msg: string; status: boolean | null };
     userName: { msg: string; status: boolean | null };
 }
+
+export interface AuthTokens {
+    access: string;
+    refresh: string;
+}
+
+export interface AuthUserToken {
+    exp: number;
+    jti: string;
+    token_type: "access";
+    user_id: number;
+}
