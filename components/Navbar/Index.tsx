@@ -1,11 +1,13 @@
 import { FC } from "react";
 import Link from "next/link";
 import { useDarkMode } from "../../Hooks/useDarkMode";
+import { useAuth } from "../../context/AuthContext";
 import Image from "next/image";
 import Logo from "./../../public/logo.svg";
 
 const Index: FC = () => {
     let { darkTheme, handleToggle } = useDarkMode();
+    let { logout } = useAuth();
     return (
         <nav
             style={{
@@ -16,6 +18,16 @@ const Index: FC = () => {
             }}
         >
             <div>
+                <Link href="/">
+                    <a>Home</a>
+                </Link>
+
+                <Link href="/private">
+                    <a>Private</a>
+                </Link>
+
+                <button onClick={logout}>Logout</button>
+
                 <Image src={Logo} alt="Logo" height={24} />
             </div>
             <div

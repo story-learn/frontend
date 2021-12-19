@@ -15,6 +15,7 @@ export const VariablesStyle = createGlobalStyle`
         --box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.12);
         
         &[data-theme="dark"] {
+            /* --stark: #333333; */
             --stark: #0A0601;
             --stark-2: #F0F0F0;
             --stark-3: #F7F2F4;
