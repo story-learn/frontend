@@ -4,7 +4,7 @@ import { Navbar } from "../../components";
 const Index: FC = ({ children }) => {
     return (
         <>
-            <Navbar />
+            {/* <Navbar /> */}
             {children}
         </>
     );
