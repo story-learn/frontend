@@ -21,7 +21,8 @@ import Icc from "./../public/assests/svgs/error.svg";
 // import {Next as Ioo} from "./../public/assests/svgs/error.svg";
 
 import Image from "next/image";
-import { PersonIcon } from "../public/assests/svgs/person";
+// import { PersonIcon } from "../components/SVGs/Person";
+import { PersonIcon } from "./../components/SVGs";
 
 export type Auth = Pick<Authentication, "userName" | "password">;
 export type AuthError = Pick<AuthenticationError, "userName" | "password">;

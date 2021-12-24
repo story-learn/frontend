@@ -1,7 +1,7 @@
 import { FC } from "react";
-import { IconTypes } from "./type";
+import { IconTypes } from "../../interfaces/types";
 
-export const PersonIcon: FC<IconTypes> = ({ color }) => {
+const PersonIcon: FC<IconTypes> = ({ color }) => {
     return (
         <svg
             width="16"
@@ -19,3 +19,5 @@ export const PersonIcon: FC<IconTypes> = ({ color }) => {
         </svg>
     );
 };
+
+export default PersonIcon;

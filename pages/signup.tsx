@@ -22,9 +22,8 @@ import {
 } from "../utilities/Auth";
 import router from "next/router";
 import { useAuth } from "../context/AuthContext";
-// import { useAuth } from "../Hooks/useAuth";
 import { HeadTag } from "../components/head";
-import { PersonIcon } from "../public/assests/svgs/person";
+import { PersonIcon } from "./../components/SVGs";
 
 const Signup: NextPage = () => {
     let { user } = useAuth();
