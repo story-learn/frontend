@@ -1,7 +1,6 @@
 import { ChangeEventHandler, useEffect, useState } from "react";
 
 export const useDarkMode = () => {
-    const [inputValue, setInputValue] = useState("");
     const [darkTheme, setDarkTheme] = useState<boolean | undefined>(undefined);
 
     const handleToggle: ChangeEventHandler<HTMLInputElement> = (event) => {

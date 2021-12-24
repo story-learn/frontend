@@ -45,10 +45,15 @@ export const VariablesStyle = createGlobalStyle`
         /* borders */
         --border-rad-xs: 0.8rem;
         --border-rad-sm: 1rem;
-        --border-rad-md: 1rem;
-        --border-rad-lg: 1rem;
+        --border-rad-md: 1.5rem;
+        --border-rad-lg: 2rem;
 
         /* box shadow */
         --box-shadow-bg: "#C4C4C4";
+
+        /* mode toggle */
+        --toggle-checked-bg: #121211;
+        --toggle-unchecked-bg: #0A0601;
+
     }
 `;

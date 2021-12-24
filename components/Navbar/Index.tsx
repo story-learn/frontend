@@ -1,12 +1,10 @@
 import { FC } from "react";
 import Link from "next/link";
-import { useDarkMode } from "../../Hooks/useDarkMode";
 import { useAuth } from "../../context/AuthContext";
 import Image from "next/image";
 import Logo from "./../../public/logo.svg";
 
 const Index: FC = () => {
-    let { darkTheme, handleToggle } = useDarkMode();
     let { logout } = useAuth();
     return (
         <nav
@@ -39,17 +37,6 @@ const Index: FC = () => {
                     gap: "2rem",
                 }}
             >
-                <div>
-                    <label htmlFor="">
-                        <input
-                            type="checkbox"
-                            name="toggle"
-                            id="toggle"
-                            value={String(darkTheme)}
-                            onChange={handleToggle}
-                        />
-                    </label>
-                </div>
                 <Link href="/signin">
                     <a>signin</a>
                 </Link>
