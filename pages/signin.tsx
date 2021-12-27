@@ -18,6 +18,7 @@ import { useAuth } from "../context/AuthContext";
 import jwtDecode from "jwt-decode";
 import { HeadTag } from "../components/head";
 import { PersonIcon } from "./../components/SVGs";
+import { toast } from "react-hot-toast";
 
 export type Auth = Pick<Authentication, "userName" | "password">;
 export type AuthError = Pick<AuthenticationError, "userName" | "password">;
@@ -97,8 +98,10 @@ const Signin: NextPage = () => {
         e.preventDefault();
 
         if (user) {
-            // alert("You are currently signed in"); // toast notification
-            // return;
+            toast.error(
+                "You are currently signed in! Kindly log out to sign in another account."
+            );
+            return;
         }
 
         try {
@@ -114,7 +117,7 @@ const Signin: NextPage = () => {
 
             router.replace("/");
         } catch (error) {
-            alert(error); // use toast notification
+            toast.error(error as string);
         } finally {
             setAuthenticating(false);
             setDisableSignInBtn(false);

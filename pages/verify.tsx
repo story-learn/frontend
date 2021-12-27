@@ -3,6 +3,7 @@ import { useRouter } from "next/router";
 import { NavAuth } from "../components";
 import { StyledVerifyPage } from "../components/Auth/StyledVerifyPage";
 import { resendVerification } from "../utilities/Auth";
+import { toast } from "react-hot-toast";
 
 const verify: NextPage = () => {
     // eslint-disable-next-line react-hooks/rules-of-hooks
@@ -13,7 +14,9 @@ const verify: NextPage = () => {
 
         try {
             await resendVerification(email);
-            alert("another verification link has been sent to your account"); // toast notification
+            toast.success(
+                "another verification link has been sent to your account"
+            );
         } catch (error) {
             console.log(error);
         }
@@ -22,6 +25,13 @@ const verify: NextPage = () => {
     return (
         <>
             <NavAuth />
+            <button
+                onClick={() => {
+                    toast("yes");
+                }}
+            >
+                click
+            </button>
             <StyledVerifyPage>
                 <header className="verify__header">
                     <figure>{/* email Icon */}</figure>

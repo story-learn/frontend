@@ -28,6 +28,7 @@ import router from "next/router";
 import { useAuth } from "../context/AuthContext";
 import { HeadTag } from "../components/head";
 import { PersonIcon, MessageIcon } from "./../components/SVGs";
+import { toast } from "react-hot-toast";
 
 const Signup: NextPage = () => {
     let { user } = useAuth();
@@ -184,8 +185,10 @@ const Signup: NextPage = () => {
         e.preventDefault();
 
         if (user) {
-            // alert("You are currently signed in."); // toast notification
-            // return;
+            toast.error(
+                "You are currently signed in! Kindly log out to sign in another account."
+            );
+            return;
         }
 
         try {
