@@ -6,7 +6,7 @@ export const StyledNavAuth = styled.nav`
     padding-top: 1.5rem;
     padding-bottom: 1.5rem;
     border-bottom: 0.1rem solid var(--border-col);
-    margin-bottom: 3rem;
+    /* margin-bottom: 3rem; */
 
     .container {
         display: flex;

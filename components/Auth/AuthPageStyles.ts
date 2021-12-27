@@ -1,7 +1,13 @@
 import styled from "styled-components";
+import { device } from "../../styles/breakpoints";
+import backgroundImge from "/assests/webps/authBgDark.webp";
+// import backgroundImge from "./../../public/assests/webps/authBgDark.webp"
 
 export const StyledAuthPage = styled.main`
     padding-bottom: 4rem;
+    padding-top: 4rem;
+    min-height: calc(100vh - 6.08rem);
+    /* background: red; */
 
     header {
         text-align: center;
@@ -74,5 +80,12 @@ export const StyledAuthPage = styled.main`
             text-align: right;
             padding: 0;
         }
+    }
+
+    @media screen and (${device.tablet}) {
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-position: center bottom;
+        background-image: var(--auth-bg);
     }
 `;

@@ -15,6 +15,8 @@ export const VariablesStyle = createGlobalStyle`
         --box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.12);
 
         --border-col: rgba(0, 0, 0, 0.12);
+
+        --auth-bg: url("/assests/webps/authBgLight.webp");
         
         &[data-theme="dark"] {
             /* --stark: #333333; */
@@ -31,6 +33,8 @@ export const VariablesStyle = createGlobalStyle`
             --box-shadow: 0px 1px 1px #202020;
 
             --border-col: rgba(32, 32, 32, 1);
+
+            --auth-bg: url("/assests/webps/authBgDark.webp");
         }
 
         --primary: #FF9F06;
