@@ -18,8 +18,6 @@ import { StyledAuthPage } from "../components/Auth/AuthPageStyles";
 import { StyledForm } from "../components/Form/FormStyles";
 import { Authentication, AuthenticationError } from "../interfaces";
 import { validateSignUpInfo } from "../utilities/validateSignUpInfo";
-import { BsFillPersonFill } from "react-icons/bs";
-import { HiOutlineMail } from "react-icons/hi";
 import {
     emailExists,
     ReturningError,
@@ -29,7 +27,7 @@ import {
 import router from "next/router";
 import { useAuth } from "../context/AuthContext";
 import { HeadTag } from "../components/head";
-import { PersonIcon } from "./../components/SVGs";
+import { PersonIcon, MessageIcon } from "./../components/SVGs";
 
 const Signup: NextPage = () => {
     let { user } = useAuth();
@@ -241,7 +239,7 @@ const Signup: NextPage = () => {
                             }}
                             Icon={
                                 <figure className="form__input-icon">
-                                    <PersonIcon color="#838383" />
+                                    <PersonIcon />
                                 </figure>
                             }
                         />
@@ -260,7 +258,7 @@ const Signup: NextPage = () => {
                             error={inputErrors.lastName.msg}
                             Icon={
                                 <figure className="form__input-icon">
-                                    <PersonIcon color="#838383" />
+                                    <PersonIcon />
                                 </figure>
                             }
                         />
@@ -286,7 +284,7 @@ const Signup: NextPage = () => {
                                 {checkingEmail ? (
                                     <LoadingIndicator className="form__input-processing" />
                                 ) : (
-                                    <HiOutlineMail />
+                                    <MessageIcon />
                                 )}
                             </figure>
                         }
@@ -311,7 +309,7 @@ const Signup: NextPage = () => {
                                 {checkingUserName ? (
                                     <LoadingIndicator className="form__input-processing" />
                                 ) : (
-                                    <BsFillPersonFill />
+                                    <PersonIcon />
                                 )}
                             </figure>
                         }

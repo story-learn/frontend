@@ -1,8 +1,8 @@
 import { FormEventHandler, useState } from "react";
-import { HiOutlineMail } from "react-icons/hi";
 import { Button, Input, NavAuth } from "../components";
 import { StyledAuthPage } from "../components/Auth/AuthPageStyles";
 import { StyledForm } from "../components/Form/FormStyles";
+import { MessageIcon } from "../components/SVGs";
 
 const Reset = () => {
     const [email, setEmail] = useState("");
@@ -48,7 +48,7 @@ const Reset = () => {
                         handleChange={(e) => setEmail(e.target.value)}
                         Icon={
                             <figure className="form__input-icon">
-                                <HiOutlineMail />
+                                <MessageIcon />
                             </figure>
                         }
                         error={error}

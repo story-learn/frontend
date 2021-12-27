@@ -17,11 +17,6 @@ import router from "next/router";
 import { useAuth } from "../context/AuthContext";
 import jwtDecode from "jwt-decode";
 import { HeadTag } from "../components/head";
-import Icc from "./../public/assests/svgs/error.svg";
-// import {Next as Ioo} from "./../public/assests/svgs/error.svg";
-
-import Image from "next/image";
-// import { PersonIcon } from "../components/SVGs/Person";
 import { PersonIcon } from "./../components/SVGs";
 
 export type Auth = Pick<Authentication, "userName" | "password">;
@@ -158,7 +153,7 @@ const Signin: NextPage = () => {
                         error={inputErrors.userName.msg}
                         Icon={
                             <figure className="form__input-icon">
-                                <PersonIcon color={"#838383"} />
+                                <PersonIcon />
                             </figure>
                         }
                     />

@@ -24,7 +24,7 @@ export const StyledForm = styled.form`
             }
 
             &-icon {
-                color: var(--icon-1);
+                color: var(--form-icon);
                 top: 2.4rem;
                 width: 1.5rem;
             }

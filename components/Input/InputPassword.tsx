@@ -3,6 +3,7 @@ import { ChangeEventHandler, FC, useState } from "react";
 import { Input } from "../../components";
 import { IInput } from "./Index";
 import { BsEye, BsEyeSlash } from "react-icons/bs";
+import { HidePasswordIcon, ShowPasswordIcon } from "../SVGs";
 
 type PasswordProps = Omit<IInput, "type" | "icon">;
 
@@ -36,7 +37,8 @@ const InputPassword: FC<PasswordProps> = ({
                     onClick={() => setShowPassword((prev) => !prev)}
                     aria-hidden="true"
                 >
-                    {showPassword ? <BsEyeSlash /> : <BsEye />}
+                    {/* {showPassword ? <BsEyeSlash /> : <BsEye />} */}
+                    {showPassword ? <HidePasswordIcon /> : <ShowPasswordIcon />}
                 </button>
             }
         />

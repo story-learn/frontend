@@ -46,6 +46,9 @@ export const VariablesStyle = createGlobalStyle`
 
         --error: #E85353bb;
 
+        /* form */
+        --form-icon: #838383;
+
         /* borders */
         --border-rad-xs: 0.8rem;
         --border-rad-sm: 1rem;
