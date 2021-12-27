@@ -4,6 +4,7 @@ import { NavAuth } from "../components";
 import { StyledVerifyPage } from "../components/Auth/StyledVerifyPage";
 import { resendVerification } from "../utilities/Auth";
 import { toast } from "react-hot-toast";
+import { VerifyEmailIcon } from "../components/SVGs";
 
 const verify: NextPage = () => {
     // eslint-disable-next-line react-hooks/rules-of-hooks
@@ -25,16 +26,12 @@ const verify: NextPage = () => {
     return (
         <>
             <NavAuth />
-            <button
-                onClick={() => {
-                    toast("yes");
-                }}
-            >
-                click
-            </button>
             <StyledVerifyPage>
                 <header className="verify__header">
-                    <figure>{/* email Icon */}</figure>
+                    <figure className="verify__header-fig">
+                        {/*  */}
+                        <VerifyEmailIcon />
+                    </figure>
                 </header>
                 <p className="verify__para">
                     One more thing!

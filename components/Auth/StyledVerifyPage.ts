@@ -14,6 +14,17 @@ export const StyledVerifyPage = styled.main`
     .verify {
         &__header {
             margin-top: auto;
+            margin-bottom: 8.8rem;
+
+            &-fig {
+                background-color: var(--primary-20);
+                padding: 2rem;
+                width: 8rem;
+                border-radius: 50%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
         }
 
         &__para {
