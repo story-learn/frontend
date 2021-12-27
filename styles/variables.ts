@@ -66,5 +66,7 @@ export const VariablesStyle = createGlobalStyle`
         --toggle-checked-bg: #121211;
         --toggle-unchecked-bg: #0A0601;
 
+        /* font */
+        --font-family-primary: 'Quicksand', sans-serif;
     }
 `;

@@ -58,7 +58,7 @@ const GlobalStyle = createGlobalStyle`
         font-size: 1.8rem;
         background-color: var(--stark);
         color: var(--stark-2);
-        font-family: Montserrat, Arial, Helvetica, sans-serif;
+        font-family: var(--font-family-primary);
         font-weight: 400;
     }
 
