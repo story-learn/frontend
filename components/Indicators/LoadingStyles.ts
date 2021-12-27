@@ -37,4 +37,13 @@ export const StyledLoading = styled.div`
             animation-name: ${spanTwoAni};
         }
     }
+
+    &.loading {
+        &-big {
+            span {
+                width: 1.4em;
+                height: 1.4em;
+            }
+        }
+    }
 `;
