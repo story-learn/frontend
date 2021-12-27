@@ -13,6 +13,8 @@ export const VariablesStyle = createGlobalStyle`
         --disabled-fg: #C2C2C2;
         
         --box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.12);
+
+        --border-col: rgba(0, 0, 0, 0.12);
         
         &[data-theme="dark"] {
             /* --stark: #333333; */
@@ -27,6 +29,8 @@ export const VariablesStyle = createGlobalStyle`
             --disabled-fg: #C2C2C2;
 
             --box-shadow: 0px 1px 1px #202020;
+
+            --border-col: rgba(32, 32, 32, 1);
         }
 
         --primary: #FF9F06;

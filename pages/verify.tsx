@@ -1,5 +1,6 @@
 import { NextPage } from "next";
 import { useRouter } from "next/router";
+import { NavAuth } from "../components";
 import { StyledVerifyPage } from "../components/Auth/StyledVerifyPage";
 import { resendVerification } from "../utilities/Auth";
 
@@ -20,6 +21,7 @@ const verify: NextPage = () => {
 
     return (
         <>
+            <NavAuth />
             <StyledVerifyPage>
                 <header className="verify__header">
                     <figure>{/* email Icon */}</figure>

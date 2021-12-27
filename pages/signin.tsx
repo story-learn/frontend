@@ -7,7 +7,7 @@ import {
     useEffect,
     useState,
 } from "react";
-import { Button, Input, InputPassword } from "../components";
+import { Button, Input, InputPassword, NavAuth } from "../components";
 import { StyledAuthPage } from "../components/Auth/AuthPageStyles";
 import { StyledForm } from "../components/Form/FormStyles";
 import { Authentication, AuthenticationError } from "../interfaces";
@@ -136,6 +136,7 @@ const Signin: NextPage = () => {
     return (
         <>
             <HeadTag title="Storylearn - Sign in" />
+            <NavAuth />
             <StyledAuthPage>
                 <header>
                     <h1>Log In</h1>
