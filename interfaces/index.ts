@@ -25,3 +25,8 @@ export interface AuthUserToken {
     token_type: "access";
     user_id: number;
 }
+
+export interface ActivateAccountDetail {
+    uid: string;
+    token: string;
+}

@@ -1,6 +1,7 @@
 import axios, { AxiosError, AxiosResponse } from "axios";
 import { STORY } from "../../configs/story";
 import {
+    ActivateAccountDetail,
     Authentication,
     AuthenticationError,
     AuthTokens,
@@ -119,5 +120,14 @@ export const signup = async (detail: Authentication) => {
         }
 
         throw error;
+    }
+};
+
+export const activateAccount = async (detail: ActivateAccountDetail) => {
+    try {
+        // let activated = await STORY.post(`/auth/users/activation`, detail);
+        // return activated.data;
+    } catch (error) {
+        // throw error;
     }
 };
