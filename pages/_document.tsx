@@ -104,6 +104,8 @@ export default class MyDocument extends Document {
                         }}
                     ></script>
                     <Main />
+                    {/* mount modal portal here */}
+                    <div id="portal" />
                     <NextScript />
                 </body>
             </Html>

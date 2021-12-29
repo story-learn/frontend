@@ -13,3 +13,5 @@ export { default as ProtectRoute } from "./ProtectRoute";
 export { default as ModeToggle } from "./ModeToggle/Index";
 export { default as Notification } from "./Notification";
 export { default as CustomLink } from "./Link/Index";
+export { default as ClientOnlyPortal } from "./ClientOnlyPortal";
+export { default as Modal } from "./Modal/Index";
