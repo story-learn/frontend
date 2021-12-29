@@ -14,11 +14,14 @@ export const StyledButton = styled.button<IStyle>`
 
     background-color: ${({ variant }) =>
         variant === "outline" ? "transparent" : "var(--primary)"};
+    /* color: ${({ variant }) =>
+        variant === "outline" ? "var(--primary)" : "var(--stark)"}; */
     color: ${({ variant }) =>
-        variant === "outline" ? "var(--primary)" : "var(--stark)"};
+        variant === "outline" ? "var(--primary)" : "var(--stark-2)"};
 
     border: ${({ variant }) =>
         variant === "outline" ? "0.1rem solid" : "none"};
+    font-weight: 600;
 
     &:hover {
         cursor: pointer;

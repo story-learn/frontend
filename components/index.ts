@@ -1,6 +1,7 @@
 export { default as HomeLogo } from "./HomeLogo";
 export { default as Navbar } from "./Navbar/Index";
 export { default as NavAuth } from "./Navbar/NavAuth";
+export { default as NavSearch } from "./Navbar/NavSearch";
 export { default as Layout } from "./Layout/Index";
 export { default as Input } from "./Input/Index";
 export { default as InputPassword } from "./Input/InputPassword";
@@ -11,3 +12,4 @@ export { default as OutlineButton } from "./Button/OutlineButton";
 export { default as ProtectRoute } from "./ProtectRoute";
 export { default as ModeToggle } from "./ModeToggle/Index";
 export { default as Notification } from "./Notification";
+export { default as CustomLink } from "./Link/Index";

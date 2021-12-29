@@ -8,6 +8,7 @@ export interface ButtonProps {
     processing?: boolean;
     disabled?: boolean;
     variant?: "outline";
+    className?: string;
 }
 
 const Index: FC<ButtonProps> = ({
@@ -16,9 +17,15 @@ const Index: FC<ButtonProps> = ({
     processing,
     disabled,
     variant,
+    className,
 }) => {
     return (
-        <StyledButton type={type} disabled={disabled} variant={variant}>
+        <StyledButton
+            type={type}
+            disabled={disabled}
+            variant={variant}
+            className={className}
+        >
             {processing ? <LoadingIndicator /> : text}
         </StyledButton>
     );
