@@ -21,13 +21,9 @@ const Activate: NextPage = () => {
 
     const handleActivateAccount = async () => {
         try {
-            let data = (await activateAccount(details))!;
+            await activateAccount(details);
 
-            localStorage.setItem("authTokens", JSON.stringify(data));
-            setAuthTokens(data);
-            setUser(jwtDecode(data.access));
-
-            router.replace("/");
+            router.replace("/signin");
         } catch (error) {
             console.error("error");
             setActivating(false);
@@ -40,6 +36,12 @@ const Activate: NextPage = () => {
         try {
         } catch (error) {}
     };
+
+    // prefetch signin page since user will be redirected to login page on successful activation
+    useEffect(() => {
+        router.prefetch("/signin");
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     useEffect(() => {
         const { query } = router;
