@@ -125,8 +125,11 @@ export const signup = async (detail: Authentication) => {
 
 export const activateAccount = async (detail: ActivateAccountDetail) => {
     try {
-        // let activated = await STORY.post(`/auth/users/activation`, detail);
-        // return activated.data;
+        let activated = await STORY.post<AuthTokens>(
+            `/auth/users/activation`,
+            detail
+        );
+        return activated.data;
     } catch (error) {
         // throw error;
     }

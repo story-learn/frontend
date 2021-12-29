@@ -1,13 +1,17 @@
+import jwtDecode from "jwt-decode";
 import { NextPage } from "next";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { LoadingIndicator, NavAuth } from "../../../components";
 import { StyledAuthPage } from "../../../components/Auth/AuthPageStyles";
+import { useAuth } from "../../../context/AuthContext";
 import { ActivateAccountDetail } from "../../../interfaces";
 import { activateAccount } from "../../../utilities/Auth";
 
 const Activate: NextPage = () => {
     const router = useRouter();
+    let { setAuthTokens, setUser } = useAuth();
+
     const [details, setDetails] = useState<ActivateAccountDetail>({
         token: "",
         uid: "",
@@ -17,11 +21,15 @@ const Activate: NextPage = () => {
 
     const handleActivateAccount = async () => {
         try {
-            await activateAccount(details);
-            // .....
-            // redirect to homepage on success
-            // update user info in local storage
+            let data = (await activateAccount(details))!;
+
+            localStorage.setItem("authTokens", JSON.stringify(data));
+            setAuthTokens(data);
+            setUser(jwtDecode(data.access));
+
+            router.replace("/");
         } catch (error) {
+            console.error("error");
             setActivating(false);
             // display error
             // redirect to verification page(if neccessary)
