@@ -6,3 +6,7 @@ export { default as HidePasswordIcon } from "./HidePassordIcon";
 export { default as ShowPasswordIcon } from "./ShowPasswordIcon";
 export { default as VerifyEmailIcon } from "./VerifyEmailIcon";
 export { default as ThreeDotsVerticalIcon } from "./ThreeDotsVerticalIcon";
+export { default as InfoIcon } from "./InfoIcon";
+export { default as ErrorIcon } from "./ErrorIcon";
+export { default as SuccessIcon } from "./SuccessIcon";
+export { default as CloseIcon } from "./CloseIcon";

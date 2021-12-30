@@ -27,8 +27,4 @@ export const UtilityStyles = createGlobalStyle`
         margin-inline-start: auto;
         margin-inline-end: auto;
     }
-
-    .notification {
-        background-color: var(--disabled-fg) !important;
-    }
 `;
