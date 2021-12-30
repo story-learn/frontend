@@ -7,7 +7,13 @@ import {
     useEffect,
     useState,
 } from "react";
-import { Button, Input, InputPassword, NavAuth } from "../components";
+import {
+    Button,
+    Input,
+    InputPassword,
+    NavAuth,
+    Notification,
+} from "../components";
 import { StyledAuthPage } from "../components/Auth/AuthPageStyles";
 import { StyledForm } from "../components/Form/FormStyles";
 import { Authentication, AuthenticationError } from "../interfaces";
@@ -98,8 +104,11 @@ const Signin: NextPage = () => {
         e.preventDefault();
 
         if (user) {
-            toast.error(
-                "You are currently signed in! Kindly log out to sign in another account."
+            toast.custom(
+                <Notification
+                    type="error"
+                    shortText="You are currently signed in! Kindly log out to sign in another account."
+                />
             );
             return;
         }
@@ -117,7 +126,9 @@ const Signin: NextPage = () => {
 
             router.replace("/");
         } catch (error) {
-            toast.error(error as string);
+            toast.custom(
+                <Notification type="error" shortText={error as string} />
+            );
         } finally {
             setAuthenticating(false);
             setDisableSignInBtn(false);

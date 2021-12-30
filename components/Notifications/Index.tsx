@@ -5,7 +5,7 @@ const Notifications: FC = () => {
     return (
         <Toaster
             toastOptions={{
-                duration: 3_000_000,
+                duration: 3_000,
             }}
         />
     );

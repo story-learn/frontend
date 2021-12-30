@@ -13,6 +13,7 @@ import {
     InputPassword,
     LoadingIndicator,
     NavAuth,
+    Notification,
 } from "../components";
 import { StyledAuthPage } from "../components/Auth/AuthPageStyles";
 import { StyledForm } from "../components/Form/FormStyles";
@@ -185,8 +186,11 @@ const Signup: NextPage = () => {
         e.preventDefault();
 
         if (user) {
-            toast.error(
-                "You are currently signed in! Kindly log out to sign in another account."
+            toast.custom(
+                <Notification
+                    type="error"
+                    shortText="You are currently signed in! Kindly log out to sign in another account."
+                />
             );
             return;
         }

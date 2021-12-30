@@ -2,7 +2,9 @@ import styled from "styled-components";
 import { device } from "../../styles/breakpoints";
 
 export const StyledNotification = styled.div`
-    background-color: #333;
+    /* background-color: #333; */
+    background-color: var(--stark);
+    color: var(--stark-2);
     width: 90vw;
     max-width: 50rem;
     padding: 1.3rem 1rem 1.5rem;
