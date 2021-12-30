@@ -6,6 +6,7 @@ import { UtilityStyles } from "../styles/utility";
 import { Layout, Notifications } from "../components";
 import { VariablesStyle } from "../styles/variables";
 import { AuthProvider } from "../context/AuthContext";
+import { ModeVariables } from "../styles/modeVariables";
 
 function MyApp({ Component, pageProps }: AppProps) {
     return (
@@ -13,6 +14,7 @@ function MyApp({ Component, pageProps }: AppProps) {
             <ResetStyle />
             <VariablesStyle />
             <GlobalStyle />
+            <ModeVariables />
             <ElementStyles />
             <UtilityStyles />
             <Notifications />
