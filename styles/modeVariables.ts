@@ -17,6 +17,8 @@ export const ModeVariables = createGlobalStyle`
         --border-col: rgba(0, 0, 0, 0.12);
 
         --auth-bg: url("/assests/webps/authBgLight.webp");
+
+        --modal-border: 0.3rem dashed #E8E6F0;
         
         &[data-theme="dark"] {
             --stark: #0A0601;
@@ -34,6 +36,8 @@ export const ModeVariables = createGlobalStyle`
             --border-col: rgba(32, 32, 32, 1);
 
             --auth-bg: url("/assests/webps/authBgDark.webp");
+
+            --modal-border: 0.3rem dashed #232326;
         }
     }
 `;

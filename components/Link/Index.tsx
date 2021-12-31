@@ -1,16 +1,18 @@
 import { StyledButton } from "../Button/ButtonStyle";
 import Link from "next/link";
 import { FC } from "react";
+import { ButtonProps } from "../Button/Index";
 
-interface ILink {
-    text: string;
-    className?: string;
+type IProps = Pick<ButtonProps, "text" | "variant" | "className">;
+
+interface ILink extends IProps {
+    href: string;
 }
 
-const CustomLink: FC<ILink> = ({ text, className }) => {
+const CustomLink: FC<ILink> = ({ text, href, variant, className }) => {
     return (
-        <Link href={"/signin"} passHref>
-            <StyledButton as="a" className={className}>
+        <Link href={href} passHref>
+            <StyledButton as="a" className={className} variant={variant}>
                 {text}
             </StyledButton>
         </Link>

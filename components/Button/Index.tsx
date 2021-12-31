@@ -7,7 +7,7 @@ export interface ButtonProps {
     text?: string | number;
     processing?: boolean;
     disabled?: boolean;
-    variant?: "outline";
+    variant?: "outline" | "no-border";
     className?: string;
 }
 

@@ -31,6 +31,7 @@ const Index: FC = () => {
                 <button className="nav__large nav__upload">upload</button>
                 {!userIsLoggedIn && (
                     <CustomLink
+                        href="/signin"
                         text="Log In"
                         className="nav__login nav__large"
                     />
