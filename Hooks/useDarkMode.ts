@@ -25,9 +25,11 @@ export const useDarkMode = () => {
             if (darkTheme) {
                 root.setAttribute("data-theme", "dark");
                 storeUserSetPreference("dark");
+                root.style.setProperty("--initial-color-mode", "dark");
             } else {
                 root.removeAttribute("data-theme");
                 storeUserSetPreference("light");
+                root.style.setProperty("--initial-color-mode", "light");
             }
         }
     }, [darkTheme]);
