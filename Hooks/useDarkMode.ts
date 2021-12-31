@@ -11,8 +11,11 @@ export const useDarkMode = () => {
     };
 
     useEffect(() => {
-        let theme = localStorage.getItem("theme");
-        setDarkTheme(theme === "dark");
+        const root = document.documentElement;
+        const initialColorValue = root.style.getPropertyValue(
+            "--initial-color-mode"
+        );
+        setDarkTheme(initialColorValue === "dark");
     }, []);
 
     useEffect(() => {
@@ -22,9 +25,11 @@ export const useDarkMode = () => {
             if (darkTheme) {
                 root.setAttribute("data-theme", "dark");
                 storeUserSetPreference("dark");
+                root.style.setProperty("--initial-color-mode", "dark");
             } else {
                 root.setAttribute("data-theme", "light");
                 storeUserSetPreference("light");
+                root.style.setProperty("--initial-color-mode", "light");
             }
         }
     }, [darkTheme]);

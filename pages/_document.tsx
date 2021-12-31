@@ -35,7 +35,12 @@ function setInitialColorMode() {
     }
 
     const colorMode = getInitialColorMode();
-    window.localStorage.setItem("theme", colorMode);
+    const root = document.documentElement;
+    root.style.setProperty("--initial-color-mode", colorMode);
+
+    // add HTML attribute if dark mode
+    if (colorMode === "dark")
+        document.documentElement.setAttribute("data-theme", "dark");
 }
 
 // our function needs to be a string
