@@ -5,8 +5,10 @@ export const StyledNavAuth = styled.nav`
     position: relative;
     padding-top: 1.5rem;
     padding-bottom: 1.5rem;
-    border-bottom: 0.1rem solid var(--border-col);
+    /* border-bottom: 0.1rem solid var(--border-col); */
     /* margin-bottom: 3rem; */
+    background-color: var(--auth-bg);
+    border-bottom: 0.1rem solid var(--color-3);
 
     .container {
         display: flex;

@@ -17,12 +17,10 @@ export const StyledButton = styled.button<IStyle>`
         variant === "outline" || variant === "no-border"
             ? "transparent"
             : "var(--primary)"};
-    /* color: ${({ variant }) =>
-        variant === "outline" ? "var(--primary)" : "var(--stark)"}; */
     color: ${({ variant }) =>
         variant === "outline" || variant === "no-border"
             ? "var(--primary)"
-            : "var(--stark-2)"};
+            : "var(--text-col-1)"};
 
     border: ${({ variant }) =>
         variant === "outline"
@@ -44,8 +42,8 @@ export const StyledButton = styled.button<IStyle>`
     }
 
     &:disabled {
-        background-color: var(--disabled-bg);
         color: var(--disbaled-fg);
+        background-color: var(--disabled);
         cursor: not-allowed;
     }
 `;

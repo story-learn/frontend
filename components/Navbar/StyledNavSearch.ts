@@ -9,12 +9,14 @@ export const StyledNavSearch = styled.form`
         width: 100%;
         border-radius: var(--border-rad-xs);
         padding: 0.4rem 2.8rem 0.6rem 1.4rem;
-        background-color: var(--input-bg-1);
+        /* background-color: var(--input-bg-1); */
+        background-color: var(--box-bg);
         font-size: 1.8rem;
 
         border: 0.1rem solid transparent;
         transition: all 0.2s linear;
-        color: var(--stark-3);
+        /* color: var(--stark-3); */
+        color: var(--color-4);
 
         &:focus,
         &:hover {

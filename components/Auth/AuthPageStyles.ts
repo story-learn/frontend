@@ -7,7 +7,6 @@ export const StyledAuthPage = styled.main`
     padding-bottom: 4rem;
     padding-top: 4rem;
     min-height: calc(100vh - 6.08rem);
-    /* background: red; */
 
     header {
         text-align: center;

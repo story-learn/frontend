@@ -45,8 +45,7 @@ export const StyledModal = styled.div`
             position: relative;
             width: 90%;
             max-width: 40rem;
-            background-color: var(--stark);
-            color: var(--stark-2);
+            background-color: var(--color-1);
             border-radius: var(--border-rad-sm);
             transition: all 0.2s linear;
             padding-top: 2.5rem;

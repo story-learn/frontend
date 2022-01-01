@@ -3,7 +3,8 @@ import { device } from "../../styles/breakpoints";
 
 export const StyledNav = styled.nav`
     position: relative;
-    border-bottom: 0.1rem solid var(--border-col);
+    border-bottom: 0.1rem solid var(--color-3);
+    background-color: var(--text-col-1);
 
     .container {
         padding-top: 1.5rem;
@@ -34,7 +35,6 @@ export const StyledNav = styled.nav`
         &__auth {
             &-options {
                 --top: 6rem;
-                background-color: var(--stark);
                 position: absolute;
                 left: -100%;
                 right: 0;
@@ -77,7 +77,7 @@ export const StyledNav = styled.nav`
         }
 
         &__upload {
-            color: var(--stark-3);
+            color: var(--color-4);
         }
 
         &__login {
@@ -102,7 +102,7 @@ export const StyledNav = styled.nav`
                     left: auto;
                     right: -1rem;
                     width: max-content;
-                    background: var(--input-bg-1);
+                    background-color: var(--box-bg);
                     padding-left: 1rem;
                     padding-right: 1rem;
                     border-radius: var(--border-rad-xs);
@@ -117,7 +117,7 @@ export const StyledNav = styled.nav`
                         right: 1.4rem;
                         display: inline-block;
                         border-right: 6px solid transparent;
-                        border-bottom: 6px solid var(--input-bg-1);
+                        border-bottom: 6px solid var(--box-bg);
                         border-left: 6px solid transparent;
                         content: "";
                         overflow: initial;

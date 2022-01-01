@@ -8,13 +8,12 @@ const InputStyle = styled.input<StyleProp>`
     display: block;
     border-radius: var(--border-rad-xs);
     padding: 1.5rem 1.6rem 1.3rem;
-    background-color: var(--input-bg-1);
     height: 5.2rem;
     font-size: 1.4rem;
 
     border: 0.1rem solid transparent;
     transition: all 0.2s linear;
-    color: var(--stark-3);
+    background-color: var(--box-bg);
 
     &:focus,
     &:hover {
@@ -22,8 +21,8 @@ const InputStyle = styled.input<StyleProp>`
     }
 
     &:-webkit-autofill {
-        box-shadow: 0 0 0 30px var(--input-bg-1) inset !important;
-        -webkit-text-fill-color: var(--stark-3);
+        box-shadow: 0 0 0 30px var(--box-bg) inset !important;
+        -webkit-text-fill-color: var(--color-4);
         border: inherit;
         background: inherit;
     }

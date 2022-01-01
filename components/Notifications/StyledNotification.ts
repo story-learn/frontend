@@ -3,8 +3,10 @@ import { device } from "../../styles/breakpoints";
 
 export const StyledNotification = styled.div`
     /* background-color: #333; */
-    background-color: var(--stark);
-    color: var(--stark-2);
+    /* background-color: var(--stark); */
+    /* color: var(--stark-2); */
+    background-color: var(--box-bg);
+    color: var(--general-fg);
     width: 90vw;
     max-width: 50rem;
     padding: 1.3rem 1rem 1.5rem;
@@ -14,7 +16,8 @@ export const StyledNotification = styled.div`
     display: flex;
     align-items: flex-start;
     justify-content: space-between;
-    border: 0.1rem solid var(--border-col);
+    /* border: 0.1rem solid var(--border-col); */
+    border: 0.1rem solid var(--box-border);
 
     &.notification__info {
         .notification__content {

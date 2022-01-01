@@ -56,8 +56,8 @@ const GlobalStyle = createGlobalStyle`
 
     body {
         font-size: 1.8rem;
-        background-color: var(--stark);
-        color: var(--stark-2);
+        background-color: var(--general-bg);
+        color: var(--general-fg);
         font-family: var(--font-family-primary);
         font-weight: 400;
     }
