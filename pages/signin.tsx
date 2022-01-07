@@ -135,13 +135,6 @@ const Signin: NextPage = () => {
         }
     };
 
-    const [theme, setTheme] = useState("");
-    useEffect(() => {
-        if (localStorage.getItem("theme") === "dark") {
-            setTheme("dark");
-        }
-        return () => {};
-    }, []);
     return (
         <>
             <HeadTag title="Storylearn - Sign in" />

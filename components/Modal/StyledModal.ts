@@ -86,6 +86,10 @@ export const StyledModal = styled.div`
                 width: 100%;
                 margin-top: 2rem;
                 opacity: 1;
+
+                &:nth-child(2) {
+                    margin-top: 0.8rem;
+                }
             }
         }
     }
