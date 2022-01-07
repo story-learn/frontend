@@ -80,16 +80,19 @@ export const logIn = async (detail: Auth) => {
         return result.data;
     } catch (error) {
         let resError = "";
+
         if (axios.isAxiosError(error)) {
             if (error.response) {
-                resError = error.response.data.detail;
+                let { status, statusText } = error.response;
+
+                if (status === 401 || statusText === "Unauthorized") {
+                    resError = error.response.data.detail;
+                }
             }
-            throw resError;
         } else {
-            resError = "Unknown error";
+            resError = "Unknown error! Please try again later";
         }
         throw resError;
-        // throw new Error(resError);
     }
 };
 
@@ -110,16 +113,31 @@ export const signup = async (detail: Authentication) => {
     } catch (error) {
         if (axios.isAxiosError(error)) {
             let errors = error.response?.data as ResError;
+            delete errors["re_password"];
+
             let returnedErrors: ReturningError = {};
 
-            for (const key in errors) {
-                returnedErrors[key] = { msg: errors[key][0], status: true };
+            for (let key in errors) {
+                // this is to correct the key coming from backend
+                if (key === "first_name") {
+                    returnedErrors["firstName"] = {
+                        msg: errors[key][0],
+                        status: true,
+                    };
+                } else if (key === "last_name") {
+                    returnedErrors["lastName"] = {
+                        msg: errors[key][0],
+                        status: true,
+                    };
+                } else {
+                    returnedErrors[key] = { msg: errors[key][0], status: true };
+                }
             }
 
             throw returnedErrors;
         }
 
-        throw error;
+        // throw error;
     }
 };
 

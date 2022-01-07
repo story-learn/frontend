@@ -75,9 +75,10 @@ export const StyledAuthPage = styled.main`
         }
 
         &-forgot {
-            max-width: 38.5rem;
             text-align: right;
-            padding: 0;
+            padding: 0 2rem;
+            margin-left: auto;
+            margin-right: auto;
         }
     }
 
@@ -85,6 +86,6 @@ export const StyledAuthPage = styled.main`
         background-repeat: no-repeat;
         background-size: cover;
         background-position: center bottom;
-        background-image: var(--auth-bg);
+        background-image: var(--auth-bg-img);
     }
 `;

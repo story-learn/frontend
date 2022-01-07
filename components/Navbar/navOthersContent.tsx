@@ -2,8 +2,6 @@ import Link from "next/link";
 import { NavAuthPageOthersContentRoutes } from "../../interfaces/types";
 
 export const NavOthersContent = (route: NavAuthPageOthersContentRoutes) => {
-    console.log({ route });
-
     switch (route) {
         case "/signup":
             return (

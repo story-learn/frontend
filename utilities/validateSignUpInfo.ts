@@ -24,6 +24,13 @@ export const validateSignUpInfo = async (
                     msg: `Number is not allowed`,
                     status: true,
                 };
+            } else if (value.length > 150) {
+                currentErrors[name] = {
+                    msg: `${
+                        name === "firstName" ? "First Name" : "Last Name"
+                    } should not be more than 150 characters`,
+                    status: true,
+                };
             } else {
                 currentErrors[name] = noError;
             }

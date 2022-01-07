@@ -4,7 +4,7 @@ export const ModeVariables = createGlobalStyle`
     :root {
         --disabled-fg: #C2C2C2;
         
-        --auth-bg: url("/assests/webps/authBgLight.webp");
+        --auth-bg-img: url("/assests/webps/authBgLight.webp");
 
         --modal-border: 0.3rem dashed #E8E6F0;
 
@@ -27,7 +27,7 @@ export const ModeVariables = createGlobalStyle`
         &[data-theme="dark"] {
             --disabled-fg: #C2C2C2;
 
-            --auth-bg: url("/assests/webps/authBgDark.webp");
+            --auth-bg-img: url("/assests/webps/authBgDark.webp");
 
             --modal-border: 0.3rem dashed #232326;
 

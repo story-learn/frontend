@@ -115,7 +115,6 @@ const Signup: NextPage = () => {
     // check if username has been taken
     // this determines the final error status of username field
     const handleUserNameBlur = async (username: string) => {
-        console.log("got here....");
         let { msg: userNameErrorMsg, status: userNameErrorStatus } =
             inputErrors.userName;
 

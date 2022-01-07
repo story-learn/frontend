@@ -36,7 +36,8 @@ export const StyledNavAuth = styled.nav`
 
         &__others {
             --top: 6.1rem;
-            background-color: var(--stark);
+            /* background-color: var(--stark); */
+            background-color: var(--general-bg);
             position: absolute;
             left: -100%;
             right: 0;
