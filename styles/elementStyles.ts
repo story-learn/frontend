@@ -64,6 +64,11 @@ export const ElementStyles = createGlobalStyle`
         }
     }
 
+    a,
+    button {
+        transition: all 0.2s ease-in;
+    }
+
     button.form__input-icon {
         &:focus,
         &:hover,

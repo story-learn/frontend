@@ -17,6 +17,29 @@ export const UtilityStyles = createGlobalStyle`
         color: var(--icon-1);
     }
 
+    .btn {
+        &__icon {
+            display: inline-block;
+            padding: 1rem;
+            padding-bottom: 1.2rem;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 4rem;
+            height: 4rem;
+            background-color: transparent;
+
+            &:hover {
+                background-color: var(--box-shadow-bg);
+            }
+
+            /* &-active {
+                background-color: red;
+            } */
+        }
+    }
+
     .container {
         padding-right: 2rem;
         padding-left: 2rem;

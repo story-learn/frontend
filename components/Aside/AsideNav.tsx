@@ -1,11 +1,6 @@
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { FC } from "react";
-import { AiOutlineHome } from "react-icons/ai";
-import { BsBookmark } from "react-icons/bs";
-import { FiSearch } from "react-icons/fi";
-import { IoMdAdd } from "react-icons/io";
-import { IoPersonOutline } from "react-icons/io5";
 import { StyledAsideNav } from "./StyledAsideNav";
 import {
     HomeIcon,
@@ -54,7 +49,10 @@ const AsideNav: FC = () => {
                         return (
                             <li key={`${href} - ${i}`}>
                                 <Link href={href}>
-                                    <a aria-label="" className={`${className}`}>
+                                    <a
+                                        aria-label=""
+                                        className={`${className} btn__icon`}
+                                    >
                                         {<Icon />}
                                     </a>
                                 </Link>

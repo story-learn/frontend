@@ -28,6 +28,10 @@ export const StyledAsideNav = styled.nav`
 
         &.active {
             color: var(--primary);
+
+            &:hover {
+                background-color: transparent;
+            }
         }
     }
 
