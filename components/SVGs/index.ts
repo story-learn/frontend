@@ -10,3 +10,8 @@ export { default as InfoIcon } from "./InfoIcon";
 export { default as ErrorIcon } from "./ErrorIcon";
 export { default as SuccessIcon } from "./SuccessIcon";
 export { default as CloseIcon } from "./CloseIcon";
+export { default as HomeIcon } from "./HomeIcon";
+export { default as SearchIcon } from "./SearchIcon";
+export { default as BookmarkIcon } from "./BookmarkIcon";
+export { default as ProfileIcon } from "./ProfileIcon";
+export { default as UploadIcon } from "./UploadIcon";

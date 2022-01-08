@@ -16,3 +16,4 @@ export { default as Notification } from "./Notifications/Notification";
 export { default as CustomLink } from "./Link/Index";
 export { default as ClientOnlyPortal } from "./ClientOnlyPortal";
 export { default as Modal } from "./Modal/Index";
+export { default as AsideNav } from "./Aside/AsideNav";
