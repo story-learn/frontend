@@ -1,6 +1,7 @@
 import { useRouter } from "next/router";
 import { FC } from "react";
-import { Navbar } from "../../components";
+import { AsideNav, Navbar } from "../../components";
+import { PageContainer } from "../Styles/PageContainer";
 
 const Index: FC = ({ children }) => {
     let { pathname } = useRouter();
@@ -15,7 +16,14 @@ const Index: FC = ({ children }) => {
     return (
         <>
             {!excludedGeneralNav.includes(pathname) && <Navbar />}
-            {children}
+            {excludedGeneralNav.includes(pathname) ? (
+                <>{children}</>
+            ) : (
+                <PageContainer>
+                    <AsideNav />
+                    {children}
+                </PageContainer>
+            )}
         </>
     );
 };
