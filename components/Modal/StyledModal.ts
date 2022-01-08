@@ -6,6 +6,7 @@ export const StyledModal = styled.div`
     position: fixed;
     inset: 0;
     top: 6.1rem;
+    bottom: 8.1rem;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -96,5 +97,7 @@ export const StyledModal = styled.div`
 
     @media screen and (${device.tablet}) {
         top: 7rem;
+        bottom: 0;
+        left: 7.5rem;
     }
 `;
