@@ -1,6 +1,45 @@
 import { createGlobalStyle } from "styled-components";
 
 export const ElementStyles = createGlobalStyle`
+    /* custom scrollbar for firefox */
+    html {
+        scrollbar-width: thin;
+        scrollbar-color: var(--primary) var(--secondary-20);
+    }
+
+    /* custom scrollbar for other browsers */
+    ::-webkit-scrollbar-track,
+    ::-webkit-scrollbar,
+    ::-webkit-scrollbar-thumb {
+        border-radius: 1rem;
+    }
+
+    ::-webkit-scrollbar-track {
+        box-shadow: inset 0 0 6px var(--secondary-80);
+        background-color: var(--disabled-fg);
+
+        &:hover {
+            background-color: var(--secondary-20);
+        }
+    }
+
+    ::-webkit-scrollbar {
+        width: 1rem;
+    }
+
+    ::-webkit-scrollbar-thumb {
+        background-color: var(--primary);	
+        background-image: -webkit-linear-gradient(90deg,
+            rgba(255, 255, 255, .2) 25%,
+            transparent 25%,
+            transparent 50%,
+            rgba(255, 255, 255, .2) 50%,
+            rgba(255, 255, 255, .2) 75%,
+            transparent 75%,
+            transparent
+        );
+    }
+
     /* headings */
     h1 {
         font-size: 3.2rem;
@@ -77,4 +116,5 @@ export const ElementStyles = createGlobalStyle`
             border: none;
         }
     }
+
 `;
