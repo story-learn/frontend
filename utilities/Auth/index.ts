@@ -36,7 +36,9 @@ export const usernameExists = async (username: string) => {
 
         let { message } = response.data;
 
-        return message === "This username already exists";
+        message = message.trim();
+
+        return message;
     } catch (error) {
         throw error;
     }

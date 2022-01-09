@@ -127,16 +127,16 @@ const Signup: NextPage = () => {
         try {
             setCheckingUserName(true);
 
-            let userNameTaken = await usernameExists(userDetail.userName);
+            let userNameMessage = await usernameExists(userDetail.userName);
             let userName: AuthenticationError["userName"];
 
-            if (userNameTaken) {
+            if (userNameMessage === "This username does not exist") {
+                userName = { msg: ``, status: false };
+            } else {
                 userName = {
-                    msg: `${username} is not available`,
+                    msg: userNameMessage,
                     status: true,
                 };
-            } else {
-                userName = { msg: ``, status: false };
             }
 
             setInputErrors((prev) => ({ ...prev, userName }));
