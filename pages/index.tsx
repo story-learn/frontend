@@ -22,26 +22,25 @@ const Home: NextPage = () => {
     return (
         <>
             <HeadTag title="Storylearn - Home" />
-            <main>
-                <Modal
-                    showModal={promptUserToLogin}
-                    title="Get the full experience when you log in"
-                    extraClassName="modalAuth"
-                >
-                    <p>
-                        Follow your favorite accounts, read stories that have
-                        been posted, save stories, and make your own.
-                    </p>
-                    <div className="modalAuth__links">
-                        <CustomLink href="/signin" text="Log In" />
-                        <CustomLink
-                            href="/signup"
-                            text="Sign Up"
-                            variant="no-border"
-                        />
-                    </div>
-                </Modal>
-            </main>
+            <main></main>
+            <Modal
+                showModal={promptUserToLogin}
+                title="Get the full experience when you log in"
+                extraClassName="modalAuth"
+            >
+                <p>
+                    Follow your favorite accounts, read stories that have been
+                    posted, save stories, and make your own.
+                </p>
+                <div className="modalAuth__links">
+                    <CustomLink href="/signin" text="Log In" />
+                    <CustomLink
+                        href="/signup"
+                        text="Sign Up"
+                        variant="no-border"
+                    />
+                </div>
+            </Modal>
         </>
     );
 };
