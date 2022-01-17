@@ -19,6 +19,7 @@ export const ModeVariables = createGlobalStyle`
         --disabled: #F0F0F0;
 
         --box-bg: #F7F2F4;
+        --box-bg-2: #f0f0f0;
         --box-border: #E8E6F0;
 
         --text-col-1: #ffffff;
@@ -42,6 +43,7 @@ export const ModeVariables = createGlobalStyle`
             --disabled: #838383;
 
             --box-bg: #121211;
+            --box-bg-2: #121211;
             --box-border: #232326;
 
             --text-col-1: #0A0601;

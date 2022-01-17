@@ -1,6 +1,6 @@
 import type { NextPage } from "next";
 import { useEffect, useState } from "react";
-import { CustomLink, Modal } from "../components";
+import { CustomLink, Modal, Stories } from "../components";
 import { HeadTag } from "../components/head";
 import { useAuth } from "../context/AuthContext";
 
@@ -22,7 +22,9 @@ const Home: NextPage = () => {
     return (
         <>
             <HeadTag title="Storylearn - Home" />
-            <main></main>
+            <main>
+                <Stories />
+            </main>
             <Modal
                 showModal={promptUserToLogin}
                 title="Get the full experience when you log in"

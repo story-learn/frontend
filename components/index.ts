@@ -17,3 +17,8 @@ export { default as CustomLink } from "./Link/Index";
 export { default as ClientOnlyPortal } from "./ClientOnlyPortal";
 export { default as Modal } from "./Modal/Index";
 export { default as AsideNav } from "./Aside/AsideNav";
+export { default as Stories } from "./Story/Stories";
+export { default as Story } from "./Story/Story";
+export { default as Avatar } from "./Avatar";
+export { default as Profile } from "./Profile";
+export { default as StoryContentActions } from "./Story/StoryContentActions";

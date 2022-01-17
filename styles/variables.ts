@@ -23,6 +23,7 @@ export const VariablesStyle = createGlobalStyle`
         --border-rad-sm: 1rem;
         --border-rad-md: 1.5rem;
         --border-rad-lg: 2rem;
+        --border-rad-xl: 2.4rem;
 
         /* box shadow */
         --box-shadow-bg: #C4C4C4;
