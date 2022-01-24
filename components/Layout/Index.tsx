@@ -13,10 +13,12 @@ const Index: FC = ({ children }) => {
         "/activate/[uid]/[token]",
     ];
 
+    let excludeAsideNav = [...excludedGeneralNav, "/upload"];
+
     return (
         <>
             {!excludedGeneralNav.includes(pathname) && <Navbar />}
-            {excludedGeneralNav.includes(pathname) ? (
+            {excludeAsideNav.includes(pathname) ? (
                 <>{children}</>
             ) : (
                 <PageContainer>

@@ -7,7 +7,7 @@ export const PageContainer = styled.div`
         display: flex;
         align-items: stretch;
         justify-content: flex-start;
-        column-gap: 2rem;
+        /* column-gap: 2rem; */
 
         & > * {
             &:nth-child(2) {

@@ -21,3 +21,6 @@ export { default as ShareIcon } from "./ShareIcon";
 export { default as ThreeDotsHorizontalIcon } from "./ThreeDotsHorizontalIcon";
 export { default as FollowUserIcon } from "./FollowUserIcon";
 export { default as LinkIcon } from "./LinkIcon";
+export { default as PenIcon } from "./PenIcon";
+export { default as CameraIcon } from "./CameraIcon";
+export { default as GalleryIcon } from "./GalleryIcon";

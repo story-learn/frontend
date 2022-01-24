@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, MouseEventHandler } from "react";
 import { LoadingIndicator } from "../../components";
 import { StyledButton } from "./ButtonStyle";
 
@@ -9,6 +9,7 @@ export interface ButtonProps {
     disabled?: boolean;
     variant?: "outline" | "no-border";
     className?: string;
+    onClick?: MouseEventHandler<HTMLButtonElement>;
 }
 
 const Index: FC<ButtonProps> = ({
@@ -17,6 +18,7 @@ const Index: FC<ButtonProps> = ({
     processing,
     disabled,
     variant,
+    onClick,
     className,
 }) => {
     return (
@@ -25,6 +27,7 @@ const Index: FC<ButtonProps> = ({
             disabled={disabled}
             variant={variant}
             className={className}
+            onClick={onClick}
         >
             {processing ? <LoadingIndicator /> : text}
         </StyledButton>
