@@ -16,22 +16,27 @@ const AsideNav: FC = () => {
         {
             Icon: HomeIcon,
             href: "/",
+            label: "home",
         },
         {
             Icon: SearchIcon,
             href: "/search",
+            label: "search",
         },
         {
             Icon: UploadIcon,
             href: "/upload",
+            label: "upload",
         },
         {
             Icon: BookmarkIcon,
             href: "/bookmark",
+            label: "bookmark",
         },
         {
             Icon: ProfileIcon,
             href: "/profile",
+            label: "profile",
         },
     ];
 
@@ -39,7 +44,7 @@ const AsideNav: FC = () => {
         <StyledAsideNav>
             <div>
                 <ul>
-                    {asideLinks.map(({ href, Icon }, i) => {
+                    {asideLinks.map(({ href, Icon, label }, i) => {
                         let className = "";
 
                         className += href === router.pathname ? "active" : "";
@@ -50,7 +55,7 @@ const AsideNav: FC = () => {
                             <li key={`${href} - ${i}`}>
                                 <Link href={href}>
                                     <a
-                                        aria-label=""
+                                        aria-label={label}
                                         className={`${className} btn__icon`}
                                     >
                                         {<Icon />}
