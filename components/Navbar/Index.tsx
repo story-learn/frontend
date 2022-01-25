@@ -1,4 +1,5 @@
 import { FC, useRef } from "react";
+import Link from "next/link";
 import {
     HomeLogo,
     ModeToggle,
@@ -9,8 +10,10 @@ import { StyledNav } from "./StyledNav";
 import { useAuth } from "../../context/AuthContext";
 import { ThreeDotsVerticalIcon } from "../SVGs";
 import { GiHamburgerMenu } from "react-icons/gi";
+import { useRouter } from "next/router";
 
 const Index: FC = () => {
+    const { pathname } = useRouter();
     const { user } = useAuth();
     const navAuthButton = useRef<HTMLButtonElement | null>(null);
     const navAuthOptions = useRef<HTMLUListElement | null>(null);
@@ -28,7 +31,12 @@ const Index: FC = () => {
                 <HomeLogo />
                 <NavSearch />
                 <ModeToggle />
-                <button className="nav__large nav__upload">upload</button>
+                {pathname !== "/upload" && (
+                    <Link href="/upload">
+                        <a className="nav__large nav__upload">upload</a>
+                    </Link>
+                )}
+
                 {!userIsLoggedIn && (
                     <CustomLink
                         href="/signin"
