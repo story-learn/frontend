@@ -1,8 +1,8 @@
 import { NextPage } from "next";
 import { FormEventHandler, useEffect, useState } from "react";
-import { Button, Modal, ProtectRoute } from "../components";
+import { Modal, ProtectRoute } from "../components";
 import { StyledUploadPage } from "../components/Styles/StyledUploadPage";
-import { Header, MetaHead, UploadImage, UploadText } from "../modules/Upload";
+import { Header, MetaHead, UploadForm } from "../modules/Upload";
 import { FrameType } from "../modules/Upload/Header";
 
 export type HandleStoryChange = (value: string) => void;
@@ -36,6 +36,7 @@ const Upload: NextPage = () => {
         e.preventDefault();
         if (!story.value || !story.type) return;
 
+        // create unique keys for stories
         let key = Date.now() as any as string;
 
         setStories((prev) => [...prev, { ...story, key }]);
@@ -55,34 +56,13 @@ const Upload: NextPage = () => {
             </StyledUploadPage>
 
             <Modal showModal={openStoryModal} extraClassName="modalUpload">
-                <form onSubmit={handleAddStories}>
-                    <h1 className="modalUpload__title">{story.type} Frame</h1>
-                    {story.type === "Text" ? (
-                        <UploadText
-                            value={story.value}
-                            handleStoryChange={handleStoryChange}
-                            frameNumber={stories.length + 1}
-                        />
-                    ) : (
-                        <UploadImage
-                            handleStoryChange={handleStoryChange}
-                            frameNumber={stories.length + 1}
-                        />
-                    )}
-                    <div className="modalUpload__btns">
-                        <Button
-                            type="submit"
-                            text="Add"
-                            disabled={!story.value || !story.type}
-                        />
-                        <Button
-                            type="button"
-                            text="Cancel"
-                            variant="no-border"
-                            onClick={handleCloseStoryModal}
-                        />
-                    </div>
-                </form>
+                <UploadForm
+                    stories={stories}
+                    story={story}
+                    handleAddStories={handleAddStories}
+                    handleCloseStoryModal={handleCloseStoryModal}
+                    handleStoryChange={handleStoryChange}
+                />
             </Modal>
         </>
     );

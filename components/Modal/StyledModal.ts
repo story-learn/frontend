@@ -107,6 +107,7 @@ export const StyledModal = styled.div`
             }
 
             &__content {
+                height: max-content;
                 max-height: 80vh;
             }
         }
@@ -229,6 +230,12 @@ export const StyledModal = styled.div`
 
         &.modalUpload {
             left: 0;
+
+            .modal {
+                &__content {
+                    max-height: 88vh;
+                }
+            }
         }
     }
 `;
