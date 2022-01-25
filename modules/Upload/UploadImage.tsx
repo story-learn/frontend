@@ -1,15 +1,21 @@
 import { ChangeEventHandler, FC, useState } from "react";
 import Image from "next/image";
 import { GalleryIcon } from "../../components/SVGs";
-import { HandleStoryChange } from "../../pages/upload";
+import { HandleStoryChange, Story } from "../../pages/upload";
 
 interface IUploadImage {
     handleStoryChange: HandleStoryChange;
     frameNumber: number;
+    story: Story;
 }
 
-const UploadImage: FC<IUploadImage> = ({ frameNumber, handleStoryChange }) => {
-    const [preview, setPreview] = useState("");
+const UploadImage: FC<IUploadImage> = ({
+    frameNumber,
+    story,
+    handleStoryChange,
+}) => {
+    // const [preview, setPreview] = useState("");
+    const [preview, setPreview] = useState(story.value || "");
 
     const handleFileChange: ChangeEventHandler<HTMLInputElement> = (e) => {
         let image = e.target.files && e.target.files[0];
@@ -49,6 +55,7 @@ const UploadImage: FC<IUploadImage> = ({ frameNumber, handleStoryChange }) => {
                             width={300}
                             height={300}
                             layout="responsive"
+                            objectFit="cover"
                         />
                     )}
                 </figure>

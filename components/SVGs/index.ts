@@ -24,3 +24,4 @@ export { default as LinkIcon } from "./LinkIcon";
 export { default as PenIcon } from "./PenIcon";
 export { default as CameraIcon } from "./CameraIcon";
 export { default as GalleryIcon } from "./GalleryIcon";
+export { default as DeleteIcon } from "./DeleteIcon";

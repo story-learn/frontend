@@ -1,8 +1,8 @@
 import { NextPage } from "next";
-import { FormEventHandler, useEffect, useState } from "react";
+import { useState } from "react";
 import { Modal, ProtectRoute } from "../components";
 import { StyledUploadPage } from "../components/Styles/StyledUploadPage";
-import { Header, MetaHead, UploadForm } from "../modules/Upload";
+import { Header, MetaHead, UploadForm, UploadPreview } from "../modules/Upload";
 import { FrameType } from "../modules/Upload/Header";
 
 export type HandleStoryChange = (value: string) => void;
@@ -11,6 +11,7 @@ export interface Story {
     type: FrameType;
     value: string;
     key: string;
+    frame?: number | null;
 }
 
 const Upload: NextPage = () => {
@@ -25,15 +26,14 @@ const Upload: NextPage = () => {
 
     const handleCloseStoryModal = () => {
         setOpenStoryModal(false);
-        setStory({ type: "", value: "", key: "" });
+        setStory({ type: "", value: "", key: "", frame: null });
     };
 
     const handleStoryChange: HandleStoryChange = (value) => {
         setStory((prev) => ({ ...prev, value }));
     };
 
-    const handleAddStories: FormEventHandler<HTMLFormElement> = (e) => {
-        e.preventDefault();
+    const handleAddStories = () => {
         if (!story.value || !story.type) return;
 
         // create unique keys for stories
@@ -43,9 +43,35 @@ const Upload: NextPage = () => {
         handleCloseStoryModal();
     };
 
-    useEffect(() => {
-        console.log({ stories });
-    }, [stories]);
+    const deleteStory = (id: Story["key"]) => {
+        let newStories = [...stories].filter((story) => story.key !== id);
+
+        setStories([...newStories]);
+    };
+
+    const editStory = (id: Story["key"]) => {
+        let story = [...stories].find(({ key }) => key === id);
+
+        if (!story) return;
+
+        let frame = [...stories].findIndex(({ key }) => key === story!.key);
+        // add 1 to index to show frame number
+        frame = frame + 1;
+
+        setOpenStoryModal(true);
+        setStory({ ...story, frame });
+    };
+
+    const updateStory = () => {
+        let newStory = { ...story };
+
+        let newStories = [...stories].map((story) =>
+            story.key === newStory.key ? newStory : story
+        );
+
+        setStories([...newStories]);
+        handleCloseStoryModal();
+    };
 
     return (
         <>
@@ -53,6 +79,13 @@ const Upload: NextPage = () => {
 
             <StyledUploadPage>
                 <Header handleOpenStoryModal={handleOpenStoryModal} />
+
+                {/* preview */}
+                <UploadPreview
+                    stories={stories}
+                    deleteStory={deleteStory}
+                    editStory={editStory}
+                />
             </StyledUploadPage>
 
             <Modal showModal={openStoryModal} extraClassName="modalUpload">
@@ -62,6 +95,7 @@ const Upload: NextPage = () => {
                     handleAddStories={handleAddStories}
                     handleCloseStoryModal={handleCloseStoryModal}
                     handleStoryChange={handleStoryChange}
+                    updateStory={updateStory}
                 />
             </Modal>
         </>

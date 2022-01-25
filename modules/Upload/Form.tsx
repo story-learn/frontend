@@ -1,4 +1,4 @@
-import { FC, FormEventHandler } from "react";
+import { FC } from "react";
 import { UploadText, UploadImage } from "./index";
 import { HandleStoryChange, Story } from "../../pages/upload";
 import { Button } from "../../components";
@@ -6,9 +6,10 @@ import { Button } from "../../components";
 export interface IForm {
     story: Story;
     stories: Story[];
-    handleAddStories: FormEventHandler<HTMLFormElement>;
+    handleAddStories: () => void;
     handleStoryChange: HandleStoryChange;
     handleCloseStoryModal: () => void;
+    updateStory: () => void;
 }
 
 const UploadForm: FC<IForm> = ({
@@ -17,26 +18,36 @@ const UploadForm: FC<IForm> = ({
     handleCloseStoryModal,
     handleStoryChange,
     handleAddStories,
+    updateStory,
 }) => {
+    let frameNumber = story.frame || stories.length + 1;
+
     return (
-        <form onSubmit={handleAddStories}>
+        <form
+            onSubmit={(e) => {
+                e.preventDefault();
+
+                story.key ? updateStory() : handleAddStories();
+            }}
+        >
             <h1 className="modalUpload__title">{story.type} Frame</h1>
             {story.type === "Text" ? (
                 <UploadText
                     value={story.value}
                     handleStoryChange={handleStoryChange}
-                    frameNumber={stories.length + 1}
+                    frameNumber={frameNumber}
                 />
             ) : (
                 <UploadImage
                     handleStoryChange={handleStoryChange}
-                    frameNumber={stories.length + 1}
+                    frameNumber={frameNumber}
+                    story={story}
                 />
             )}
             <div className="modalUpload__btns">
                 <Button
                     type="submit"
-                    text="Add"
+                    text={story.key ? "Update" : "Add"}
                     disabled={!story.value || !story.type}
                 />
                 <Button

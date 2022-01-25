@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, useEffect, useRef } from "react";
 import { HandleStoryChange } from "../../pages/upload";
 
 interface IUploadText {
@@ -12,16 +12,26 @@ const UploadText: FC<IUploadText> = ({
     frameNumber,
     handleStoryChange,
 }) => {
+    const textAreaRef = useRef<HTMLTextAreaElement>(null);
+
+    useEffect(() => {
+        let textArea = textAreaRef.current!;
+
+        // automatically focus textarea
+        textArea.focus();
+    }, []);
+
     return (
         <div className="modalUpload__control">
             <label htmlFor="frame" className="modalUpload__label">
                 Frame {frameNumber}
             </label>
             <textarea
+                ref={textAreaRef}
                 name="frame"
                 id="frame"
                 rows={10}
-                placeholder="write your text here"
+                placeholder="Write your text here"
                 className="modalUpload__textarea"
                 value={value}
                 onChange={(e) => {

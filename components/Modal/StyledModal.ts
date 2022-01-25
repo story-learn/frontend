@@ -141,7 +141,7 @@ export const StyledModal = styled.div`
             outline: none;
             background-color: var(--box-border);
             resize: none;
-            padding: 0.5rem 0.8rem;
+            padding: 1.5rem 1.8rem;
         }
 
         &__file {
