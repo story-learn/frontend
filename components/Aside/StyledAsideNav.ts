@@ -2,20 +2,23 @@ import styled from "styled-components";
 import { device } from "../../styles/breakpoints";
 
 export const StyledAsideNav = styled.nav`
-    border-top: 0.1rem solid var(--color-3);
+    /* border-top: 0.1rem solid var(--color-3); */
     /* background-color: var(--text-col-1); */
-    background-color: var(--box-bg);
+    /* background-color: var(--box-bg); */
+    background-color: var(--color-1);
+    background-color: var(--general-bg);
     position: fixed;
     bottom: 0;
     left: 0;
     width: 100vw;
+    z-index: 400;
 
     ul {
         display: flex;
         align-items: center;
         justify-content: space-around;
-        padding-top: 2rem;
-        padding-bottom: 2rem;
+        padding-top: 1.5rem;
+        padding-bottom: 1.5rem;
     }
 
     a {
