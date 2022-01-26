@@ -1,9 +1,10 @@
 import { NextPage } from "next";
-import { useState } from "react";
+import { MouseEventHandler, useState } from "react";
 import { Modal, ProtectRoute } from "../components";
 import { StyledUploadPage } from "../components/Styles/StyledUploadPage";
 import { Header, MetaHead, UploadForm, UploadPreview } from "../modules/Upload";
 import { FrameType } from "../modules/Upload/Header";
+import { createStory } from "../utilities/Story";
 
 export type HandleStoryChange = (value: string) => void;
 
@@ -73,12 +74,28 @@ const Upload: NextPage = () => {
         handleCloseStoryModal();
     };
 
+    const handleStoriesSubmitted: MouseEventHandler<HTMLButtonElement> = async (
+        e
+    ) => {
+        e.preventDefault();
+        console.log("stories submitted....");
+
+        try {
+            await createStory(stories);
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
     return (
         <>
             <MetaHead />
 
             <StyledUploadPage>
-                <Header handleOpenStoryModal={handleOpenStoryModal} />
+                <Header
+                    handleOpenStoryModal={handleOpenStoryModal}
+                    handleStoriesSubmitted={handleStoriesSubmitted}
+                />
 
                 {/* preview */}
                 <UploadPreview
@@ -88,7 +105,12 @@ const Upload: NextPage = () => {
                 />
             </StyledUploadPage>
 
-            <Modal showModal={openStoryModal} extraClassName="modalUpload">
+            <Modal
+                showModal={openStoryModal}
+                extraClassName="modalUpload"
+                closeModal={handleCloseStoryModal}
+                showCloseBtn={false}
+            >
                 <UploadForm
                     stories={stories}
                     story={story}

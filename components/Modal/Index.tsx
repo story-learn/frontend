@@ -9,6 +9,7 @@ interface ModalProps {
     showModal: boolean;
     extraClassName?: string;
     title?: string;
+    showCloseBtn?: boolean;
 }
 
 const Index: FC<ModalProps> = ({
@@ -16,6 +17,7 @@ const Index: FC<ModalProps> = ({
     extraClassName,
     closeModal,
     title,
+    showCloseBtn = true,
     children,
 }) => {
     const closeModalWhenEscapeKeyIsPressed = (e: KeyboardEvent) => {
@@ -58,7 +60,7 @@ const Index: FC<ModalProps> = ({
                             </header>
                         )}
                         <section className="modal__content">{children}</section>
-                        {closeModal && (
+                        {closeModal && showCloseBtn && (
                             <button
                                 className="modal__close"
                                 aria-label="close modal"

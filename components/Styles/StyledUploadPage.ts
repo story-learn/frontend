@@ -26,6 +26,32 @@ export const StyledUploadPage = styled.main`
                 color: var(--color-4);
                 font-size: 1.8rem;
             }
+
+            &-btn {
+                background-color: var(--primary);
+                border-radius: 50%;
+                width: 4rem;
+                height: 4rem;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                color: var(--text-col-1);
+                position: fixed;
+                bottom: 1.55rem;
+                right: 2rem;
+                z-index: 500;
+
+                &-icon {
+                }
+
+                &-text {
+                    display: none;
+                }
+            }
+
+            &-help {
+                display: none;
+            }
         }
 
         &__btns {
@@ -142,6 +168,43 @@ export const StyledUploadPage = styled.main`
 
                 &--next {
                     right: -1.5rem;
+                }
+            }
+        }
+    }
+
+    @media screen and (${device.tablet}) {
+        .upload {
+            &__header {
+                &-cont {
+                    display: flex;
+                    align-items: center;
+                    /* justify-content: center; */
+                }
+
+                &-btn {
+                    position: static;
+                    width: auto;
+                    height: auto;
+                    border-radius: var(--border-rad-xs);
+                    padding: 0.4rem 2.5rem 0.6rem;
+                    font-size: 1.6rem;
+
+                    &-icon {
+                        display: none;
+                    }
+
+                    &-text {
+                        display: block;
+                    }
+                }
+
+                &-help {
+                    display: block;
+
+                    &:hover {
+                        background-color: transparent;
+                    }
                 }
             }
         }
