@@ -122,6 +122,11 @@ export const StyledModal = styled.div`
 
         &__control {
             margin-bottom: 2.5rem;
+
+            &-text {
+                position: relative;
+                margin-bottom: 4rem;
+            }
         }
 
         &__label,
@@ -142,6 +147,17 @@ export const StyledModal = styled.div`
             background-color: var(--box-border);
             resize: none;
             padding: 1.5rem 1.8rem;
+
+            &-length {
+                position: absolute;
+                bottom: 0.8rem;
+                bottom: -2.2rem;
+                right: 1.6rem;
+                right: 0.3rem;
+                font-size: 1.2rem;
+                color: var(--primary);
+                font-weight: bolder;
+            }
         }
 
         &__file {
