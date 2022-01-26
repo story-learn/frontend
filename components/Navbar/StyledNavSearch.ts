@@ -26,7 +26,7 @@ export const StyledNavSearch = styled.form`
 
     button {
         position: absolute;
-        top: 1.8rem;
+        top: 2rem;
         right: 1rem;
         transform: translateY(-50%);
         font-size: 1.5rem;
@@ -34,7 +34,6 @@ export const StyledNavSearch = styled.form`
         &:hover,
         &:focus {
             outline: none;
-            border: none;
         }
     }
 `;

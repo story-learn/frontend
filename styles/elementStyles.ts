@@ -94,7 +94,7 @@ export const ElementStyles = createGlobalStyle`
     }
 
     button {
-        border: none;
+        border: 0.1rem solid transparent;
         cursor: pointer;
         background-color: transparent;
 
