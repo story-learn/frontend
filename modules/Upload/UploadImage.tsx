@@ -14,16 +14,20 @@ const UploadImage: FC<IUploadImage> = ({
     story,
     handleStoryChange,
 }) => {
-    // const [preview, setPreview] = useState("");
     const [preview, setPreview] = useState(story.value || "");
 
     const handleFileChange: ChangeEventHandler<HTMLInputElement> = (e) => {
         let image = e.target.files && e.target.files[0];
         if (!image) return null;
 
-        let story = URL.createObjectURL(image);
-        setPreview(story);
-        handleStoryChange(story);
+        let reader = new FileReader();
+        reader.readAsDataURL(image);
+
+        reader.onload = () => {
+            let story = reader.result as unknown as string;
+            setPreview(story);
+            handleStoryChange(story);
+        };
     };
 
     return (
