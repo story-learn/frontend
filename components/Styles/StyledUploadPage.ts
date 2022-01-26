@@ -41,6 +41,12 @@ export const StyledUploadPage = styled.main`
                 right: 2rem;
                 z-index: 500;
 
+                &:disabled {
+                    color: var(--disbaled-fg);
+                    background-color: var(--disabled);
+                    cursor: not-allowed;
+                }
+
                 &-icon {
                 }
 

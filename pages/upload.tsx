@@ -95,6 +95,7 @@ const Upload: NextPage = () => {
                 <Header
                     handleOpenStoryModal={handleOpenStoryModal}
                     handleStoriesSubmitted={handleStoriesSubmitted}
+                    stories={stories}
                 />
 
                 {/* preview */}
