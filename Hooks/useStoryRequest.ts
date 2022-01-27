@@ -15,28 +15,30 @@ const useStoryRequest = () => {
     });
 
     storyInstance.interceptors.request.use(async (req) => {
-        let availableToken = authTokens!;
+        let oldTokens = authTokens!;
 
-        const userToken: AuthUserToken = jwtDecode(availableToken.access);
+        const accessToken: AuthUserToken = jwtDecode(oldTokens.access);
 
-        const tokenExpired = Date.now() > userToken.exp * 1000;
+        const tokenExpired = Date.now() > accessToken.exp * 1000;
 
         if (!tokenExpired) return req;
 
-        const { data } = await axios.post<AuthTokens>(
+        let { refresh } = oldTokens;
+
+        const { data } = await axios.post<{ access: string }>(
             `${baseURL}/auth/jwt/refresh`,
-            {
-                refresh: availableToken.refresh,
-            }
+            { refresh }
         );
 
-        localStorage.setItem("authTokens", JSON.stringify(data));
+        let newTokens: AuthTokens = { ...data, refresh };
 
-        setAuthTokens(data);
-        setUser(jwtDecode(data.access));
+        localStorage.setItem("authTokens", JSON.stringify(newTokens));
+
+        setAuthTokens(newTokens);
+        setUser(jwtDecode(newTokens.access));
 
         // fix this!!!
-        req!.headers!.Authorization = `JWT ${data.access}`;
+        req!.headers!.Authorization = `JWT ${newTokens.access}`;
         return req;
     });
 

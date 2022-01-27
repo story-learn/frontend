@@ -4,7 +4,6 @@ import { MouseEventHandler, useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { Modal, Notification, ProtectRoute } from "../components";
 import { StyledUploadPage } from "../components/Styles/StyledUploadPage";
-import { useAuth } from "../context/AuthContext";
 import useStoryRequest from "../Hooks/useStoryRequest";
 import { Header, MetaHead, UploadForm, UploadPreview } from "../modules/Upload";
 import { FrameType } from "../modules/Upload/Header";
@@ -21,7 +20,6 @@ export interface Story {
 
 const Upload: NextPage = () => {
     let router = useRouter();
-    const { authTokens } = useAuth();
     const { storyInstance } = useStoryRequest();
     const [stories, setStories] = useState<Story[]>([]);
     const [story, setStory] = useState<Story>({ type: "", value: "", key: "" });
@@ -90,22 +88,24 @@ const Upload: NextPage = () => {
         try {
             await createStory(stories, storyInstance);
 
-            toast.custom(
-                <Notification
-                    type="success"
-                    shortText="Story successfully cretead! You'll be redirected to homepage in some seconds"
-                />
-            );
-
+            // notify user
             setTimeout(() => {
-                router.push("/");
-            }, 5_000);
+                toast.custom(
+                    <Notification
+                        type="success"
+                        shortText="Story successfully cretead!"
+                    />
+                );
+            }, 600);
+
+            router.push("/");
         } catch (error) {
             // console.log(error);
         }
     };
 
     useEffect(() => {
+        // prefetch home page since user will be redirected to home page after story is created
         router.prefetch("/");
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
