@@ -45,6 +45,7 @@ export const StyledNav = styled.nav`
                 transition: left 0.3s linear;
                 display: flex;
                 flex-direction: column;
+                background-color: var(--general-bg);
 
                 &-open {
                     left: 0%;
