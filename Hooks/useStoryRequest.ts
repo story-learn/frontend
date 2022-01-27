@@ -9,17 +9,17 @@ const useStoryRequest = () => {
     let baseURL = BASE_URLS.Story;
     const { authTokens, setAuthTokens, setUser } = useAuth();
 
-    const storyInsatnce = axios.create({
+    const storyInstance = axios.create({
         baseURL,
-        headers: { Authorization: `Bearer ${authTokens?.access}` },
+        headers: { Authorization: `JWT ${authTokens?.access}` },
     });
 
-    storyInsatnce.interceptors.request.use(async (req) => {
+    storyInstance.interceptors.request.use(async (req) => {
         let availableToken = authTokens!;
 
         const userToken: AuthUserToken = jwtDecode(availableToken.access);
 
-        const tokenExpired = Date.now() > userToken.exp;
+        const tokenExpired = Date.now() > userToken.exp * 1000;
 
         if (!tokenExpired) return req;
 
@@ -36,11 +36,11 @@ const useStoryRequest = () => {
         setUser(jwtDecode(data.access));
 
         // fix this!!!
-        req!.headers!.Authorization = `Bearer ${data.access}`;
+        req!.headers!.Authorization = `JWT ${data.access}`;
         return req;
     });
 
-    return { storyInsatnce };
+    return { storyInstance };
 };
 
 export default useStoryRequest;

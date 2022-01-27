@@ -1,7 +1,11 @@
 import { NextPage } from "next";
-import { MouseEventHandler, useState } from "react";
-import { Modal, ProtectRoute } from "../components";
+import { useRouter } from "next/router";
+import { MouseEventHandler, useEffect, useState } from "react";
+import toast from "react-hot-toast";
+import { Modal, Notification, ProtectRoute } from "../components";
 import { StyledUploadPage } from "../components/Styles/StyledUploadPage";
+import { useAuth } from "../context/AuthContext";
+import useStoryRequest from "../Hooks/useStoryRequest";
 import { Header, MetaHead, UploadForm, UploadPreview } from "../modules/Upload";
 import { FrameType } from "../modules/Upload/Header";
 import { createStory } from "../utilities/Story";
@@ -16,6 +20,9 @@ export interface Story {
 }
 
 const Upload: NextPage = () => {
+    let router = useRouter();
+    const { authTokens } = useAuth();
+    const { storyInstance } = useStoryRequest();
     const [stories, setStories] = useState<Story[]>([]);
     const [story, setStory] = useState<Story>({ type: "", value: "", key: "" });
     const [openStoryModal, setOpenStoryModal] = useState(false);
@@ -81,11 +88,27 @@ const Upload: NextPage = () => {
         console.log("stories submitted....");
 
         try {
-            await createStory(stories);
+            await createStory(stories, storyInstance);
+
+            toast.custom(
+                <Notification
+                    type="success"
+                    shortText="Story successfully cretead! You'll be redirected to homepage in some seconds"
+                />
+            );
+
+            setTimeout(() => {
+                router.push("/");
+            }, 5_000);
         } catch (error) {
-            console.log(error);
+            // console.log(error);
         }
     };
+
+    useEffect(() => {
+        router.prefetch("/");
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     return (
         <>
@@ -125,5 +148,5 @@ const Upload: NextPage = () => {
     );
 };
 
-export default Upload;
-// export default ProtectRoute(Upload);
+// export default Upload;
+export default ProtectRoute(Upload);
