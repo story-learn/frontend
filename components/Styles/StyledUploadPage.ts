@@ -143,7 +143,7 @@ export const StyledUploadPage = styled.main`
                 -webkit-line-clamp: 15;
                 -webkit-box-orient: vertical;
                 overflow: hidden;
-                height: 100%;
+                /* height: 100%; */
                 color: var(--color-4);
             }
 
