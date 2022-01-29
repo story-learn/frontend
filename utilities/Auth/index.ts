@@ -1,5 +1,5 @@
 import axios, { AxiosError, AxiosResponse } from "axios";
-import { STORY } from "../../configs/story";
+import { STORY, StoryRoutes } from "../../configs/story";
 import {
     ActivateAccountDetail,
     Authentication,
@@ -60,7 +60,7 @@ export const emailExists = async (email: string) => {
 
 export const resendVerification = async (email: string) => {
     try {
-        await STORY.post(`/auth/users/resend_activation/`, { email });
+        await STORY.post(StoryRoutes.RESEND_VERIFICATION_LINK, { email });
     } catch (error) {
         console.log(error);
     }
@@ -75,10 +75,7 @@ export const logIn = async (detail: Auth) => {
     };
 
     try {
-        let result = await STORY.post<AuthTokens>(
-            `/auth/jwt/custom-create/`,
-            data
-        );
+        let result = await STORY.post<AuthTokens>(StoryRoutes.SIGNIN, data);
         return result.data;
     } catch (error) {
         let resError = "";
@@ -109,7 +106,7 @@ export const signup = async (detail: Authentication) => {
             re_password: detail.password,
         };
 
-        let auth = await STORY.post<any, AxiosError>(`/auth/users/`, data);
+        let auth = await STORY.post<any, AxiosError>(StoryRoutes.SIGNUP, data);
 
         return auth;
     } catch (error) {
