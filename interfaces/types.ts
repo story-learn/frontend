@@ -11,3 +11,5 @@ export type NavAuthPageOthersContentRoutes =
     | "/signin"
     | "/verify"
     | "/reset";
+
+export type FrameType = "" | "Text" | "Image";

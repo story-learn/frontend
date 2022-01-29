@@ -2,9 +2,8 @@ import { FC, MouseEventHandler, useState } from "react";
 import { UploadInstruction } from "./index";
 import { Modal } from "../../components";
 import { CameraIcon, HelpIcon, MarkIcon, PenIcon } from "../../components/SVGs";
-import { Story } from "../../pages/upload";
-
-export type FrameType = "" | "Text" | "Image";
+import { StoryUpload as Story } from "../../interfaces";
+import { FrameType } from "../../interfaces/types";
 
 interface IHeader {
     handleOpenStoryModal: (type: FrameType) => void;

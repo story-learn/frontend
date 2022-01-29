@@ -33,7 +33,7 @@ const UploadForm: FC<IForm> = ({
             <h1 className="modalUpload__title">{story.type} Frame</h1>
             {story.type === "Text" ? (
                 <UploadText
-                    value={story.value}
+                    value={story.value as string}
                     handleStoryChange={handleStoryChange}
                     frameNumber={frameNumber}
                 />

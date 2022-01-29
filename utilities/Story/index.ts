@@ -1,24 +1,29 @@
 import axios, { AxiosInstance } from "axios";
-import { Story } from "../../pages/upload";
+import { StoryUpload as Story } from "../../interfaces";
 
 export const createStory = async (
     stories: Story[],
     storyInstance: AxiosInstance
 ) => {
-    let frames = stories.map(({ type, value }) => {
-        if (type === "Image") return { image: value, text: "" };
-
-        return { image: "", text: value };
-    });
-    let data = { frames };
+    let frames = stories.map(({ type, value }) =>
+        type === "Image"
+            ? { image: value, text: "" }
+            : { image: "", text: value }
+    );
 
     try {
-        let result = await storyInstance.post(`/story/story/`, data);
+        let data = new FormData();
+        data.append("frames", JSON.stringify(frames));
 
-        console.log(result);
+        await storyInstance.post(`/story/story/`, data, {
+            headers: {
+                "Content-Type": "multipart/form-data",
+            },
+        });
     } catch (error) {
         if (axios.isAxiosError(error)) {
             console.log("errors", error.response?.data);
         }
+        throw error;
     }
 };

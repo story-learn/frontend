@@ -5,18 +5,12 @@ import toast from "react-hot-toast";
 import { Modal, Notification, ProtectRoute } from "../components";
 import { StyledUploadPage } from "../components/Styles/StyledUploadPage";
 import useStoryRequest from "../Hooks/useStoryRequest";
+import { StoryUpload as Story } from "../interfaces";
+import { FrameType } from "../interfaces/types";
 import { Header, MetaHead, UploadForm, UploadPreview } from "../modules/Upload";
-import { FrameType } from "../modules/Upload/Header";
 import { createStory } from "../utilities/Story";
 
-export type HandleStoryChange = (value: string) => void;
-
-export interface Story {
-    type: FrameType;
-    value: string;
-    key: string;
-    frame?: number | null;
-}
+export type HandleStoryChange = (value: string | File) => void;
 
 const Upload: NextPage = () => {
     let router = useRouter();

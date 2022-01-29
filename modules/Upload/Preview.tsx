@@ -3,7 +3,7 @@ import { Splide, SplideSlide } from "@splidejs/react-splide";
 import { FC } from "react";
 import "@splidejs/splide/dist/css/splide.min.css";
 import { DeleteIcon } from "../../components/SVGs";
-import { Story } from "../../pages/upload";
+import { StoryUpload as Story } from "../../interfaces";
 
 export interface IPreview {
     stories: Story[];
@@ -51,6 +51,9 @@ const UploadPreview: FC<IPreview> = ({ stories, deleteStory, editStory }) => {
                             frameNumber === 1 ? "(Cover Frame)" : ""
                         }`.trim();
 
+                        // retrieve image url from image file
+                        let getImgSrc = (val: File) => URL.createObjectURL(val);
+
                         return (
                             <SplideSlide key={key} className="slider__item">
                                 <div className="slider__item-frame">
@@ -75,7 +78,8 @@ const UploadPreview: FC<IPreview> = ({ stories, deleteStory, editStory }) => {
                                     ) : (
                                         <figure className="slider__item-img">
                                             <Image
-                                                src={value}
+                                                // src={value}
+                                                src={getImgSrc(value as File)}
                                                 alt=""
                                                 width={300}
                                                 height={300}

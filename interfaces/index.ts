@@ -1,3 +1,5 @@
+import { FrameType } from "./types";
+
 export interface Authentication {
     firstName: string;
     lastName: string;
@@ -29,4 +31,12 @@ export interface AuthUserToken {
 export interface ActivateAccountDetail {
     uid: string;
     token: string;
+}
+
+// export interface Story {
+export interface StoryUpload {
+    type: FrameType;
+    value: string | File; // text || image
+    key: string;
+    frame?: number | null;
 }

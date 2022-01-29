@@ -1,7 +1,8 @@
-import { ChangeEventHandler, FC, useState } from "react";
+import { ChangeEventHandler, FC, useEffect, useState } from "react";
 import Image from "next/image";
 import { GalleryIcon } from "../../components/SVGs";
-import { HandleStoryChange, Story } from "../../pages/upload";
+import { HandleStoryChange } from "../../pages/upload";
+import { StoryUpload as Story } from "../../interfaces";
 
 interface IUploadImage {
     handleStoryChange: HandleStoryChange;
@@ -14,20 +15,25 @@ const UploadImage: FC<IUploadImage> = ({
     story,
     handleStoryChange,
 }) => {
-    const [preview, setPreview] = useState(story.value || "");
+    const [preview, setPreview] = useState("");
+
+    useEffect(() => {
+        let file = story.value;
+
+        // file is coimg from update if there is file
+        let previewSrc = file ? URL.createObjectURL(file as File) : "";
+        setPreview(previewSrc);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     const handleFileChange: ChangeEventHandler<HTMLInputElement> = (e) => {
         let image = e.target.files && e.target.files[0];
         if (!image) return null;
 
-        let reader = new FileReader();
-        reader.readAsDataURL(image);
-
-        reader.onload = () => {
-            let story = reader.result as unknown as string;
-            setPreview(story);
-            handleStoryChange(story);
-        };
+        // get preview string
+        let preview = URL.createObjectURL(image);
+        setPreview(preview);
+        handleStoryChange(image);
     };
 
     return (
