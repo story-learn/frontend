@@ -21,14 +21,12 @@ const Activate: NextPage = () => {
 
     const handleActivateAccount = async () => {
         try {
-            await activateAccount(details);
-
-            router.replace("/signin");
+            // await activateAccount(details);
+            // router.replace("/signin");
         } catch (error) {
-            let err = error as Error;
-            setActivating(false);
-
-            setActivateError(err.message);
+            // let err = error as Error;
+            // setActivating(false);
+            // setActivateError(err.message);
             // display error
             // redirect to verification page(if neccessary)
         }
