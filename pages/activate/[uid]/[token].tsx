@@ -2,7 +2,7 @@ import jwtDecode from "jwt-decode";
 import { NextPage } from "next";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import { LoadingIndicator, NavAuth } from "../../../components";
+import { Button, LoadingIndicator, NavAuth } from "../../../components";
 import { StyledAuthPage } from "../../../components/Auth/AuthPageStyles";
 import { useAuth } from "../../../context/AuthContext";
 import { ActivateAccountDetail } from "../../../interfaces";
@@ -17,7 +17,7 @@ const Activate: NextPage = () => {
         uid: "",
     });
     const [activating, setActivating] = useState(true);
-    const [activateError, setActivateError] = useState(null);
+    const [activateError, setActivateError] = useState<null | string>(null);
 
     const handleActivateAccount = async () => {
         try {
@@ -25,14 +25,17 @@ const Activate: NextPage = () => {
 
             router.replace("/signin");
         } catch (error) {
-            console.error("error");
+            let err = error as Error;
             setActivating(false);
+
+            setActivateError(err.message);
             // display error
             // redirect to verification page(if neccessary)
         }
     };
 
     const handleResendVerifyLink = async () => {
+        alert("clicked....");
         try {
         } catch (error) {}
     };
@@ -52,6 +55,9 @@ const Activate: NextPage = () => {
     }, [router]);
 
     useEffect(() => {
+        let { token, uid } = details;
+        if (!token || !uid) return;
+
         handleActivateAccount();
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [details]);
@@ -59,12 +65,21 @@ const Activate: NextPage = () => {
     return (
         <>
             <NavAuth />
-            <StyledAuthPage>
+            <StyledAuthPage className="activation">
                 {activating && <LoadingIndicator className="loading-big" />}
                 {activateError && (
-                    <button type="button" onClick={handleResendVerifyLink}>
-                        Resend verification link
-                    </button>
+                    <>
+                        <p className="activation__error-para">
+                            {activateError}
+                        </p>
+                        <Button
+                            className="activation__error-btn"
+                            onClick={handleResendVerifyLink}
+                            type="button"
+                            text="Resend verification link"
+                            variant="no-border"
+                        />
+                    </>
                 )}
             </StyledAuthPage>
         </>

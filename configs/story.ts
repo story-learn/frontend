@@ -6,8 +6,13 @@ export const STORY = axios.create({
 });
 
 export const StoryRoutes = {
+    // auth
     SIGNIN: "/auth/jwt/custom-create/",
     SIGNUP: "/auth/users/",
     RESEND_VERIFICATION_LINK: "/auth/users/resend_activation/",
+    ACCOUNT_ACTIVATION: "/auth/users/activation",
+
+    // story
     CREATE_STORY: "/story/story/",
+    GET_STORIES: "/story/storylist/",
 };

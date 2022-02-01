@@ -38,6 +38,11 @@ export const usernameExists = async (username: string) => {
 
         message = message.trim();
 
+        // {{This user account is not activated}} message should only be visible in the login page
+        if (message === "This user account is not activated") {
+            message = "This username already exists";
+        }
+
         return message;
     } catch (error) {
         throw error;
@@ -141,13 +146,24 @@ export const signup = async (detail: Authentication) => {
 };
 
 export const activateAccount = async (detail: ActivateAccountDetail) => {
+    let errorMsg = "";
+    // console.log("activating....");
+
     try {
         let activated = await STORY.post<AuthTokens>(
-            `/auth/users/activation`,
+            StoryRoutes.ACCOUNT_ACTIVATION,
             detail
         );
         return activated.data;
     } catch (error) {
-        // throw error;
+        if (axios.isAxiosError(error)) {
+            errorMsg = error.response?.data?.detail;
+        } else {
+            errorMsg =
+                "Please, request for another activation ink and try again!";
+        }
+        // console.log(errorMsg);
+
+        throw new Error(errorMsg);
     }
 };

@@ -82,6 +82,37 @@ export const StyledAuthPage = styled.main`
         }
     }
 
+    &.activation {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+
+        padding: 0 2rem;
+    }
+
+    .activation {
+        &__error {
+            &-para {
+                margin: 1rem auto;
+                text-align: center;
+            }
+
+            &-btn {
+                padding: 1.3rem 3rem;
+
+                &:focus {
+                    border-color: inherit;
+                }
+
+                &:hover {
+                    border-color: transparent;
+                    opacity: 0.7;
+                }
+            }
+        }
+    }
+
     @media screen and (${device.tablet}) {
         background-repeat: no-repeat;
         background-size: cover;
