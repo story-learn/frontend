@@ -40,3 +40,21 @@ export interface StoryUpload {
     key: string;
     frame?: number | null;
 }
+
+export interface HomeStory {
+    created: string;
+    id: number;
+    frames: {
+        created: string;
+        id: number;
+        image: null | string;
+        text: null | string;
+        story: number;
+    };
+    user: {
+        first_name: string;
+        last_name: string;
+        username: string;
+        email: string;
+    };
+}

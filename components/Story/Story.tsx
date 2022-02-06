@@ -1,4 +1,6 @@
+import Image from "next/image";
 import { FC } from "react";
+import { HomeStory } from "../../interfaces";
 import {
     LoveIcon,
     ShareIcon,
@@ -7,20 +9,14 @@ import {
 } from "../SVGs";
 import { Profile, StoryContentActions } from "./../../components";
 import { StyledStory } from "./StyledStory";
+import tempoImage from "./../../public/assests/jpgs/Screenshot (72).png";
 
-export interface StoryP {
-    user: {
-        name: string;
-        username: string;
-        profilePic: string;
-    };
-    firstSlide: string;
-    views: number;
-    likes: number;
-    share: number;
-}
-
-const Story: FC<StoryP> = ({ firstSlide, likes, share, user, views }) => {
+const Story: FC<HomeStory> = ({
+    user,
+    created,
+    frames: { image, text },
+    id,
+}) => {
     return (
         <StyledStory>
             <article className="story">
@@ -32,20 +28,35 @@ const Story: FC<StoryP> = ({ firstSlide, likes, share, user, views }) => {
                         </div>
                         <StoryContentActions user={user} />
                     </header>
-                    <p className="story__main">{firstSlide}</p>
+                    <div className="story__main">
+                        {text ? (
+                            <p className="story__main-text">{text}</p>
+                        ) : (
+                            <figure className="story__main-img">
+                                <Image
+                                    src={tempoImage}
+                                    alt=""
+                                    width={200}
+                                    height={200}
+                                    layout="responsive"
+                                    objectFit="cover"
+                                />
+                            </figure>
+                        )}
+                    </div>
                 </div>
                 <div className="story__actions">
                     <p className="story__actions-view">
                         <ViewIcon />
-                        {views}
+                        {4}
                     </p>
                     <button className="story__actions-like">
                         <LoveIcon />
-                        {likes}
+                        {5}
                     </button>
                     <button className="story__actions-share">
                         <ShareIcon />
-                        {share}
+                        {7}
                     </button>
                 </div>
             </article>

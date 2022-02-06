@@ -1,8 +1,12 @@
 import { FC } from "react";
 import { Story } from "./../../components";
-import { stories } from "../../data/stories";
+import { HomeStory } from "../../interfaces";
 
-const Stories: FC = () => {
+interface IStories {
+    stories: HomeStory[];
+}
+
+const Stories: FC<IStories> = ({ stories }) => {
     return (
         <ul>
             {stories.map((story, index) => (

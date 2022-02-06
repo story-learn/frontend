@@ -31,6 +31,20 @@ export const StyledStory = styled.li`
             color: var(--color-4);
             border-bottom: 0.1rem solid var(--box-border);
             padding: 2.5rem 2rem;
+
+            &-text {
+                display: -webkit-box;
+                -webkit-line-clamp: 8;
+                -webkit-box-orient: vertical;
+                overflow: hidden;
+            }
+
+            &-img {
+                width: 100%;
+                max-height: 40rem;
+                overflow: hidden;
+                border-radius: var(--border-rad-sm);
+            }
         }
 
         &__actions {
@@ -91,6 +105,7 @@ export const StyledStory = styled.li`
                 background-color: var(--box-bg-2);
                 border-radius: var(--border-rad-sm);
                 padding: 1.4rem 1.2rem 1rem;
+                width: 100%;
             }
 
             &__main {
