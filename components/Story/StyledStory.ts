@@ -37,6 +37,8 @@ export const StyledStory = styled.li`
                 -webkit-line-clamp: 8;
                 -webkit-box-orient: vertical;
                 overflow: hidden;
+                line-height: 1.9;
+                text-align: left;
             }
 
             &-img {
@@ -110,6 +112,10 @@ export const StyledStory = styled.li`
 
             &__main {
                 border: 0;
+
+                &-text {
+                    -webkit-line-clamp: 4;
+                }
             }
 
             &__actions {
