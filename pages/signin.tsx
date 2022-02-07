@@ -188,7 +188,7 @@ const Signin: NextPage = () => {
                     </div>
                 </StyledForm>
                 <p className="other other-forgot">
-                    <Link href="/reset">
+                    <Link href="/forgotpassword">
                         <a>Forgot Password?</a>
                     </Link>
                 </p>

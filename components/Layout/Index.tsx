@@ -8,6 +8,7 @@ const Index: FC = ({ children }) => {
     let excludedGeneralNav = [
         "/signin",
         "/signup",
+        "/forgotpassword",
         "/reset",
         "/verify",
         "/activate/[uid]/[token]",

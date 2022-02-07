@@ -11,6 +11,7 @@ export const StoryRoutes = {
     SIGNUP: "/auth/users/",
     RESEND_VERIFICATION_LINK: "/auth/users/resend_activation/",
     ACCOUNT_ACTIVATION: "/auth/users/activation",
+    FORGOT_PASSWORD: "/auth/users/reset_password/",
 
     // story
     CREATE_STORY: "/story/story/",

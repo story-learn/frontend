@@ -168,3 +168,14 @@ export const activateAccount = async (detail: ActivateAccountDetail) => {
         throw new Error(errorMsg);
     }
 };
+
+export const forgotPassword = async (email: string) => {
+    try {
+        await STORY.post(StoryRoutes.FORGOT_PASSWORD, { email });
+    } catch (error) {
+        if (axios.isAxiosError(error)) {
+            console.log(error.response);
+        }
+        throw new Error("There is an error! Please Try again later!!");
+    }
+};
