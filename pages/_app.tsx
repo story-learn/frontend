@@ -7,6 +7,7 @@ import { Layout, Notifications } from "../components";
 import { VariablesStyle } from "../styles/variables";
 import { AuthProvider } from "../context/AuthContext";
 import { ModeVariables } from "../styles/modeVariables";
+import { StoriesProvider } from "../context/StoriesContext";
 
 function MyApp({ Component, pageProps }: AppProps) {
     return (
@@ -19,9 +20,11 @@ function MyApp({ Component, pageProps }: AppProps) {
             <UtilityStyles />
             <Notifications />
             <AuthProvider>
-                <Layout>
-                    <Component {...pageProps} />
-                </Layout>
+                <StoriesProvider>
+                    <Layout>
+                        <Component {...pageProps} />
+                    </Layout>
+                </StoriesProvider>
             </AuthProvider>
         </>
     );

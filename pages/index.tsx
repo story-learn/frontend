@@ -4,6 +4,7 @@ import { CustomLink, LoadingIndicator, Modal, Stories } from "../components";
 import { HeadTag } from "../components/head";
 import { BASE_URLS } from "../Constants";
 import { useAuth } from "../context/AuthContext";
+import { useStories } from "../context/StoriesContext";
 import { useInfiniteScroll } from "../Hooks/useInfiniteScroll";
 import { HomeStory } from "../interfaces";
 import { StoryRoutes } from "./../configs/story";
@@ -11,18 +12,34 @@ import { StoryRoutes } from "./../configs/story";
 const Home: NextPage = () => {
     const { user } = useAuth();
     const [promptUserToLogin, setPromptUserToLogin] = useState(false);
-    const [storyPage, setStoryPage] = useState(0);
-    let storiesUrl = `${BASE_URLS.Story}${StoryRoutes.GET_STORIES}`;
 
     let {
-        totalData: stories,
-        loading,
-        error,
-    } = useInfiniteScroll<HomeStory[]>(storiesUrl, storyPage);
+        stories: {
+            data: stories,
+            currentPage: storiesPage,
+            totalPages: totalStoriesPages,
+        },
+        dispatchStories,
+    } = useStories();
 
-    if (!stories) stories = [];
+    let storiesUrl = `${BASE_URLS.Story}${StoryRoutes.GET_STORIES}`;
 
-    //    console.log("total data...", stories);
+    let { totalData, loading, error, currentPage, totalPages } =
+        useInfiniteScroll<HomeStory[]>(
+            storiesUrl,
+            storiesPage,
+            totalStoriesPages
+        );
+
+    useEffect(() => {
+        if (!totalData) return;
+
+        dispatchStories({
+            type: "fetch_stories",
+            payload: { stories: totalData, currentPage, totalPages },
+        });
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [totalData]);
 
     useEffect(() => {
         let promptId = setTimeout(() => {

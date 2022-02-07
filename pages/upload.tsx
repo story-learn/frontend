@@ -4,6 +4,7 @@ import { MouseEventHandler, useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { Modal, Notification, ProtectRoute } from "../components";
 import { StyledUploadPage } from "../components/Styles/StyledUploadPage";
+import { useStories } from "../context/StoriesContext";
 import useStoryRequest from "../Hooks/useStoryRequest";
 import { StoryUpload as Story } from "../interfaces";
 import { FrameType } from "../interfaces/types";
@@ -13,6 +14,7 @@ import { createStory } from "../utilities/Story";
 export type HandleStoryChange = (value: string | File) => void;
 
 const Upload: NextPage = () => {
+    let { dispatchStories } = useStories();
     let router = useRouter();
     const { storyInstance } = useStoryRequest();
     const [stories, setStories] = useState<Story[]>([]);
@@ -77,10 +79,12 @@ const Upload: NextPage = () => {
         e
     ) => {
         e.preventDefault();
-        console.log("stories submitted....");
 
         try {
             await createStory(stories, storyInstance);
+
+            // update global stories
+            dispatchStories({ type: "upload_new_story" });
 
             // notify user
             setTimeout(() => {
