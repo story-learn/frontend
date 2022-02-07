@@ -25,7 +25,7 @@ const ForgotPassword: NextPage = () => {
             toast.custom(
                 <Notification
                     type="success"
-                    shortText="A link to reset your password has been sent to the specified gmail."
+                    shortText="A link has been sent to your mail. Click on the mail to reset your password."
                 />
             );
 
