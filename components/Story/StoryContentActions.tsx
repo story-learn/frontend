@@ -1,4 +1,5 @@
 import { FC, LegacyRef, useRef } from "react";
+import { HomeStory } from "../../interfaces";
 import {
     BookmarkIcon,
     FollowUserIcon,
@@ -6,10 +7,9 @@ import {
     ThreeDotsHorizontalIcon,
     ViewIcon,
 } from "../SVGs";
-import { StoryP } from "./Story";
 import { StyledStoryContentActions } from "./StyledStoryContentActions";
 
-type StoryAction = Pick<StoryP, "user">;
+type StoryAction = Pick<HomeStory, "user">;
 
 const StoryContentActions: FC<StoryAction> = ({ user: { username } }) => {
     let actions = [

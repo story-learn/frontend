@@ -1,11 +1,12 @@
 import { FC } from "react";
 import { UploadText, UploadImage } from "./index";
-import { HandleStoryChange, Story } from "../../pages/upload";
+import { HandleStoryChange } from "../../pages/upload";
 import { Button } from "../../components";
+import { StoryUpload } from "../../interfaces";
 
 export interface IForm {
-    story: Story;
-    stories: Story[];
+    story: StoryUpload;
+    stories: StoryUpload[];
     handleAddStories: () => void;
     handleStoryChange: HandleStoryChange;
     handleCloseStoryModal: () => void;
