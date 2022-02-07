@@ -12,6 +12,7 @@ const Index: FC = ({ children }) => {
         "/reset",
         "/verify",
         "/activate/[uid]/[token]",
+        "/resetpassword/[uid]/[token]",
     ];
 
     let excludeAsideNav = [...excludedGeneralNav, "/upload"];

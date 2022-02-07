@@ -5,6 +5,7 @@ import {
     Authentication,
     AuthenticationError,
     AuthTokens,
+    ResetPassword,
 } from "../../interfaces";
 import { Auth } from "../../interfaces/types";
 
@@ -177,5 +178,21 @@ export const forgotPassword = async (email: string) => {
             console.log(error.response);
         }
         throw new Error("There is an error! Please Try again later!!");
+    }
+};
+
+export const resetPassword = async (data: ResetPassword) => {
+    try {
+        await STORY.post(StoryRoutes.RESET_PASSWORD, data);
+    } catch (error) {
+        let err = "";
+        if (axios.isAxiosError(error)) {
+            let errArray = error.response?.data as Object;
+            err = (Object.values(errArray)[0] as string[])[0];
+        } else {
+            err = "Unknown error! Try again later";
+        }
+
+        throw new Error(err);
     }
 };

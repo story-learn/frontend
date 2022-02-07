@@ -96,6 +96,7 @@ export const StyledAuthPage = styled.main`
             &-para {
                 margin: 1rem auto;
                 text-align: center;
+                color: var(--error);
             }
 
             &-btn {

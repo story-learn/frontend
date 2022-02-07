@@ -33,6 +33,12 @@ export interface ActivateAccountDetail {
     token: string;
 }
 
+export interface ResetPassword {
+    uid: string;
+    token: string;
+    new_password: string;
+}
+
 // export interface Story {
 export interface StoryUpload {
     type: FrameType;
