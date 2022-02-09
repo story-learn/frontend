@@ -149,8 +149,8 @@ const Signin: NextPage = () => {
                         value={userDetail.userName}
                         name="userName"
                         id="userName"
-                        label="User Name"
-                        placeholder="User name"
+                        label="User Name or Email"
+                        placeholder="Username or Email"
                         showError={fieldError("userName")}
                         handleBlur={(e) => {
                             handleUserHasFocused("userName");
