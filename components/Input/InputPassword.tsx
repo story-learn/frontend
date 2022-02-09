@@ -33,11 +33,10 @@ const InputPassword: FC<PasswordProps> = ({
             Icon={
                 <button
                     type="button"
-                    className="form__input-icon"
+                    className="form__input-icon form__input-icon-password"
                     onClick={() => setShowPassword((prev) => !prev)}
                     aria-hidden="true"
                 >
-                    {/* {showPassword ? <BsEyeSlash /> : <BsEye />} */}
                     {showPassword ? <HidePasswordIcon /> : <ShowPasswordIcon />}
                 </button>
             }
@@ -46,15 +45,3 @@ const InputPassword: FC<PasswordProps> = ({
 };
 
 export default InputPassword;
-
-/*
-<button
-                    className="form__input-icon"
-                    aria-hidden="true"
-                    type="button"
-                    onClick={() => {
-                        setShowPassword((prev) => !prev);
-                    }}
-                >
-                </button>
-*/
