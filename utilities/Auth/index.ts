@@ -147,24 +147,17 @@ export const signup = async (detail: Authentication) => {
 };
 
 export const activateAccount = async (detail: ActivateAccountDetail) => {
-    // console.log("activating....");
-
     try {
-        // let activated = await STORY.post<AuthTokens>(
-        //     StoryRoutes.ACCOUNT_ACTIVATION,
-        //     detail
-        // );
-        // return activated.data;
+        await STORY.post<AuthTokens>(StoryRoutes.ACCOUNT_ACTIVATION, detail);
     } catch (error) {
         let errorMsg = "";
 
-        // if (axios.isAxiosError(error)) {
-        //     errorMsg = error.response?.data?.detail;
-        // } else {
-        //     errorMsg =
-        //         "Please, request for another activation ink and try again!";
-        // }
-        // console.log(errorMsg);
+        if (axios.isAxiosError(error)) {
+            errorMsg = error.response?.data?.detail;
+        } else {
+            errorMsg =
+                "Please, request for another activation link and try again!";
+        }
 
         throw new Error(errorMsg);
     }

@@ -10,7 +10,7 @@ export const StoryRoutes = {
     SIGNIN: "/auth/jwt/custom-create/",
     SIGNUP: "/auth/users/",
     RESEND_VERIFICATION_LINK: "/auth/users/resend_activation/",
-    ACCOUNT_ACTIVATION: "/auth/users/activation",
+    ACCOUNT_ACTIVATION: "/auth/users/activation/",
     FORGOT_PASSWORD: "/auth/users/reset_password/",
     RESET_PASSWORD: "/auth/users/reset_password_confirm/",
 

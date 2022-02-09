@@ -1,16 +1,13 @@
-import jwtDecode from "jwt-decode";
 import { NextPage } from "next";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { Button, LoadingIndicator, NavAuth } from "../../../components";
 import { StyledAuthPage } from "../../../components/Auth/AuthPageStyles";
-import { useAuth } from "../../../context/AuthContext";
 import { ActivateAccountDetail } from "../../../interfaces";
 import { activateAccount } from "../../../utilities/Auth";
 
 const Activate: NextPage = () => {
     const router = useRouter();
-    let { setAuthTokens, setUser } = useAuth();
 
     const [details, setDetails] = useState<ActivateAccountDetail>({
         token: "",
@@ -21,14 +18,18 @@ const Activate: NextPage = () => {
 
     const handleActivateAccount = async () => {
         try {
-            // await activateAccount(details);
-            // router.replace("/signin");
+            await activateAccount(details);
+
+            router.replace("/signin");
         } catch (error) {
-            // let err = error as Error;
-            // setActivating(false);
-            // setActivateError(err.message);
+            let err = error as Error;
+            setActivating(false);
+            setActivateError(err.message);
+
             // display error
             // redirect to verification page(if neccessary)
+        } finally {
+            setActivating(false);
         }
     };
 
@@ -38,9 +39,10 @@ const Activate: NextPage = () => {
         } catch (error) {}
     };
 
-    // prefetch signin page since user will be redirected to login page on successful activation
+    // prefetch signin page since user will be redirected to sign page on successful activation
     useEffect(() => {
         router.prefetch("/signin");
+
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
