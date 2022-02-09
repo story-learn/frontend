@@ -28,7 +28,7 @@ const ResetPassword = () => {
 
         if (!query) return;
 
-        let { token, uid } = query as Omit<IResetPassword, "password">;
+        let { token, uid } = query as Omit<IResetPassword, "new_password">;
 
         let data: IResetPassword = { new_password: password, token, uid };
 
