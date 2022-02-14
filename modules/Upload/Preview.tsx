@@ -52,7 +52,7 @@ const UploadPreview: FC<IPreview> = ({ stories, deleteStory, editStory }) => {
                         }`.trim();
 
                         // retrieve image url from image file
-                        let getImgSrc = (val: File) => URL.createObjectURL(val);
+                        // let getImgSrc = (val: File) => URL.createObjectURL(val);
 
                         return (
                             <SplideSlide key={key} className="slider__item">
@@ -78,8 +78,8 @@ const UploadPreview: FC<IPreview> = ({ stories, deleteStory, editStory }) => {
                                     ) : (
                                         <figure className="slider__item-img">
                                             <Image
-                                                // src={value}
-                                                src={getImgSrc(value as File)}
+                                                src={value as string}
+                                                // src={getImgSrc(value as File)}
                                                 alt=""
                                                 width={300}
                                                 height={300}

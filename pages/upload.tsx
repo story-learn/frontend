@@ -11,14 +11,22 @@ import { FrameType } from "../interfaces/types";
 import { Header, MetaHead, UploadForm, UploadPreview } from "../modules/Upload";
 import { createStory } from "../utilities/Story";
 
-export type HandleStoryChange = (value: string | File) => void;
+export type HandleStoryChange = (
+    value: string | File,
+    imageVal?: string
+) => void;
 
 const Upload: NextPage = () => {
     let { dispatchStories } = useStories();
     let router = useRouter();
     const { storyInstance } = useStoryRequest();
     const [stories, setStories] = useState<Story[]>([]);
-    const [story, setStory] = useState<Story>({ type: "", value: "", key: "" });
+    const [story, setStory] = useState<Story>({
+        type: "",
+        value: "",
+        key: "",
+        imageVal: "",
+    });
     const [openStoryModal, setOpenStoryModal] = useState(false);
 
     const handleOpenStoryModal = (type: FrameType) => {
@@ -31,8 +39,8 @@ const Upload: NextPage = () => {
         setStory({ type: "", value: "", key: "", frame: null });
     };
 
-    const handleStoryChange: HandleStoryChange = (value) => {
-        setStory((prev) => ({ ...prev, value }));
+    const handleStoryChange: HandleStoryChange = (value, imageVal = "") => {
+        setStory((prev) => ({ ...prev, value, imageVal }));
     };
 
     const handleAddStories = () => {

@@ -18,11 +18,16 @@ const UploadImage: FC<IUploadImage> = ({
     const [preview, setPreview] = useState("");
 
     useEffect(() => {
-        let file = story.value;
+        // let file = story.value;
 
         // file is coimg from update if there is file
-        let previewSrc = file ? URL.createObjectURL(file as File) : "";
-        setPreview(previewSrc);
+        // let previewSrc = file ? URL.createObjectURL(file as File) : "";
+        // setPreview(previewSrc);
+
+        let file = story.value;
+
+        setPreview(story.value as string);
+
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
@@ -31,9 +36,25 @@ const UploadImage: FC<IUploadImage> = ({
         if (!image) return null;
 
         // get preview string
-        let preview = URL.createObjectURL(image);
-        setPreview(preview);
-        handleStoryChange(image);
+        // let preview = URL.createObjectURL(image);
+        // setPreview(preview);
+        // handleStoryChange(image);
+
+        let reader = new FileReader();
+        reader.readAsDataURL(image);
+
+        reader.onload = function () {
+            let preview = reader.result as string;
+            let imageName = image!.name;
+
+            let typeRegex = /^data:image\/\w+;base64,/;
+            let base64 = preview.replace(typeRegex, "").trimStart();
+
+            let imageVal = `${imageName}+${base64}`;
+
+            setPreview(preview);
+            handleStoryChange(preview, imageVal);
+        };
     };
 
     return (

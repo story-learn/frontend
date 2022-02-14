@@ -45,6 +45,7 @@ export interface StoryUpload {
     value: string | File; // text || image
     key: string;
     frame?: number | null;
+    imageVal?: string;
 }
 
 export interface HomeStory {

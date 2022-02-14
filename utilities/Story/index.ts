@@ -6,21 +6,14 @@ export const createStory = async (
     stories: Story[],
     storyInstance: AxiosInstance
 ) => {
-    let frames = stories.map(({ type, value }) =>
+    let frames = stories.map(({ type, value, imageVal }) =>
         type === "Image"
-            ? { image: value, text: "" }
+            ? { image: imageVal, text: "" }
             : { image: "", text: value }
     );
 
     try {
-        let data = new FormData();
-        data.append("frames", JSON.stringify(frames));
-
-        await storyInstance.post(StoryRoutes.CREATE_STORY, data, {
-            headers: {
-                "Content-Type": "multipart/form-data",
-            },
-        });
+        await storyInstance.post(StoryRoutes.CREATE_STORY, { frames });
     } catch (error) {
         if (axios.isAxiosError(error)) {
             console.log("errors", error.response?.data);
