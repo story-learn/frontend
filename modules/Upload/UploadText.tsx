@@ -1,24 +1,25 @@
 import {
     ChangeEventHandler,
-    ClipboardEventHandler,
     FC,
     KeyboardEventHandler,
     useEffect,
     useRef,
     useState,
 } from "react";
-import { HandleStoryChange } from "../../pages/upload";
+import { HandleFrameChange } from "../../pages/upload";
 
 interface IUploadText {
     value: string;
-    handleStoryChange: HandleStoryChange;
+    handleFrameChange: HandleFrameChange;
     frameNumber: number;
+    handleAddFrame: () => void;
 }
 
 const UploadText: FC<IUploadText> = ({
     value,
     frameNumber,
-    handleStoryChange,
+    handleFrameChange,
+    handleAddFrame,
 }) => {
     const textAreaRef = useRef<HTMLTextAreaElement>(null);
     const [textLength, setTextLength] = useState(value.length);
@@ -38,8 +39,17 @@ const UploadText: FC<IUploadText> = ({
             val = val.slice(0, maxTextLength); // this takes care of pasting longer text
         }
 
-        handleStoryChange(val);
+        handleFrameChange(val);
         setTextLength(val.length);
+    };
+
+    const handleKeyDown: KeyboardEventHandler<HTMLTextAreaElement> = (e) => {
+        if (e.keyCode === 13 && e.shiftKey) {
+            let text = textAreaRef.current?.value.trim();
+
+            // submit the form if user has someting typed
+            if (text) handleAddFrame();
+        }
     };
 
     return (
@@ -56,6 +66,7 @@ const UploadText: FC<IUploadText> = ({
                 className="modalUpload__textarea"
                 value={value}
                 onChange={hanldeChange}
+                onKeyDown={handleKeyDown}
             ></textarea>
             <span className={`modalUpload__textarea-length`}>
                 {textLength}/{maxTextLength}

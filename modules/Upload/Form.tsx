@@ -1,55 +1,72 @@
-import { FC } from "react";
+import { FC, MouseEventHandler } from "react";
 import { UploadText, UploadImage } from "./index";
-import { HandleStoryChange } from "../../pages/upload";
+import { HandleFrameChange } from "../../pages/upload";
 import { Button } from "../../components";
-import { StoryUpload } from "../../interfaces";
+import { FrameUpload } from "../../interfaces";
+import { HiOutlineSwitchHorizontal } from "react-icons/hi";
+import { FrameType } from "../../interfaces/types";
 
 export interface IForm {
-    story: StoryUpload;
-    stories: StoryUpload[];
-    handleAddStories: () => void;
-    handleStoryChange: HandleStoryChange;
+    frame: FrameUpload;
+    frames: FrameUpload[];
+    handleAddFrame: () => void;
+    handleFrameChange: HandleFrameChange;
     handleCloseStoryModal: () => void;
-    updateStory: () => void;
+    updateFrame: () => void;
+    handleSwitchFrame: (type: FrameType) => void;
 }
 
 const UploadForm: FC<IForm> = ({
-    story,
-    stories,
+    frame,
+    frames,
     handleCloseStoryModal,
-    handleStoryChange,
-    handleAddStories,
-    updateStory,
+    handleFrameChange,
+    handleAddFrame,
+    updateFrame,
+    handleSwitchFrame,
 }) => {
-    let frameNumber = story.frame || stories.length + 1;
+    let frameNumber = frame.index || frames.length + 1;
 
     return (
         <form
             onSubmit={(e) => {
                 e.preventDefault();
 
-                story.key ? updateStory() : handleAddStories();
+                frame.key ? updateFrame() : handleAddFrame();
             }}
         >
-            <h1 className="modalUpload__title">{story.type} Frame</h1>
-            {story.type === "Text" ? (
+            <header className="modalUpload__header">
+                <h1 className="modalUpload__title">{frame.type} Frame</h1>
+                <button
+                    className="modalUpload__switch"
+                    onClick={() =>
+                        handleSwitchFrame(
+                            frame.type === "Image" ? "Text" : "Image"
+                        )
+                    }
+                >
+                    <HiOutlineSwitchHorizontal />
+                </button>
+            </header>
+            {frame.type === "Text" ? (
                 <UploadText
-                    value={story.value as string}
-                    handleStoryChange={handleStoryChange}
+                    value={frame.value as string}
+                    handleFrameChange={handleFrameChange}
                     frameNumber={frameNumber}
+                    handleAddFrame={handleAddFrame}
                 />
             ) : (
                 <UploadImage
-                    handleStoryChange={handleStoryChange}
+                    handleFrameChange={handleFrameChange}
                     frameNumber={frameNumber}
-                    story={story}
+                    frame={frame}
                 />
             )}
             <div className="modalUpload__btns">
                 <Button
                     type="submit"
-                    text={story.key ? "Update" : "Add"}
-                    disabled={!story.value || !story.type}
+                    text={frame.key ? "Update" : "Add"}
+                    disabled={!frame.value || !frame.type}
                 />
                 <Button
                     type="button"

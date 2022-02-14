@@ -3,17 +3,18 @@ import { Splide, SplideSlide } from "@splidejs/react-splide";
 import { FC } from "react";
 import "@splidejs/splide/dist/css/splide.min.css";
 import { DeleteIcon } from "../../components/SVGs";
-import { StoryUpload as Story } from "../../interfaces";
+// import { StoryUpload as Story } from "../../interfaces";
+import { FrameUpload as Frame } from "../../interfaces";
 
 export interface IPreview {
-    stories: Story[];
-    deleteStory: (id: Story["key"]) => void;
-    editStory: (id: Story["key"]) => void;
+    frames: Frame[];
+    deleteFrame: (id: Frame["key"]) => void;
+    editFrame: (id: Frame["key"]) => void;
 }
 
-const UploadPreview: FC<IPreview> = ({ stories, deleteStory, editStory }) => {
+const UploadPreview: FC<IPreview> = ({ frames, deleteFrame, editFrame }) => {
     return (
-        <section className={`preview ${stories.length > 0 ? "show" : ""}`}>
+        <section className={`preview ${frames.length > 0 ? "show" : ""}`}>
             <div className="container">
                 <h2 className="preview__head">Preview</h2>
 
@@ -45,14 +46,11 @@ const UploadPreview: FC<IPreview> = ({ stories, deleteStory, editStory }) => {
                         },
                     }}
                 >
-                    {stories.map(({ type, key, value }, index) => {
+                    {frames.map(({ type, key, value }, index) => {
                         let frameNumber = index + 1;
                         let frameHeading = `Frame ${frameNumber} ${
                             frameNumber === 1 ? "(Cover Frame)" : ""
                         }`.trim();
-
-                        // retrieve image url from image file
-                        // let getImgSrc = (val: File) => URL.createObjectURL(val);
 
                         return (
                             <SplideSlide key={key} className="slider__item">
@@ -62,14 +60,14 @@ const UploadPreview: FC<IPreview> = ({ stories, deleteStory, editStory }) => {
                                     </h6>
                                     <button
                                         className="slider__item-delete"
-                                        onClick={() => deleteStory(key)}
+                                        onClick={() => deleteFrame(key)}
                                     >
                                         <DeleteIcon />
                                     </button>
                                 </div>
                                 <div
                                     className="slider__item-cont"
-                                    onClick={() => editStory(key)}
+                                    onClick={() => editFrame(key)}
                                 >
                                     {type === "Text" ? (
                                         <p className="slider__item-content">

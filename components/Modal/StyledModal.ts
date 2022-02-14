@@ -114,10 +114,26 @@ export const StyledModal = styled.div`
     }
 
     .modalUpload {
+        &__header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+        }
+
         &__title {
             font-weight: 500;
             text-align: center;
             font-size: 2.5rem;
+        }
+
+        &__switch {
+            color: var(--primary);
+            font-size: 3rem;
+
+            &:hover {
+                opacity: 0.6;
+            }
         }
 
         &__control {

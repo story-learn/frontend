@@ -1,19 +1,25 @@
 import { ChangeEventHandler, FC, useEffect, useState } from "react";
 import Image from "next/image";
 import { GalleryIcon } from "../../components/SVGs";
-import { HandleStoryChange } from "../../pages/upload";
-import { StoryUpload as Story } from "../../interfaces";
+// import { HandleStoryChange } from "../../pages/upload";
+import { HandleFrameChange } from "../../pages/upload";
+// import { StoryUpload as Story } from "../../interfaces";
+import { FrameUpload as Frame } from "../../interfaces";
 
 interface IUploadImage {
-    handleStoryChange: HandleStoryChange;
+    // handleStoryChange: HandleStoryChange;
+    handleFrameChange: HandleFrameChange;
     frameNumber: number;
-    story: Story;
+    // story: Story;
+    frame: Frame;
 }
 
 const UploadImage: FC<IUploadImage> = ({
     frameNumber,
-    story,
-    handleStoryChange,
+    // story,
+    frame,
+    // handleStoryChange,
+    handleFrameChange,
 }) => {
     const [preview, setPreview] = useState("");
 
@@ -24,9 +30,11 @@ const UploadImage: FC<IUploadImage> = ({
         // let previewSrc = file ? URL.createObjectURL(file as File) : "";
         // setPreview(previewSrc);
 
-        let file = story.value;
+        // let file = story.value;
+        let file = frame.value;
 
-        setPreview(story.value as string);
+        // setPreview(story.value as string);
+        setPreview(frame.value as string);
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
@@ -53,7 +61,8 @@ const UploadImage: FC<IUploadImage> = ({
             let imageVal = `${imageName}+${base64}`;
 
             setPreview(preview);
-            handleStoryChange(preview, imageVal);
+            // handleStoryChange(preview, imageVal);
+            handleFrameChange(preview, imageVal);
         };
     };
 

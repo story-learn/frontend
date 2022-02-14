@@ -2,19 +2,18 @@ import { FC, MouseEventHandler, useState } from "react";
 import { UploadInstruction } from "./index";
 import { Modal } from "../../components";
 import { CameraIcon, HelpIcon, MarkIcon, PenIcon } from "../../components/SVGs";
-import { StoryUpload as Story } from "../../interfaces";
 import { FrameType } from "../../interfaces/types";
 
 interface IHeader {
     handleOpenStoryModal: (type: FrameType) => void;
-    handleStoriesSubmitted: MouseEventHandler<HTMLButtonElement>;
-    stories: Story[];
+    handleCreateStory: MouseEventHandler<HTMLButtonElement>;
+    disbaled: boolean;
 }
 
 const Header: FC<IHeader> = ({
     handleOpenStoryModal,
-    handleStoriesSubmitted,
-    stories,
+    handleCreateStory,
+    disbaled,
 }) => {
     const [openHelpModal, setOpenHelpModal] = useState(false);
 
@@ -28,8 +27,8 @@ const Header: FC<IHeader> = ({
                             className="upload__header-btn"
                             aria-label="upload story"
                             type="submit"
-                            onClick={handleStoriesSubmitted}
-                            disabled={stories.length < 2}
+                            onClick={handleCreateStory}
+                            disabled={disbaled}
                         >
                             <span
                                 className="upload__header-btn-icon"

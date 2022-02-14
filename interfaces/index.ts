@@ -39,12 +39,12 @@ export interface ResetPassword {
     new_password: string;
 }
 
-// export interface Story {
-export interface StoryUpload {
+export interface FrameUpload {
     type: FrameType;
     value: string | File; // text || image
     key: string;
-    frame?: number | null;
+    // frame?: number | null;
+    index?: number | null;
     imageVal?: string;
 }
 

@@ -1,9 +1,10 @@
 import axios, { AxiosInstance } from "axios";
 import { StoryRoutes } from "../../configs/story";
-import { StoryUpload as Story } from "../../interfaces";
+// import { StoryUpload as Story } from "../../interfaces";
+import { FrameUpload as Frame } from "../../interfaces";
 
 export const createStory = async (
-    stories: Story[],
+    stories: Frame[],
     storyInstance: AxiosInstance
 ) => {
     let frames = stories.map(({ type, value, imageVal }) =>

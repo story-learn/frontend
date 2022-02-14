@@ -2,94 +2,116 @@ import { NextPage } from "next";
 import { useRouter } from "next/router";
 import { MouseEventHandler, useEffect, useState } from "react";
 import toast from "react-hot-toast";
-import { Modal, Notification, ProtectRoute } from "../components";
+import {
+    LoadingIndicator,
+    Modal,
+    Notification,
+    ProtectRoute,
+} from "../components";
 import { StyledUploadPage } from "../components/Styles/StyledUploadPage";
 import { useStories } from "../context/StoriesContext";
 import useStoryRequest from "../Hooks/useStoryRequest";
-import { StoryUpload as Story } from "../interfaces";
+import { FrameUpload as Frame } from "../interfaces";
 import { FrameType } from "../interfaces/types";
 import { Header, MetaHead, UploadForm, UploadPreview } from "../modules/Upload";
 import { createStory } from "../utilities/Story";
 
-export type HandleStoryChange = (
+export type HandleFrameChange = (
     value: string | File,
     imageVal?: string
 ) => void;
+
+interface Uploading {
+    loading: boolean;
+    error: string | null;
+}
 
 const Upload: NextPage = () => {
     let { dispatchStories } = useStories();
     let router = useRouter();
     const { storyInstance } = useStoryRequest();
-    const [stories, setStories] = useState<Story[]>([]);
-    const [story, setStory] = useState<Story>({
+    const [frames, setFrames] = useState<Frame[]>([]);
+    const [frame, setFrame] = useState<Frame>({
         type: "",
         value: "",
         key: "",
         imageVal: "",
     });
     const [openStoryModal, setOpenStoryModal] = useState(false);
+    const [uploading, setUploading] = useState<Uploading>({
+        loading: false,
+        error: null,
+    });
 
     const handleOpenStoryModal = (type: FrameType) => {
         setOpenStoryModal(true);
-        setStory((prev) => ({ ...prev, type: type }));
+        setFrame((prev) => ({ ...prev, type: type }));
     };
 
     const handleCloseStoryModal = () => {
         setOpenStoryModal(false);
-        setStory({ type: "", value: "", key: "", frame: null });
+        setFrame({ type: "", value: "", key: "", index: null });
     };
 
-    const handleStoryChange: HandleStoryChange = (value, imageVal = "") => {
-        setStory((prev) => ({ ...prev, value, imageVal }));
+    const handleFrameChange: HandleFrameChange = (value, imageVal = "") => {
+        setFrame((prev) => ({ ...prev, value, imageVal }));
     };
 
-    const handleAddStories = () => {
-        if (!story.value || !story.type) return;
+    const handleSwitchFrame = (type: FrameType) => {
+        setFrame({ key: "", type, value: "" });
+    };
+
+    const handleAddFrame = () => {
+        if (!frame.value || !frame.type) return;
 
         // create unique keys for stories
         let key = Date.now() as any as string;
 
-        setStories((prev) => [...prev, { ...story, key }]);
+        setFrames((prev) => [...prev, { ...frame, key }]);
         handleCloseStoryModal();
     };
 
-    const deleteStory = (id: Story["key"]) => {
-        let newStories = [...stories].filter((story) => story.key !== id);
+    const deleteFrame = (id: Frame["key"]) => {
+        let newFrame = [...frames].filter((frame) => frame.key !== id);
 
-        setStories([...newStories]);
+        setFrames([...newFrame]);
     };
 
-    const editStory = (id: Story["key"]) => {
-        let story = [...stories].find(({ key }) => key === id);
+    const editFrame = (id: Frame["key"]) => {
+        // get the frame
+        let frame = [...frames].find(({ key }) => key === id);
 
-        if (!story) return;
+        if (!frame) return;
 
-        let frame = [...stories].findIndex(({ key }) => key === story!.key);
+        // get its index
+        let index = [...frames].findIndex(({ key }) => key === frame!.key);
+
         // add 1 to index to show frame number
-        frame = frame + 1;
+        index = index + 1;
 
         setOpenStoryModal(true);
-        setStory({ ...story, frame });
+        setFrame({ ...frame, index });
     };
 
-    const updateStory = () => {
-        let newStory = { ...story };
+    const updateFrame = () => {
+        let newFrame = { ...frame };
 
-        let newStories = [...stories].map((story) =>
-            story.key === newStory.key ? newStory : story
+        let newFrames = [...frames].map((frame) =>
+            frame.key === newFrame.key ? newFrame : frame
         );
 
-        setStories([...newStories]);
+        setFrames([...newFrames]);
         handleCloseStoryModal();
     };
 
-    const handleStoriesSubmitted: MouseEventHandler<HTMLButtonElement> = async (
+    const handleCreateStory: MouseEventHandler<HTMLButtonElement> = async (
         e
     ) => {
         e.preventDefault();
 
         try {
-            await createStory(stories, storyInstance);
+            setUploading((prev) => ({ ...prev, loading: true }));
+            await createStory(frames, storyInstance);
 
             // update global stories
             dispatchStories({ type: "upload_new_story" });
@@ -106,7 +128,12 @@ const Upload: NextPage = () => {
 
             router.push("/");
         } catch (error) {
-            // console.log(error);
+            console.log(error);
+            setUploading((prev) => ({
+                ...prev,
+                loading: false,
+                error: "There is an error",
+            }));
         }
     };
 
@@ -116,6 +143,8 @@ const Upload: NextPage = () => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
+    let disableUploadBtn = frames.length < 2;
+
     return (
         <>
             <MetaHead />
@@ -123,15 +152,15 @@ const Upload: NextPage = () => {
             <StyledUploadPage>
                 <Header
                     handleOpenStoryModal={handleOpenStoryModal}
-                    handleStoriesSubmitted={handleStoriesSubmitted}
-                    stories={stories}
+                    handleCreateStory={handleCreateStory}
+                    disbaled={disableUploadBtn}
                 />
 
                 {/* preview */}
                 <UploadPreview
-                    stories={stories}
-                    deleteStory={deleteStory}
-                    editStory={editStory}
+                    frames={frames}
+                    deleteFrame={deleteFrame}
+                    editFrame={editFrame}
                 />
             </StyledUploadPage>
 
@@ -142,13 +171,19 @@ const Upload: NextPage = () => {
                 showCloseBtn={false}
             >
                 <UploadForm
-                    stories={stories}
-                    story={story}
-                    handleAddStories={handleAddStories}
+                    frames={frames}
+                    frame={frame}
+                    handleAddFrame={handleAddFrame}
                     handleCloseStoryModal={handleCloseStoryModal}
-                    handleStoryChange={handleStoryChange}
-                    updateStory={updateStory}
+                    handleFrameChange={handleFrameChange}
+                    updateFrame={updateFrame}
+                    handleSwitchFrame={handleSwitchFrame}
                 />
+            </Modal>
+
+            {/* show a loading indicator when a user uploads a story */}
+            <Modal showModal={uploading.loading}>
+                <LoadingIndicator />
             </Modal>
         </>
     );
