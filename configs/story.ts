@@ -17,4 +17,5 @@ export const StoryRoutes = {
     // story
     CREATE_STORY: "/story/story/",
     GET_STORIES: "/story/storylist",
+    GET_STORY: "/story/story",
 };
