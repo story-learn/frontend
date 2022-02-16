@@ -7,10 +7,13 @@ interface IStories {
 }
 
 const Stories: FC<IStories> = ({ stories }) => {
+    // use this in testing mode to remove stories that have neither image or text
+    stories = stories.filter(({ frames: { image, text } }) => image || text);
+
     return (
         <ul>
-            {stories.map((story, index) => (
-                <Story {...story} key={index} />
+            {stories.map((story) => (
+                <Story {...story} key={story.id} />
             ))}
         </ul>
     );

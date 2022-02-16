@@ -6,6 +6,12 @@ export const StyledStory = styled.li`
     width: 100%;
 
     .story {
+        &__link {
+            color: inherit;
+            display: block;
+            width: 100%;
+        }
+
         &__header {
             padding: 1rem 1.5rem;
             display: flex;
