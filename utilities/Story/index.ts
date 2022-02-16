@@ -1,7 +1,7 @@
 import axios, { AxiosInstance } from "axios";
 import { StoryRoutes } from "../../configs/story";
 // import { StoryUpload as Story } from "../../interfaces";
-import { FrameUpload as Frame } from "../../interfaces";
+import { FrameUpload as Frame, HomeStory } from "../../interfaces";
 
 export const createStory = async (
     stories: Frame[],
@@ -14,7 +14,14 @@ export const createStory = async (
     );
 
     try {
-        await storyInstance.post(StoryRoutes.CREATE_STORY, { frames });
+        let result = await storyInstance.post<HomeStory>(
+            StoryRoutes.CREATE_STORY,
+            {
+                frames,
+            }
+        );
+        let newStory = result.data;
+        return newStory;
     } catch (error) {
         if (axios.isAxiosError(error)) {
             console.log("errors", error.response?.data);

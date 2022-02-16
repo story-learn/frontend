@@ -20,7 +20,7 @@ type FetchStoriesAction = {
 
 type UploadNewStoryAction = {
     type: "upload_new_story";
-    // payload: HomeStory;
+    payload: HomeStory;
 };
 
 export type Action = FetchStoriesAction | UploadNewStoryAction;
@@ -46,23 +46,7 @@ export const reducer = (state: CounterState, action: Action) => {
 
     if (action.type === "upload_new_story") {
         // testing purpose
-        let newStory = {
-            created: "2022-01-19T13:27:11.286232Z",
-            frames: {
-                id: Date.now(),
-                image: null,
-                text: "Testing new Story",
-                created: "2022-01-19T13:27:58.270585Z",
-                story: 1,
-            },
-            id: Date.now(),
-            user: {
-                username: "Chinedu",
-                first_name: "",
-                last_name: "",
-                email: "emekaaladimma@gmail.com",
-            },
-        };
+        let newStory = action.payload;
 
         let data = [newStory, ...prevStories];
 
