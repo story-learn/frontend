@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import { FC } from "react";
 import { HomeStory } from "../../interfaces";
 import {
@@ -17,49 +18,57 @@ const Story: FC<HomeStory> = ({
     frames: { image, text },
     id,
 }) => {
+    if (image) console.log({ image });
+
     return (
         <StyledStory>
-            <article className="story">
-                <div className="story__contents">
-                    <header className="story__header">
-                        <div>
-                            <Profile />
-                            <div className="story__posted">10 minutes ago</div>
+            <Link href={`/stories/${id}`}>
+                <a className="story__path">
+                    <article className="story">
+                        <div className="story__contents">
+                            <header className="story__header">
+                                <div>
+                                    <Profile />
+                                    <div className="story__posted">
+                                        10 minutes ago
+                                    </div>
+                                </div>
+                                <StoryContentActions user={user} />
+                            </header>
+                            <div className="story__main">
+                                {text ? (
+                                    <p className="story__main-text">{text}</p>
+                                ) : (
+                                    <figure className="story__main-img">
+                                        <Image
+                                            src={tempoImage}
+                                            alt=""
+                                            width={200}
+                                            height={200}
+                                            layout="responsive"
+                                            objectFit="cover"
+                                        />
+                                    </figure>
+                                )}
+                            </div>
                         </div>
-                        <StoryContentActions user={user} />
-                    </header>
-                    <div className="story__main">
-                        {text ? (
-                            <p className="story__main-text">{text}</p>
-                        ) : (
-                            <figure className="story__main-img">
-                                <Image
-                                    src={tempoImage}
-                                    alt=""
-                                    width={200}
-                                    height={200}
-                                    layout="responsive"
-                                    objectFit="cover"
-                                />
-                            </figure>
-                        )}
-                    </div>
-                </div>
-                <div className="story__actions">
-                    <p className="story__actions-view">
-                        <ViewIcon />
-                        {4}
-                    </p>
-                    <button className="story__actions-like">
-                        <LoveIcon />
-                        {5}
-                    </button>
-                    <button className="story__actions-share">
-                        <ShareIcon />
-                        {7}
-                    </button>
-                </div>
-            </article>
+                        <div className="story__actions">
+                            <p className="story__actions-view">
+                                <ViewIcon />
+                                {4}
+                            </p>
+                            <button className="story__actions-like">
+                                <LoveIcon />
+                                {5}
+                            </button>
+                            <button className="story__actions-share">
+                                <ShareIcon />
+                                {7}
+                            </button>
+                        </div>
+                    </article>
+                </a>
+            </Link>
         </StyledStory>
     );
 };

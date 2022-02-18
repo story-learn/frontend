@@ -7,6 +7,8 @@ interface IStories {
 }
 
 const Stories: FC<IStories> = ({ stories }) => {
+    // console.log(stories);
+
     return (
         <ul>
             {stories.map((story, index) => (
