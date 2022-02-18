@@ -89,6 +89,13 @@ export const StyledNav = styled.nav`
         }
     }
 
+    form {
+        margin-right: auto;
+        margin-left: auto;
+        max-width: 36rem;
+        width: 100%;
+    }
+
     @media screen and (${device.tablet}) {
         .nav {
             &__large {

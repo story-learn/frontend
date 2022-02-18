@@ -41,6 +41,17 @@ export const StyledForm = styled.form`
                 top: 0.3rem;
                 right: 0.05rem;
             }
+
+            &-search {
+                height: auto;
+                padding: 1rem 1.6rem 1.1rem 1.6rem;
+                font-size: 1.4rem;
+
+                & ~ .form__input-icon {
+                    top: 2.2rem;
+                    color: var(--general-fg);
+                }
+            }
         }
     }
 `;

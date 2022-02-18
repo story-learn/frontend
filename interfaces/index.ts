@@ -1,4 +1,4 @@
-import { FrameType } from "./types";
+import { FrameType, SearchCategroy } from "./types";
 
 export interface Authentication {
     firstName: string;
@@ -64,4 +64,9 @@ export interface HomeStory {
         username: string;
         email: string;
     };
+}
+
+export interface Search {
+    value: string;
+    category: SearchCategroy;
 }

@@ -2,6 +2,8 @@ import {
     ChangeEventHandler,
     FC,
     FocusEventHandler,
+    HTMLAttributes,
+    HTMLInputTypeAttribute,
     KeyboardEventHandler,
 } from "react";
 import InputStyle from "./InputStyle";
@@ -11,20 +13,22 @@ export interface IInput {
     value: string | number;
     name: string;
     id: string;
-    label: string;
-    type?: string | "text";
+    label?: string;
+    type?: HTMLInputTypeAttribute;
     placeholder?: string;
     error?: string;
     processing?: boolean;
     Icon?: any;
     showError?: string;
+    className?: string;
     handleChange: ChangeEventHandler<HTMLInputElement>;
     handleBlur?: FocusEventHandler<HTMLInputElement>;
     handleKeyDown?: KeyboardEventHandler<HTMLInputElement>;
+    others?: HTMLAttributes<HTMLInputElement>;
 }
 
 const Index: FC<IInput> = ({
-    type,
+    type = "text",
     value,
     name,
     id,
@@ -34,9 +38,11 @@ const Index: FC<IInput> = ({
     processing,
     Icon,
     showError,
+    className = "",
     handleChange,
     handleBlur,
     handleKeyDown,
+    others,
 }) => {
     let errorClass = showError === "invalid" ? "error-border" : "";
 
@@ -48,7 +54,7 @@ const Index: FC<IInput> = ({
                 name={name}
                 id={id}
                 placeholder={placeholder}
-                className={`form__input ${errorClass}`}
+                className={`form__input ${errorClass} ${className}`}
                 error={error}
                 onChange={handleChange}
                 onBlur={handleBlur}
@@ -56,15 +62,15 @@ const Index: FC<IInput> = ({
                 autoSave="false"
                 onKeyDown={handleKeyDown}
                 showError={showError}
+                {...others}
             />
-            <label htmlFor={id} className="form__label">
-                {label}
-            </label>
+            {label && (
+                <label htmlFor={id} className="form__label">
+                    {label}
+                </label>
+            )}
             {Icon}
             {error && <span>{error}</span>}
-            {/* {processing && (
-                <LoadingIndicator className="form__input-processing" />
-            )} */}
         </div>
     );
 };

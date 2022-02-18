@@ -5,6 +5,7 @@ export { default as NavSearch } from "./Navbar/NavSearch";
 export { default as Layout } from "./Layout/Index";
 export { default as Input } from "./Input/Index";
 export { default as InputPassword } from "./Input/InputPassword";
+export { default as InputSearch } from "./Input/InputSearch";
 export { default as InputWithIcon } from "./Input/InputWithIcon";
 export { default as LoadingIndicator } from "./Indicators/LoadingIndicator";
 export { default as Button } from "./Button/Index";

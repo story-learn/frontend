@@ -1,4 +1,4 @@
-import { HomeStory } from "../interfaces";
+import { HomeStory, Search } from "../interfaces";
 import { returnUniqueArrayObject } from "../utilities/returnUniqueArrayObject";
 
 type Status =
@@ -7,10 +7,11 @@ type Status =
 
 export type CounterState = {
     status: Status;
-    data: any;
+    data: HomeStory[];
     loading: boolean;
     currentPage: number;
     totalPages: number;
+    search: Search;
 };
 
 type FetchStoriesAction = {
@@ -23,7 +24,14 @@ type UploadNewStoryAction = {
     payload: HomeStory;
 };
 
-export type Action = FetchStoriesAction | UploadNewStoryAction;
+type StorySearch = {
+    type: "search";
+    payload: {
+        [key: string]: string;
+    };
+};
+
+export type Action = FetchStoriesAction | UploadNewStoryAction | StorySearch;
 
 export const InitialStoryState: CounterState = {
     status: "empty",
@@ -31,6 +39,10 @@ export const InitialStoryState: CounterState = {
     loading: false,
     currentPage: 1,
     totalPages: 1,
+    search: {
+        value: "",
+        category: "",
+    },
 };
 
 export const reducer = (state: CounterState, action: Action) => {
@@ -39,7 +51,10 @@ export const reducer = (state: CounterState, action: Action) => {
     if (action.type === "fetch_stories") {
         let { currentPage, totalPages, stories } = action.payload;
 
-        let data = returnUniqueArrayObject([...prevStories, ...stories], "id");
+        let data = returnUniqueArrayObject(
+            [...prevStories, ...stories],
+            "id"
+        ) as HomeStory[];
 
         state = { ...state, currentPage, totalPages, data };
     }
@@ -51,6 +66,12 @@ export const reducer = (state: CounterState, action: Action) => {
         let data = [newStory, ...prevStories];
 
         state = { ...state, data };
+    }
+
+    if (action.type === "search") {
+        let prevSearch = state.search;
+
+        state = { ...state, search: { ...prevSearch, ...action.payload } };
     }
 
     return state;
