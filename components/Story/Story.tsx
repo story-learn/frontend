@@ -1,5 +1,5 @@
-import Image from "next/image";
 import Link from "next/link";
+import Image from "next/image";
 import { FC } from "react";
 import { HomeStory } from "../../interfaces";
 import {
@@ -10,7 +10,7 @@ import {
 } from "../SVGs";
 import { Profile, StoryContentActions } from "./../../components";
 import { StyledStory } from "./StyledStory";
-import tempoImage from "./../../public/assests/jpgs/Screenshot (72).png";
+import { getTimeAgo } from "../../utilities/getTimeAgo";
 
 const Story: FC<HomeStory> = ({
     user,
@@ -20,55 +20,60 @@ const Story: FC<HomeStory> = ({
 }) => {
     if (image) console.log({ image });
 
+    let createdInMilliSeconds = new Date(created).getTime();
+    let timeAgo = getTimeAgo(createdInMilliSeconds);
+
     return (
         <StyledStory>
-            <Link href={`/stories/${id}`}>
-                <a className="story__path">
-                    <article className="story">
-                        <div className="story__contents">
-                            <header className="story__header">
-                                <div>
-                                    <Profile />
-                                    <div className="story__posted">
-                                        10 minutes ago
-                                    </div>
-                                </div>
-                                <StoryContentActions user={user} />
-                            </header>
-                            <div className="story__main">
-                                {text ? (
-                                    <p className="story__main-text">{text}</p>
-                                ) : (
-                                    <figure className="story__main-img">
-                                        <Image
-                                            src={tempoImage}
-                                            alt=""
-                                            width={200}
-                                            height={200}
-                                            layout="responsive"
-                                            objectFit="cover"
-                                        />
-                                    </figure>
-                                )}
+            <article className="story">
+                <Link href={`/stories/${id}`}>
+                    <a className="story__link story__contents">
+                        <header className="story__header">
+                            <div>
+                                <Profile
+                                    firstName={user.first_name}
+                                    lastName={user.last_name}
+                                    userName={user.username}
+                                    // wait for backend to include profile image in the user's object
+                                    imgSrc=""
+                                />
+                                <div className="story__posted">{timeAgo}</div>
                             </div>
+                            <StoryContentActions user={user} />
+                        </header>
+                        <div className="story__main">
+                            {text ? (
+                                <p className="story__main-text">{text}</p>
+                            ) : (
+                                <figure className="story__main-img">
+                                    <Image
+                                        src={image as string}
+                                        alt=""
+                                        width={200}
+                                        height={200}
+                                        layout="responsive"
+                                        objectFit="cover"
+                                    />
+                                </figure>
+                            )}
                         </div>
-                        <div className="story__actions">
-                            <p className="story__actions-view">
-                                <ViewIcon />
-                                {4}
-                            </p>
-                            <button className="story__actions-like">
-                                <LoveIcon />
-                                {5}
-                            </button>
-                            <button className="story__actions-share">
-                                <ShareIcon />
-                                {7}
-                            </button>
-                        </div>
-                    </article>
-                </a>
-            </Link>
+                    </a>
+                </Link>
+                <div className="story__actions">
+                    {/* <p className="story__actions-view">
+                        <ViewIcon />
+                        {4}
+                    </p> */}
+                    <button className="story__actions-like">
+                        <LoveIcon />
+                        {5}
+                    </button>
+                    <button className="story__actions-share">
+                        <ShareIcon />
+                        {/* {7} */}
+                    </button>
+                </div>
+            </article>
         </StyledStory>
     );
 };

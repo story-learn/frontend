@@ -111,10 +111,28 @@ const Upload: NextPage = () => {
 
         try {
             setUploading((prev) => ({ ...prev, loading: true }));
-            await createStory(frames, storyInstance);
+            let newStory = await createStory(frames, storyInstance);
+
+            newStory = {
+                created: "2022-01-19T13:27:11.286232Z",
+                frames: {
+                    id: Date.now(),
+                    image: null,
+                    text: "Fake Data",
+                    created: `${Date.now()}`,
+                    story: 1,
+                },
+                id: Date.now(),
+                user: {
+                    username: "Chinedu",
+                    first_name: "",
+                    last_name: "",
+                    email: "emekaaladimma@gmail.com",
+                },
+            };
 
             // update global stories
-            dispatchStories({ type: "upload_new_story" });
+            dispatchStories({ type: "upload_new_story", payload: newStory });
 
             // notify user
             setTimeout(() => {
