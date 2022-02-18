@@ -15,6 +15,17 @@ const InputStyle = styled.input<StyleProp>`
     transition: all 0.2s linear;
     background-color: var(--box-bg);
 
+    &[type="search"] {
+        &::-webkit-search-cancel-button {
+            display: none;
+        }
+
+        & ~ button {
+            border: 0;
+            cursor: auto;
+        }
+    }
+
     &:focus,
     &:hover {
         border-color: var(--primary-10);
@@ -37,7 +48,8 @@ const InputStyle = styled.input<StyleProp>`
         font-weight: 500;
     }
 
-    &:placeholder-shown {
+    /* &:placeholder-shown { */
+    &:not([type="search"]):placeholder-shown {
         padding: 1.4rem 1.6rem;
         & + label {
             font-size: 1.4rem;

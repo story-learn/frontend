@@ -13,3 +13,5 @@ export type NavAuthPageOthersContentRoutes =
     | "/reset";
 
 export type FrameType = "" | "Text" | "Image";
+
+export type SearchCategroy = "" | "story" | "username";
