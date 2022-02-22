@@ -33,8 +33,9 @@ export const getTimeAgo = (millisecondsAgo: number) => {
     let weeksAgo = daysAgo / 7;
     weeksAgo = Math.floor(weeksAgo);
 
-    if (weeksAgo < 4) return `${weeksAgo}wk`;
+    if (weeksAgo < 4) return `${weeksAgo}w`;
 
+    /*
     // 5 weeks / 4 = 1 month 1 week
     let monthsAgo = weeksAgo / 4;
     monthsAgo = Math.floor(monthsAgo);
@@ -46,4 +47,13 @@ export const getTimeAgo = (millisecondsAgo: number) => {
     yearsAgo = Math.floor(yearsAgo);
 
     return `${yearsAgo}y`;
+    */
+
+    // return exact date for any time greater than 3 weeks
+    let created = new Date(millisecondsAgo);
+
+    let date = created.toLocaleDateString();
+    let time = created.toLocaleTimeString();
+
+    return `${date} • ${time}`;
 };
