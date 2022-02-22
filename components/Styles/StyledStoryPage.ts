@@ -16,6 +16,7 @@ export const StyledStoryPage = styled.main`
             justify-content: flex-start;
             max-width: 59rem;
             overflow-y: initial !important;
+            width: 100%;
         }
 
         &__close {
@@ -41,6 +42,7 @@ export const StyledStoryPage = styled.main`
 
     .carousel {
         overflow: hidden;
+        width: 100%;
 
         &__inner {
             transition: transform 0.25s ease-in-out;
@@ -96,6 +98,8 @@ export const StyledStoryPage = styled.main`
                 border-radius: var(--border-rad-sm);
                 padding-left: 0;
                 padding-right: 0;
+                width: auto;
+                min-width: 41.4rem;
 
                 & > * {
                     max-width: 41.4rem;
@@ -147,6 +151,7 @@ const indicatorsWidth = (numberOfIndicators: number) =>
 
 export const StyledStoryIndicator = styled.header<IStyledStoryIndicator>`
     margin-bottom: 1.053rem;
+    width: 100%;
 
     .story {
         &__header {
