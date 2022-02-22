@@ -11,12 +11,14 @@ import {
 import { Profile, StoryContentActions } from "./../../components";
 import { StyledStory } from "./StyledStory";
 import { getTimeAgo } from "../../utilities/getTimeAgo";
+import { BsBookmark } from "react-icons/bs";
 
 const Story: FC<HomeStory> = ({
     user,
     created,
     frames: { image, text },
     id,
+    likes,
 }) => {
     if (image) console.log({ image });
 
@@ -60,17 +62,15 @@ const Story: FC<HomeStory> = ({
                     </a>
                 </Link>
                 <div className="story__actions">
-                    {/* <p className="story__actions-view">
-                        <ViewIcon />
-                        {4}
-                    </p> */}
+                    <button className="story__actions-bookmark">
+                        <BsBookmark />
+                    </button>
                     <button className="story__actions-like">
                         <LoveIcon />
-                        {5}
+                        {likes}
                     </button>
                     <button className="story__actions-share">
                         <ShareIcon />
-                        {/* {7} */}
                     </button>
                 </div>
             </article>

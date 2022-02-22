@@ -1,6 +1,5 @@
 import type { NextPage } from "next";
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
 import { LoadingIndicator } from "../../components";
 import { StyledStoryPage } from "../../components/Styles/StyledStoryPage";
 import { StoryRoutes } from "../../configs/story";
@@ -12,7 +11,6 @@ import { HomeStory } from "./../../interfaces/index";
 type PickStory = Omit<HomeStory, "frames">;
 
 export interface IStory extends PickStory {
-    likes: number;
     frames: HomeStory["frames"][];
 }
 

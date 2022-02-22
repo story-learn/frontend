@@ -64,6 +64,7 @@ export interface HomeStory {
         username: string;
         email: string;
     };
+    likes: number;
 }
 
 export interface Search {

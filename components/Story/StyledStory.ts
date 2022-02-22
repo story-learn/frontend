@@ -61,7 +61,7 @@ export const StyledStory = styled.li`
             justify-content: flex-end;
             padding: 1rem 2rem 0.7rem;
 
-            &-view,
+            &-bookmark,
             &-like,
             &-share {
                 display: flex;
@@ -77,13 +77,17 @@ export const StyledStory = styled.li`
                 }
             }
 
-            &-view,
+            &-bookmark,
             &-share {
                 background-color: var(--box-bg-2);
                 border-radius: var(--border-rad-xl);
             }
 
-            &-view {
+            &-bookmark {
+                background-color: transparent;
+                font-size: 1.7rem;
+                color: var(--color-6);
+                margin-right: 0.4rem;
             }
 
             &-like {
@@ -92,6 +96,7 @@ export const StyledStory = styled.li`
 
             &-share {
                 margin-right: 0;
+                padding: 0.9rem 1.2rem 1rem 1.6rem;
             }
         }
     }
