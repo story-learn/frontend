@@ -27,3 +27,5 @@ export { default as GalleryIcon } from "./GalleryIcon";
 export { default as DeleteIcon } from "./DeleteIcon";
 export { default as MarkIcon } from "./MarkIcon";
 export { default as HelpIcon } from "./HelpIcon";
+export { default as LeftArrow } from "./LeftArrow";
+export { default as RightArrow } from "./RightArrow";

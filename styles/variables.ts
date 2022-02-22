@@ -19,6 +19,7 @@ export const VariablesStyle = createGlobalStyle`
         --form-icon: #838383;
 
         /* borders */
+        --border-rad-xxs: 0.4rem;
         --border-rad-xs: 0.8rem;
         --border-rad-sm: 1rem;
         --border-rad-md: 1.5rem;
