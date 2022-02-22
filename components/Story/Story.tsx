@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
-import { FC } from "react";
+import { FC, MouseEventHandler } from "react";
 import { HomeStory } from "../../interfaces";
 import {
     LoveIcon,
@@ -8,10 +8,12 @@ import {
     ThreeDotsHorizontalIcon,
     ViewIcon,
 } from "../SVGs";
-import { Profile, StoryContentActions } from "./../../components";
+import { Profile, StoryContentActions, Notification } from "./../../components";
 import { StyledStory } from "./StyledStory";
 import { getTimeAgo } from "../../utilities/getTimeAgo";
 import { BsBookmark } from "react-icons/bs";
+import toast from "react-hot-toast";
+import { copyStoryLinkToClipBoard } from "../../utilities/Story";
 
 const Story: FC<HomeStory> = ({
     user,
@@ -24,6 +26,17 @@ const Story: FC<HomeStory> = ({
 
     let createdInMilliSeconds = new Date(created).getTime();
     let timeAgo = getTimeAgo(createdInMilliSeconds);
+
+    const handleShareStory: MouseEventHandler<HTMLButtonElement> = async () => {
+        try {
+            await copyStoryLinkToClipBoard(`/stories/${id}`);
+            toast.custom(<Notification type="success" shortText="Copied" />);
+        } catch (error) {
+            toast.custom(
+                <Notification type="error" shortText="Error copying link" />
+            );
+        }
+    };
 
     return (
         <StyledStory>
@@ -69,7 +82,10 @@ const Story: FC<HomeStory> = ({
                         <LoveIcon />
                         {likes}
                     </button>
-                    <button className="story__actions-share">
+                    <button
+                        className="story__actions-share"
+                        onClick={handleShareStory}
+                    >
                         <ShareIcon />
                     </button>
                 </div>

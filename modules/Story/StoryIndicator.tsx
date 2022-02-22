@@ -4,6 +4,7 @@ import toast from "react-hot-toast";
 import { Notification } from "../../components";
 import { StyledStoryIndicator } from "../../components/Styles/StyledStoryPage";
 import { ShareIcon } from "../../components/SVGs";
+import { copyStoryLinkToClipBoard } from "../../utilities/Story";
 
 interface IStoryIndicator {
     stories: any[];
@@ -13,10 +14,9 @@ interface IStoryIndicator {
 const StoryIndicator: FC<IStoryIndicator> = ({ active, stories }) => {
     const { asPath } = useRouter();
 
-    const shareStoryUrl: MouseEventHandler<HTMLButtonElement> = async (e) => {
+    const shareStoryUrl: MouseEventHandler<HTMLButtonElement> = async () => {
         try {
-            let storyPath = `https://storylearn.netlify.app${asPath}`;
-            await navigator.clipboard.writeText(`${storyPath}`);
+            await copyStoryLinkToClipBoard(asPath);
             toast.custom(<Notification type="success" shortText="Copied" />);
         } catch (error) {
             toast.custom(

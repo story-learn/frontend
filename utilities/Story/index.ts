@@ -5,6 +5,7 @@ import { StoryRoutes } from "../../configs/story";
 import { FrameUpload as Frame, HomeStory } from "../../interfaces";
 // import { FrameUpload as Frame } from "../../interfaces";
 import { Action } from "../../Reducer/Story";
+import { copyToClipBoard } from "../copyToClipBoard";
 
 export const createStory = async (
     stories: Frame[],
@@ -40,4 +41,12 @@ export const searchStory = (
     if (!search) return;
 
     dispatchStories({ type: "search", payload: { value: search } });
+};
+
+export const copyStoryLinkToClipBoard = async (storyPath: string) => {
+    try {
+        await copyToClipBoard(`https://storylearn.netlify.app${storyPath}`);
+    } catch (error) {
+        throw error;
+    }
 };
