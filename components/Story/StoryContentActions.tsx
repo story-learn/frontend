@@ -1,4 +1,5 @@
-import { FC, LegacyRef, useRef } from "react";
+import { useRouter } from "next/router";
+import { FC, MouseEventHandler, useRef } from "react";
 import { HomeStory } from "../../interfaces";
 import {
     BookmarkIcon,
@@ -9,16 +10,27 @@ import {
 } from "../SVGs";
 import { StyledStoryContentActions } from "./StyledStoryContentActions";
 
-type StoryAction = Pick<HomeStory, "user">;
+type StoryAction = Pick<HomeStory, "user" | "id">;
 
-const StoryContentActions: FC<StoryAction> = ({ user: { username } }) => {
+interface IStoryAction extends StoryAction {
+    handleCopyStory: MouseEventHandler<HTMLButtonElement>;
+}
+
+const StoryContentActions: FC<IStoryAction> = ({
+    user: { username },
+    id,
+    handleCopyStory,
+}) => {
+    const { push } = useRouter();
+
     let actions = [
         {
             Icon: FollowUserIcon,
-            text: `Follow ${username}`,
+            text: `Follow ${username} Ademola Peace Olayinka`,
             action: () => {
                 console.log("Follow");
             },
+            className: "story__contents-action--follow",
         },
         {
             Icon: BookmarkIcon,
@@ -31,21 +43,21 @@ const StoryContentActions: FC<StoryAction> = ({ user: { username } }) => {
             Icon: ViewIcon,
             text: "Open Story",
             action: () => {
-                console.log("open story");
+                push(`/stories/${id}`);
             },
         },
         {
             Icon: LinkIcon,
             text: "Copy Link",
-            action: () => {
-                console.log("copy Link");
-            },
+            action: handleCopyStory,
         },
     ];
 
     const contentRef = useRef<HTMLUListElement>(null);
 
-    const handleContentActions = () => {
+    const handleContentActions: MouseEventHandler<HTMLButtonElement> = (e) => {
+        e.preventDefault();
+
         let actionsContainer = contentRef.current!;
 
         actionsContainer.classList.toggle("show");
@@ -60,11 +72,17 @@ const StoryContentActions: FC<StoryAction> = ({ user: { username } }) => {
                 <ThreeDotsHorizontalIcon />
             </button>
             <ul ref={contentRef} className="story__contents-actions arrow">
-                {actions.map(({ action, Icon, text }, index) => (
-                    <li key={index}>
-                        <button onClick={action}>
+                {actions.map(({ action, Icon, text, className }, index) => (
+                    <li key={index} className={className || ""}>
+                        <button
+                            onClick={(e) => {
+                                e.preventDefault();
+                                action(e);
+                                handleContentActions(e);
+                            }}
+                        >
                             <Icon />
-                            {text}
+                            <span>{text}</span>
                         </button>
                     </li>
                 ))}

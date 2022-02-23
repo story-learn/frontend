@@ -2,8 +2,9 @@ import styled from "styled-components";
 import { device } from "../../styles/breakpoints";
 
 export const StyledStory = styled.li`
-    margin-bottom: 4rem;
     width: 100%;
+    border-bottom: 0.1rem solid var(--box-border);
+    padding-bottom: 1.6rem;
 
     .story {
         &__link {
@@ -14,10 +15,10 @@ export const StyledStory = styled.li`
 
         &__header {
             padding: 1rem 1.5rem;
+            padding: 4rem 1.5rem 1.5rem;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            border-bottom: 0.1rem solid var(--box-border);
 
             & > div {
                 display: flex;
@@ -35,8 +36,8 @@ export const StyledStory = styled.li`
             text-align: center;
             font-size: 1.6rem;
             color: var(--color-4);
-            border-bottom: 0.1rem solid var(--box-border);
             padding: 2.5rem 2rem;
+            padding: 0rem 2rem 0.4rem;
 
             &-text {
                 display: -webkit-box;
@@ -105,6 +106,8 @@ export const StyledStory = styled.li`
         max-width: 64rem;
         margin-right: auto;
         margin-left: auto;
+        border: 0;
+        margin-bottom: 4rem;
 
         .story {
             display: flex;
@@ -112,6 +115,8 @@ export const StyledStory = styled.li`
 
             &__header {
                 padding-bottom: 1.7rem;
+                padding-top: 1rem;
+                border-bottom: 0.1rem solid var(--box-border);
             }
 
             &__contents {
@@ -123,6 +128,7 @@ export const StyledStory = styled.li`
 
             &__main {
                 border: 0;
+                padding: 2.5rem 2rem;
 
                 &-text {
                     -webkit-line-clamp: 4;

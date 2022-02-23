@@ -2,12 +2,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { FC, MouseEventHandler } from "react";
 import { HomeStory } from "../../interfaces";
-import {
-    LoveIcon,
-    ShareIcon,
-    ThreeDotsHorizontalIcon,
-    ViewIcon,
-} from "../SVGs";
+import { LoveIcon, ShareIcon } from "../SVGs";
 import { Profile, StoryContentActions, Notification } from "./../../components";
 import { StyledStory } from "./StyledStory";
 import { getTimeAgo } from "../../utilities/getTimeAgo";
@@ -22,8 +17,6 @@ const Story: FC<HomeStory> = ({
     id,
     likes,
 }) => {
-    if (image) console.log({ image });
-
     let createdInMilliSeconds = new Date(created).getTime();
     let timeAgo = getTimeAgo(createdInMilliSeconds);
 
@@ -54,7 +47,11 @@ const Story: FC<HomeStory> = ({
                                 />
                                 <div className="story__posted">{timeAgo}</div>
                             </div>
-                            <StoryContentActions user={user} />
+                            <StoryContentActions
+                                user={user}
+                                id={id}
+                                handleCopyStory={handleShareStory}
+                            />
                         </header>
                         <div className="story__main">
                             {text ? (
