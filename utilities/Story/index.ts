@@ -1,9 +1,7 @@
 import axios, { AxiosInstance } from "axios";
-import { Dispatch, FormEventHandler } from "react";
+import { Dispatch } from "react";
 import { StoryRoutes } from "../../configs/story";
-// import { StoryUpload as Story } from "../../interfaces";
 import { FrameUpload as Frame, HomeStory } from "../../interfaces";
-// import { FrameUpload as Frame } from "../../interfaces";
 import { Action } from "../../Reducer/Story";
 import { copyToClipBoard } from "../copyToClipBoard";
 
