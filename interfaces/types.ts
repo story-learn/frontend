@@ -14,4 +14,4 @@ export type NavAuthPageOthersContentRoutes =
 
 export type FrameType = "" | "Text" | "Image";
 
-export type SearchCategroy = "" | "story" | "username";
+export type SearchCategroy = "story" | "username";

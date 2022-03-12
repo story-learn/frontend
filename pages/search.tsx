@@ -1,5 +1,10 @@
 import { NextPage } from "next";
-import { InputSearch, Stories, LoadingIndicator } from "../components";
+import {
+    InputSearch,
+    Stories,
+    LoadingIndicator,
+    Accounts,
+} from "../components";
 import { StyledSearchPage } from "../components/Styles/StyledSearchPage";
 import { StyledForm } from "../components/Form/FormStyles";
 import { FormEventHandler, useEffect, useState } from "react";
@@ -11,6 +16,7 @@ import { useInfiniteScroll } from "../Hooks/useInfiniteScroll";
 import { HomeStory, Search as SearchInterface } from "../interfaces";
 import { searchStory } from "../utilities/Story";
 import { SearchCategories, SearchHeader } from "../modules/Search";
+import { IAccount } from "../components/Accounts/Account";
 
 export type Category = "" | "story" | "username";
 
@@ -25,47 +31,54 @@ const Search: NextPage = () => {
         dispatchStories,
     } = useStories();
 
-    // only show maximum of 15 stories from homepage
-    stories = stories.slice(0, 15);
-
-    const [search, setSearch] = useState("");
-    const [intialRender, setIntialRender] = useState(true);
-
-    let baseUrl = `${BASE_URLS.Story}${StoryRoutes.GET_STORIES}`;
+    let baseUrl = BASE_URLS.Story;
     let searchUrl = "";
 
     if (value) {
-        searchUrl = `${baseUrl}/?search=${value}`;
+        searchUrl = baseUrl;
 
-        if (category) {
-            searchUrl = `${searchUrl}&category=${category}`;
+        if (category === "story") {
+            searchUrl += `${StoryRoutes.GET_STORIES}/?search=${value}&category=${category}`;
+        } else {
+            searchUrl += StoryRoutes.GET_USERS;
+
+            let useUserNameAsCategory = false,
+                currentSearch = value; // save it in a new variable so as the preserve the real one
+
+            // remove @ because we're going to use username as the category
+            if (currentSearch.startsWith("@")) {
+                currentSearch = currentSearch.slice(1);
+                useUserNameAsCategory = true;
+            }
+
+            // this searches for username, firstName and lastName
+            searchUrl += `/?search=${currentSearch}`;
+
+            // this limits search to username only
+            if (useUserNameAsCategory) searchUrl += `&category=${category}`;
         }
     }
 
-    console.log({ searchUrl });
-
     const { currentPage, error, loading, totalData, totalPages } =
-        useInfiniteScroll<HomeStory>(searchUrl);
+        useInfiniteScroll<HomeStory | IAccount>(searchUrl);
 
-    // console.log({
-    //     //
-    //     // category,
-    //     // value,
-    //     // searchUrl,
-    // });
+    const [search, setSearch] = useState("");
+    const [initialRender, setInitialRender] = useState(true);
 
-    // console.log({
-    //     //
-    //     // currentPage,
-    //     // error,
-    //     // loading,
-    //     // totalData,
-    //     // totalPages,
-    // });
+    // only show maximum of 15 stories from homepage
+    stories = stories.slice(0, 15);
 
     const handleChangeCategory = (category: string) => {
         dispatchStories({ type: "search", payload: { category } });
     };
+
+    useEffect(() => {
+        // setTotalSearch(totalData);
+        if (!value) return;
+
+        if (!loading) setInitialRender(false);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [loading]);
 
     // update path url when search/category changes
     useEffect(() => {
@@ -76,6 +89,7 @@ const Search: NextPage = () => {
         if (category) newUrl += `&category=${category}`;
 
         push(newUrl, undefined, { shallow: true });
+
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [category, value]);
 
@@ -92,8 +106,9 @@ const Search: NextPage = () => {
     const handleSearch: FormEventHandler<HTMLFormElement> = (e) => {
         e.preventDefault();
 
+        if (!search) return;
+
         searchStory(search, dispatchStories);
-        setIntialRender(false);
     };
 
     return (
@@ -114,12 +129,22 @@ const Search: NextPage = () => {
                         category={category}
                         handleChangeCategory={handleChangeCategory}
                     />
-                    <section>
-                        {intialRender ? (
+                    <section className="search__result">
+                        {initialRender ? (
                             <Stories stories={stories} />
                         ) : (
                             <>
-                                <Stories stories={totalData} />
+                                {category === "story" && (
+                                    <Stories
+                                        stories={totalData as HomeStory[]}
+                                    />
+                                )}
+                                {category === "username" && (
+                                    <Accounts
+                                        users={totalData as IAccount[]}
+                                        className="search__profiles"
+                                    />
+                                )}
                                 {loading && <LoadingIndicator />}
                                 {error && <div>There is an Error</div>}
                             </>

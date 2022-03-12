@@ -50,4 +50,11 @@ export const UtilityStyles = createGlobalStyle`
         margin-inline-start: auto;
         margin-inline-end: auto;
     }
+
+    .truncate {
+        display: -webkit-box;
+        -webkit-line-clamp: 2; // default to two lines
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
 `;

@@ -31,7 +31,8 @@ const NavSearch: FC = () => {
 
         dispatchStories({
             type: "search",
-            payload: { category: "", value: "" },
+            // default to story category
+            payload: { category: "story", value: "" },
         });
 
         // empty search bar

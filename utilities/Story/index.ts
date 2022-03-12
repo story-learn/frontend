@@ -36,7 +36,7 @@ export const searchStory = (
     search: string,
     dispatchStories: Dispatch<Action>
 ) => {
-    if (!search) return;
+    // if (!search) return;
 
     dispatchStories({ type: "search", payload: { value: search } });
 };

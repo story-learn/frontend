@@ -4,11 +4,12 @@ import { StyledAvatar } from "./Styles/StyledAvatar";
 
 export interface IAvatar {
     imgSrc: string;
+    className?: string;
 }
 
-const Avatar: FC<IAvatar> = ({ imgSrc }) => {
+const Avatar: FC<IAvatar> = ({ imgSrc, className = "" }) => {
     return (
-        <StyledAvatar>
+        <StyledAvatar className={className}>
             <Image
                 src={imgSrc}
                 width={20}

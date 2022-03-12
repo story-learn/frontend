@@ -23,3 +23,5 @@ export { default as Story } from "./Story/Story";
 export { default as Avatar } from "./Avatar";
 export { default as Profile } from "./Profile";
 export { default as StoryContentActions } from "./Story/StoryContentActions";
+export { default as Account } from "./Accounts/Account";
+export { default as Accounts } from "./Accounts/Index";

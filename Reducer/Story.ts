@@ -27,7 +27,7 @@ type UploadNewStoryAction = {
 type StorySearch = {
     type: "search";
     payload: {
-        [key: string]: string;
+        [key: string]: string | boolean;
     };
 };
 
@@ -41,7 +41,7 @@ export const InitialStoryState: CounterState = {
     totalPages: 1,
     search: {
         value: "",
-        category: "",
+        category: "story",
     },
 };
 

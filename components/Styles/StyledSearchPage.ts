@@ -61,6 +61,15 @@ export const StyledSearchPage = styled.main`
                 }
             }
         }
+
+        &__result {
+            width: 100%;
+        }
+
+        &__profiles {
+            li {
+            }
+        }
     }
 
     @media screen and (${device.tablet}) {
