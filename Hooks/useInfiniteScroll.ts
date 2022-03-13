@@ -24,6 +24,9 @@ export const useInfiniteScroll = <Data>(
 
     let { data, error, loading } = useFetch<Data>(infiniteUrl);
 
+    // this might be in case of search page where there is no search url
+    if (!infiniteUrl) loading = false;
+
     const handleScroll = () => {
         if (scrollBottom()) {
             // increase page

@@ -18,11 +18,13 @@ const NavSearch: FC = () => {
     const handleSearchStories: FormEventHandler<HTMLFormElement> = (e) => {
         e.preventDefault();
 
-        searchStory(search, dispatchStories);
+        // searchStory(search, dispatchStories);
 
         // go to search page if user is not on search page
         if (pathname !== "/search") {
-            push(`/search?value=${search}`);
+            push(`/search?value=${search}&category=story`);
+        } else {
+            searchStory(search, dispatchStories);
         }
     };
 

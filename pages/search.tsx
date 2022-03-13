@@ -59,7 +59,7 @@ const Search: NextPage = () => {
         }
     }
 
-    const { currentPage, error, loading, totalData, totalPages } =
+    let { currentPage, error, loading, totalData, totalPages } =
         useInfiniteScroll<HomeStory | IAccount>(searchUrl);
 
     const [search, setSearch] = useState("");
@@ -69,11 +69,13 @@ const Search: NextPage = () => {
     stories = stories.slice(0, 15);
 
     const handleChangeCategory = (category: string) => {
+        // totalData = []; // ! this is not working!!
+
+        totalData.length = 0; // + this works
         dispatchStories({ type: "search", payload: { category } });
     };
 
     useEffect(() => {
-        // setTotalSearch(totalData);
         if (!value) return;
 
         if (!loading) setInitialRender(false);
@@ -107,6 +109,7 @@ const Search: NextPage = () => {
         e.preventDefault();
 
         if (!search) return;
+        setInitialRender(false);
 
         searchStory(search, dispatchStories);
     };
@@ -130,20 +133,30 @@ const Search: NextPage = () => {
                         handleChangeCategory={handleChangeCategory}
                     />
                     <section className="search__result">
-                        {initialRender ? (
+                        {!loading && initialRender && stories.length > 0 && (
                             <Stories stories={stories} />
-                        ) : (
+                        )}
+
+                        {!initialRender && (
                             <>
-                                {category === "story" && (
-                                    <Stories
-                                        stories={totalData as HomeStory[]}
-                                    />
-                                )}
-                                {category === "username" && (
-                                    <Accounts
-                                        users={totalData as IAccount[]}
-                                        className="search__profiles"
-                                    />
+                                {!loading && totalData.length === 0 ? (
+                                    <div>No result found</div>
+                                ) : (
+                                    <>
+                                        {category === "story" && (
+                                            <Stories
+                                                stories={
+                                                    totalData as HomeStory[]
+                                                }
+                                            />
+                                        )}
+                                        {category === "username" && (
+                                            <Accounts
+                                                users={totalData as IAccount[]}
+                                                className="search__profiles"
+                                            />
+                                        )}
+                                    </>
                                 )}
                                 {loading && <LoadingIndicator />}
                                 {error && <div>There is an Error</div>}

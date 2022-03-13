@@ -14,6 +14,7 @@ const InputStyle = styled.input<StyleProp>`
     border: 0.1rem solid transparent;
     transition: all 0.2s linear;
     background-color: var(--box-bg);
+    caret-color: var(--primary);
 
     &[type="search"] {
         &::-webkit-search-cancel-button {
