@@ -7,16 +7,13 @@ import { StyledAccount } from "./Styles";
 export interface IAccount extends IProfile {}
 
 const Account: FC<IAccount> = (props) => {
-    console.log(props);
-
     return (
         <StyledAccount>
-            <Link href={`/profiles/1`}>
+            <Link href={`/profiles/${props.id}`}>
                 <a className="profile__link">
                     <Profile
                         {...props}
                         firstName={props.firstName || "First"}
-                        // imgSrc=""
                         lastName={props.lastName || "Last"}
                         userName={props.userName || "username"}
                         bio="Random Bio For everyone. Just Kidding, You'll soon get a better bio, just chill till our backend is okay"

@@ -39,6 +39,7 @@ const Story: FC<HomeStory> = ({
                         <header className="story__header">
                             <div>
                                 <Profile
+                                    id={user.id}
                                     firstName={user.first_name}
                                     lastName={user.last_name}
                                     userName={user.username}

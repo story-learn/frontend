@@ -63,6 +63,7 @@ export interface HomeStory {
         last_name: string;
         username: string;
         email: string;
+        id: number;
     };
     likes: number;
 }

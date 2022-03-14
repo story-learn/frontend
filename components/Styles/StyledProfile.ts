@@ -24,6 +24,10 @@ export const StyledProfile = styled.div`
         &__name {
             font-weight: bolder;
             font-size: 1.8rem;
+
+            &:hover {
+                opacity: 0.7;
+            }
         }
 
         &__userFollow {
