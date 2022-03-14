@@ -19,6 +19,8 @@ export const ModeVariables = createGlobalStyle`
         --color-7: #838383;
         --color-8: #E0DAD2;
         --color-9: #c9c9bf;
+        --color-10: #000000;
+        --color-11: #0A0601;
         --auth-bg: #FFFFFF;
 
         --disabled: #F0F0F0;
@@ -47,6 +49,8 @@ export const ModeVariables = createGlobalStyle`
             --color-7: #E0DAD2;
             --color-8: rgba(250, 250, 250, 0.2);
             --color-9: #c9c9bf;
+            --color-10: #FFFFFF;
+            --color-11: #F7F2F4;
             --auth-bg: #0A0601;
 
             --disabled: #838383;

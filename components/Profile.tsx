@@ -9,7 +9,7 @@ export interface IProfile extends IAvatar {
     userName: string;
     bio?: string;
     followers?: string;
-    onFollow?: () => void;
+    onFollow?: MouseEventHandler<HTMLButtonElement>;
     as?: ElementType;
     profileClassName?: string;
 }
