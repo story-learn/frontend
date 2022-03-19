@@ -29,6 +29,12 @@ interface LoginError {
     detail: string;
 }
 
+/**
+ * checks if a username already exists
+ * @param username value to check
+ * @returns {string} This username already exists OR This username does not exist
+ */
+
 export const usernameExists = async (username: string) => {
     try {
         let response = await STORY.post(`/auth/checkifexists/user/`, {
@@ -50,6 +56,12 @@ export const usernameExists = async (username: string) => {
     }
 };
 
+/**
+ * checks if an email exists
+ * @param email value to check
+ * @returns {boolean} true/false
+ */
+
 export const emailExists = async (email: string) => {
     try {
         let response = await STORY.post(`/auth/checkifexists/email/`, {
@@ -64,6 +76,11 @@ export const emailExists = async (email: string) => {
     }
 };
 
+/**
+ * resend a new verification link to the associated email
+ * @param email email to resend verification link to
+ */
+
 export const resendVerification = async (email: string) => {
     try {
         await STORY.post(StoryRoutes.RESEND_VERIFICATION_LINK, { email });
@@ -71,6 +88,13 @@ export const resendVerification = async (email: string) => {
         console.log(error);
     }
 };
+
+/**
+ * logs in a user
+ * @param detail
+ * @returns detail of newly created user if successful
+ * @throws log in error
+ */
 
 export const logIn = async (detail: Auth) => {
     let data = {
@@ -100,6 +124,12 @@ export const logIn = async (detail: Auth) => {
         throw resError;
     }
 };
+
+/**
+ * sign up a user and direct them to success(verify) page
+ * @param detail user's detail
+ * @returns
+ */
 
 export const signup = async (detail: Authentication) => {
     try {
@@ -146,6 +176,11 @@ export const signup = async (detail: Authentication) => {
     }
 };
 
+/**
+ * activate a user's account
+ * @param {{uid: string; token: string;}} detail user's activation detail
+ */
+
 export const activateAccount = async (detail: ActivateAccountDetail) => {
     try {
         await STORY.post<AuthTokens>(StoryRoutes.ACCOUNT_ACTIVATION, detail);
@@ -163,6 +198,13 @@ export const activateAccount = async (detail: ActivateAccountDetail) => {
     }
 };
 
+/**
+ * send a reset password link to the user's email
+ * @param email user's email
+ * @returns void
+ * @throws random error
+ */
+
 export const forgotPassword = async (email: string) => {
     try {
         await STORY.post(StoryRoutes.FORGOT_PASSWORD, { email });
@@ -173,6 +215,12 @@ export const forgotPassword = async (email: string) => {
         throw new Error("There is an error! Please Try again later!!");
     }
 };
+
+/**
+ * reset password to a user account
+ * @param {{uid: string; token: string; new_password: string;}} data user's data
+ * @returns void
+ */
 
 export const resetPassword = async (data: ResetPassword) => {
     try {

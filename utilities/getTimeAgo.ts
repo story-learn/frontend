@@ -1,3 +1,9 @@
+/**
+ *
+ * @param {number} millisecondsAgo in milliseconds
+ * @returns {string} time from now
+ */
+
 export const getTimeAgo = (millisecondsAgo: number) => {
     let totalSecondsAgo = +Math.floor((Date.now() - millisecondsAgo) / 1000);
 

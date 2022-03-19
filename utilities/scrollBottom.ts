@@ -1,3 +1,9 @@
+/**
+ * checks if a user is some distance away from the bottom of the page
+ * @type {function}
+ * @returns {boolean} boolean
+ */
+
 export const scrollBottom = (): boolean => {
     let scrolledFromTop = window.scrollY,
         visibleWindow = document.documentElement.clientHeight,

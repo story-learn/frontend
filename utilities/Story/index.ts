@@ -5,6 +5,13 @@ import { FrameUpload as Frame, HomeStory } from "../../interfaces";
 import { Action } from "../../Reducer/Story";
 import { copyToClipBoard } from "../copyToClipBoard";
 
+/**
+ * @async
+ * @param stories an array of frames
+ * @param storyInstance axios story instance
+ * @returns story created or error string
+ */
+
 export const createStory = async (
     stories: Frame[],
     storyInstance: AxiosInstance
@@ -32,6 +39,12 @@ export const createStory = async (
     }
 };
 
+/**
+ * searchStory dispatches story action
+ * @param {string} search word to search for
+ * @param dispatchStories action to dispatch
+ */
+
 export const searchStory = (
     search: string,
     dispatchStories: Dispatch<Action>
@@ -40,6 +53,11 @@ export const searchStory = (
 
     dispatchStories({ type: "search", payload: { value: search } });
 };
+
+/**
+ * copies story url to clipboard
+ * @param storyPath url path that will be added to BASE URL
+ */
 
 export const copyStoryLinkToClipBoard = async (storyPath: string) => {
     try {

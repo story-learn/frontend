@@ -6,6 +6,12 @@ let passwordRegex = {
     "all": /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/,
 };
 
+/**
+ * validatePassword function checks if a password contains uppercase, lowercase, digit, and special characters.
+ * @param {string} password password to validate
+ * @returns {boolean | null} any of the condition not met or null
+ */
+
 export const validatePassword = (password: string): string | null => {
     if (!passwordRegex["uppercase"].test(password))
         return `Password must contain at least 1 uppercase letter`;
