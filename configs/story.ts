@@ -21,4 +21,7 @@ export const StoryRoutes = {
 
     // accounts
     GET_USERS: "/auth/accounts/userlist",
+
+    // profile
+    GET_PROFILE: "/auth/users",
 };
