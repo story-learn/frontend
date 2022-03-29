@@ -1,7 +1,7 @@
 import axios from "axios";
 import useSWR from "swr";
 
-export const useSWRFetch = <Data>(url: string | boolean) => {
+export const useSWRFetch = <Data>(url: string | boolean | undefined) => {
     const fetcher = async (url: string) => {
         try {
             let req = await axios.get<Data>(url);

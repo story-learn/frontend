@@ -72,3 +72,17 @@ export interface Search {
     value: string;
     category: SearchCategroy;
 }
+
+export interface Profile {
+    bio: null | string;
+    date_joined: string;
+    first_name: string;
+    followers: string[];
+    followers_count: number;
+    following: string[];
+    following_count: number;
+    id: number;
+    last_name: string;
+    profile_picture: string | null;
+    username: string;
+}
