@@ -1,12 +1,13 @@
 import { FC } from "react";
 import Tabs from "./Tabs";
-import { Tabs as ITabs, HandleTabChanged } from "../../pages/profiles/[id]";
-import { ProfileStories, People } from "./index";
+// import { Tabs as ITabs, HandleTabChanged } from "../../pages/profiles/[id]";
+import { ProfileStories, StoriesLikes, Followers, Followings } from "./index";
+import { Profile } from "../../interfaces";
+import { useProfileContext } from "../../context/pages/Profile";
 
-interface IMain {
-    tabs: ITabs;
-    handleTabChanged: HandleTabChanged;
-}
+type PMain = Pick<Profile, "id">;
+
+interface IMain extends PMain {}
 
 interface PrivateTabs {
     [key: string]: () => JSX.Element;
@@ -18,28 +19,30 @@ interface PrivateTabs {
  * @param newSelected new one to decided= whether to show stories or people
  * @returns selected tab
  */
-const tabs = (selected: string, newSelected: string) => {
+
+const tabs = (selected: string, id: number) => {
     const allTabs: PrivateTabs = {
-        "Stories": () => <ProfileStories selected={selected} />,
-        "People": () => <People selected={selected} />,
+        "Stories": () => <ProfileStories id={id} />,
+        "Likes": () => <StoriesLikes id={id} />,
+        "Followers": () => <Followers />,
+        "Following": () => <Followings />,
     };
 
-    return allTabs[newSelected];
+    return allTabs[selected];
 };
 
-const Main: FC<IMain> = (props) => {
-    const {
-        tabs: { selected },
-    } = props;
+const Main: FC<IMain> = ({ id }) => {
+    let {
+        profile: {
+            tabs: { selected },
+        },
+    } = useProfileContext()!;
 
-    let newSelected =
-        selected === "Stories" || selected === "Likes" ? "Stories" : "People";
-
-    let selectedTab = tabs(selected, newSelected);
+    let selectedTab = tabs(selected, id);
 
     return (
         <div className="profile__main--section flex">
-            <Tabs {...props} />
+            <Tabs />
             {selectedTab?.()}
         </div>
     );

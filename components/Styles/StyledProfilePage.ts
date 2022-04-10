@@ -25,7 +25,8 @@ export const StyledProfilePage = styled.main`
 
             &--div {
                 &-1 {
-                    display: block;
+                    /* display: block; */
+                    flex-direction: column;
                 }
 
                 &-2 {
@@ -86,7 +87,15 @@ export const StyledProfilePage = styled.main`
             justify-content: flex-start;
             overflow-x: auto;
             white-space: nowrap;
+
+            /* Hide scrollbar for IE, Edge and Firefox */
+            -ms-overflow-style: none;
             scrollbar-width: none;
+
+            /* Hide scrollbar for Chrome, Safari and Opera */
+            &::-webkit-scrollbar {
+                display: none;
+            }
         }
 
         &__tab {
@@ -136,6 +145,23 @@ export const StyledProfilePage = styled.main`
         &__main {
             &--section {
                 display: block;
+
+                & > section {
+                    width: 100%;
+                }
+            }
+        }
+
+        &__stories {
+            &--other {
+                padding: 0 3.2rem;
+
+                &--no {
+                }
+
+                &--error {
+                    color: #e22;
+                }
             }
         }
     }
@@ -176,6 +202,7 @@ export const StyledProfilePage = styled.main`
                 &--cont {
                     margin-top: 0;
                     padding-top: 0;
+                    top: 2.5rem;
                 }
             }
 
@@ -207,6 +234,10 @@ export const StyledProfilePage = styled.main`
                             margin-bottom: 0;
                         }
                     }
+                }
+
+                &--other {
+                    padding: 0;
                 }
             }
         }

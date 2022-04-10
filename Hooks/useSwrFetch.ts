@@ -15,7 +15,10 @@ export const useSWRFetch = <Data>(url: string | boolean | undefined) => {
         }
     };
 
-    let { data, error } = useSWR((url as string) || null, fetcher);
+    let { data, error } = useSWR((url as string) || null, fetcher, {
+        revalidateIfStale: false,
+        revalidateOnFocus: false,
+    });
 
     let loading = !data && !error;
 

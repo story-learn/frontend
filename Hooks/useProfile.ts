@@ -6,7 +6,9 @@ export const useProfile = <Data>(id: string | undefined) => {
     // let profileUrl = id && `${BASE_URLS.Story}${StoryRoutes.GET_PROFILE}/${1}`;
     let profileUrl = id && `${BASE_URLS.Story}${StoryRoutes.GET_PROFILE}/${id}`;
 
-    const { data, error, loading } = useSWRFetch<Data>(profileUrl);
+    return useSWRFetch<Data>(profileUrl);
 
-    return { data, error, loading };
+    // const { data, error, loading,mutate } = useSWRFetch<Data>(profileUrl);
+
+    // return { data, error, loading, mutate };
 };

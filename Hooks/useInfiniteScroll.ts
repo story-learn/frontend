@@ -44,8 +44,8 @@ export const useInfiniteScroll = <Data>(
 
     // this is particularly useful for search page when the search query changes
     useEffect(() => {
-        setCurrentPage(1);
-        setTotalPages(1);
+        setCurrentPage(page || 1);
+        setTotalPages(pages || 1);
         setTotalData([]);
     }, [url]);
 

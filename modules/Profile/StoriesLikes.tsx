@@ -13,17 +13,15 @@ type IProfile = Pick<Profile, "id">;
 
 interface Stories extends IStories, IProfile {}
 
-const Stories: FC<{ id: number }> = ({ id }) => {
-    // console.log("stories rendered...");
-
+const StoriesLikes: FC<{ id: number }> = ({ id }) => {
     let {
         profile: {
-            stories: { data, page, pages },
+            likes: { data, page, pages },
         },
         dispatchProfile,
     } = useProfileContext()!;
 
-    let storiesUrl = `${BASE_URLS.Story}${StoryRoutes.GET_PROFILE_STORIES}&search=${id}`;
+    let storiesUrl = `${BASE_URLS.Story}${StoryRoutes.GET_PROFILE_LIKES}?user_id=${id}`;
 
     let { totalData, loading, error, currentPage, totalPages } =
         useInfiniteScroll<HomeStory[]>(storiesUrl, page, pages);
@@ -32,13 +30,14 @@ const Stories: FC<{ id: number }> = ({ id }) => {
         if (!totalData) return;
 
         dispatchProfile({
-            type: "profile_stories",
+            type: "profile_stories_likes",
             payload: {
                 data: totalData,
                 page: currentPage,
                 pages: totalPages,
             },
         });
+
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [totalData]);
 
@@ -61,4 +60,4 @@ const Stories: FC<{ id: number }> = ({ id }) => {
     );
 };
 
-export default Stories;
+export default StoriesLikes;

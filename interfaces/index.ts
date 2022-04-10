@@ -77,9 +77,13 @@ export interface Profile {
     bio: null | string;
     date_joined: string;
     first_name: string;
-    followers: string[];
+    followers: { created: string; id: number; user_id: number }[];
     followers_count: number;
-    following: string[];
+    following: {
+        created: string;
+        id: number;
+        person_user_follows_id: number;
+    }[];
     following_count: number;
     id: number;
     last_name: string;

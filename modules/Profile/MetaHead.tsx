@@ -7,6 +7,8 @@ type PMeta = Pick<Profile, "username">;
 interface IMeta extends PMeta {}
 
 const MetaHead: FC<IMeta> = ({ username }) => {
+    // console.log("meta head rendered...");
+
     return (
         <Head>
             <title>{username} - Story Learn</title>
