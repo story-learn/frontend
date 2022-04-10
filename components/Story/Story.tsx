@@ -40,9 +40,9 @@ const Story: FC<HomeStory> = ({
                             <div>
                                 <Profile
                                     id={user.id}
-                                    firstName={user.first_name}
-                                    lastName={user.last_name}
-                                    userName={user.username}
+                                    first_name={user.first_name}
+                                    last_name={user.last_name}
+                                    username={user.username}
                                     // wait for backend to include profile image in the user's object
                                     imgSrc=""
                                 />

@@ -1,5 +1,6 @@
 import { useRouter } from "next/router";
 import { FC, MouseEventHandler, useRef } from "react";
+import { useAuth } from "../../context/AuthContext";
 import { HomeStory } from "../../interfaces";
 import {
     BookmarkIcon,
@@ -22,6 +23,11 @@ const StoryContentActions: FC<IStoryAction> = ({
     handleCopyStory,
 }) => {
     const { push } = useRouter();
+    const { user } = useAuth();
+
+    const handleFollowUser: MouseEventHandler<HTMLButtonElement> = (e) => {
+        console.log("trying to follow....");
+    };
 
     let actions = [
         {

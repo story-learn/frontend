@@ -113,6 +113,7 @@ const Search: NextPage = () => {
 
         searchStory(search, dispatchStories);
     };
+    // console.log("totalData", totalData);
 
     return (
         <>

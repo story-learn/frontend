@@ -26,7 +26,7 @@ const Header: FC = () => {
     } = main.data!;
 
     const [followBtnText, setFollowBtnText] = useState(
-        followers.findIndex(({ user_id }) => user_id === user.user_id) === -1
+        followers.findIndex(({ user_id }) => user_id === user?.user_id) === -1
             ? "Follow"
             : "Unfollow"
     );

@@ -4,32 +4,53 @@ import { Avatar, Button } from "./../components";
 import { IAvatar } from "./Avatar";
 import { StyledProfile } from "./Styles/StyledProfile";
 
+// export interface IProfile extends IAvatar {
+//     id: number;
+//     firstName: string;
+//     lastName: string;
+//     userName: string;
+//     bio?: string;
+//     // followers?: string;
+//     // followers_count?: { created: string; id: number; user_id: number }[];
+//     followers?: { created: string; id: number; user_id: number }[];
+//     followers_count?: string;
+//     onFollow?: MouseEventHandler<HTMLButtonElement>;
+//     as?: ElementType;
+//     profileClassName?: string;
+// }
+
 export interface IProfile extends IAvatar {
     id: number;
-    firstName: string;
-    lastName: string;
-    userName: string;
+    first_name: string;
+    last_name: string;
+    username: string;
     bio?: string;
-    followers?: string;
+    followers?: { created: string; id: number; user_id: number }[];
+    followers_count?: string;
     onFollow?: MouseEventHandler<HTMLButtonElement>;
+    showFollowBtn?: boolean;
+    followBtnText?: "Follow" | "Unfollow";
     as?: ElementType;
     profileClassName?: string;
 }
 
 const Profile: FC<IProfile> = ({
     id,
-    firstName,
-    lastName,
-    userName,
+    first_name,
+    last_name,
+    username,
     imgSrc,
     bio,
     followers,
+    followers_count,
     onFollow,
     as,
     profileClassName = "",
+    showFollowBtn = false,
+    followBtnText = "Follow",
 }) => {
     const { push } = useRouter();
-    let fullName = `${firstName} ${lastName}`.trim();
+    let fullName = `${first_name} ${last_name}`.trim();
 
     if (!imgSrc) imgSrc = "/assests/jpgs/profile.jfif"; // default image
 
@@ -47,18 +68,27 @@ const Profile: FC<IProfile> = ({
                     {fullName || "Testing Mode"}
                 </button>
                 <div className="profile__userFollow">
-                    <p className="profile__username">{userName}</p>
+                    <p className="profile__username">{username}</p>
                     {followers && (
                         <p className="profile__followers">
-                            {followers} followers
+                            {followers_count} followers
                         </p>
                     )}
                 </div>
                 {bio && <p className="profile__bio truncate">{bio}</p>}
             </div>
-            {onFollow && (
+            {/* {onFollow && (
                 <Button
                     text="Follow"
+                    type="button"
+                    variant="outline"
+                    onClick={onFollow}
+                    className="profile__follow"
+                />
+            )} */}
+            {showFollowBtn && (
+                <Button
+                    text={followBtnText}
                     type="button"
                     variant="outline"
                     onClick={onFollow}

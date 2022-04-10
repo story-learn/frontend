@@ -1,4 +1,4 @@
-import { FC, useEffect } from "react";
+import { FC } from "react";
 import { Accounts, LoadingIndicator } from "../../components";
 import { IAccount } from "../../components/Accounts/Account";
 import { StoryRoutes } from "../../configs/story";
@@ -21,18 +21,38 @@ const Followers: FC = () => {
 
     let followersUrl = `${BASE_URLS.Story}${StoryRoutes.GET_FOLLOWERS}/?user_id=${id}`;
 
-    let { data, error, loading } = useSWRFetch<IAccount[]>(followersUrl);
+    // let { data, error, loading } = useSWRFetch<IAccount[]>(followersUrl);
+    let { data, error, loading } =
+        useSWRFetch<{ created: string; id: number; user_id: IAccount }[]>(
+            followersUrl
+        );
 
-    useEffect(() => {
-        console.log("user either followr or unfollows");
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [profile?.followers_count]);
+    let accounts: IAccount[] = [];
+    if (data) {
+        accounts = [...data].map(({ user_id }) => user_id);
+    }
+
+    const dispatchFollowersAction: IAccount["dispatchFollowAction"] = (
+        status
+    ) => {
+        if (status) {
+            console.log("action failed followers");
+        } else {
+            console.log("action successful followers");
+        }
+    };
 
     return (
         <section>
-            {data && data.length > 0 && <Accounts users={data} />}
-            {loading && <LoadingIndicator />}
-            {!loading && error && <p>There is an error</p>}
+            {loading ? (
+                <LoadingIndicator />
+            ) : error ? (
+                <p>error</p>
+            ) : accounts.length > 0 ? (
+                <Accounts users={accounts} dispatch={dispatchFollowersAction} />
+            ) : (
+                <p>0 followers</p>
+            )}
         </section>
     );
 };
