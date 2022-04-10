@@ -21,12 +21,14 @@ export const ModeVariables = createGlobalStyle`
         --color-9: #c9c9bf;
         --color-10: #000000;
         --color-11: #0A0601;
+        --color-12: #6E6767;
         --auth-bg: #FFFFFF;
 
         --disabled: #F0F0F0;
 
         --box-bg: #F7F2F4;
         --box-bg-2: #f0f0f0;
+        --box-bg-3: rgba(0, 0, 0, 0.12);
         --box-border: #E8E6F0;
 
         --text-col-1: #ffffff;
@@ -51,12 +53,14 @@ export const ModeVariables = createGlobalStyle`
             --color-9: #c9c9bf;
             --color-10: #FFFFFF;
             --color-11: #F7F2F4;
+            --color-12: #FAFAFA;
             --auth-bg: #0A0601;
 
             --disabled: #838383;
 
             --box-bg: #121211;
             --box-bg-2: #121211;
+            --box-bg-3: rgba(250, 250, 250, 0.12);
             --box-border: #232326;
 
             --text-col-1: #0A0601;

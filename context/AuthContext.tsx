@@ -51,7 +51,7 @@ export const AuthProvider: FC = ({ children }) => {
         setUser(null);
     };
 
-    console.log("user", user);
+    // console.log("user", user);
     return (
         <AuthContext.Provider
             value={{

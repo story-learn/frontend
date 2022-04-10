@@ -21,4 +21,13 @@ export const StoryRoutes = {
 
     // accounts
     GET_USERS: "/auth/accounts/userlist",
+
+    // profile
+    GET_PROFILE: "/auth/users",
+    GET_PROFILE_STORIES: "/story/storylist/?category=userid",
+    GET_PROFILE_LIKES: "/story/likes/",
+
+    // followers/following
+    GET_FOLLOWERS: "/userprofile/follow",
+    GET_FOLLOWING: "/userprofile/following",
 };
