@@ -1,9 +1,9 @@
 import { FC, MouseEventHandler, useState } from "react";
 import { Button } from "../../components";
-import { BASE_URLS } from "../../Constants";
 import { useAuth } from "../../context/AuthContext";
 import { useProfileContext } from "../../context/pages/Profile";
 import useStoryRequest from "../../Hooks/useStoryRequest";
+import { followProfile, unFollowProfile } from "../../utilities/Profile";
 import { ProfileImage } from "./index";
 
 const Header: FC = () => {
@@ -40,9 +40,6 @@ const Header: FC = () => {
     const handleFollow: MouseEventHandler<HTMLButtonElement> = async (e) => {
         let currentFollowText = followBtnText;
 
-        let unFollowUrl = `${BASE_URLS.Story}/userprofile/follow/${profileId}/`;
-        let followUrl = `${BASE_URLS.Story}/userprofile/follow/`;
-
         let newFollowersCount =
             currentFollowText === "Follow"
                 ? followers_count + 1
@@ -60,10 +57,8 @@ const Header: FC = () => {
         });
         try {
             followBtnText === "Unfollow"
-                ? await storyInstance.delete(unFollowUrl)
-                : await storyInstance.post(followUrl, {
-                      person_user_follows_id: profileId,
-                  });
+                ? await unFollowProfile(storyInstance, profileId)
+                : await followProfile(storyInstance, profileId);
         } catch (error) {
             console.log("there was error");
             // console.log(error);
