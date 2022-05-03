@@ -115,6 +115,12 @@ export const ElementStyles = createGlobalStyle`
             outline: none;
             border: none;
         }
+
+        &:disabled {
+            cursor:not-allowed !important;
+            background-color: var(--disabled) !important;
+            color: var(--disabled-fg) !important;
+        }
     }
 
 `;

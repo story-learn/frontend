@@ -16,6 +16,7 @@ const Story: FC<HomeStory> = ({
     frames: { image, text },
     id,
     likes,
+    following_story_creator,
 }) => {
     let createdInMilliSeconds = new Date(created).getTime();
     let timeAgo = getTimeAgo(createdInMilliSeconds);
@@ -52,6 +53,9 @@ const Story: FC<HomeStory> = ({
                                 user={user}
                                 id={id}
                                 handleCopyStory={handleShareStory}
+                                following_story_creator={
+                                    following_story_creator
+                                }
                             />
                         </header>
                         <div className="story__main">

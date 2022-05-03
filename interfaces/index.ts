@@ -66,6 +66,7 @@ export interface HomeStory {
         id: number;
     };
     likes: number;
+    following_story_creator: boolean | null;
 }
 
 export interface Search {

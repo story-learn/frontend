@@ -2,10 +2,11 @@ import { useEffect, useState } from "react";
 import { scrollBottom } from "../utilities/scrollBottom";
 import { useFetch } from "./useFetch";
 import useSWRInfinite from "swr/infinite";
-import axios from "axios";
+import { AxiosInstance } from "axios";
 
 export const useInfiniteScroll = <Data>(
-    url: string,
+    url: string | boolean,
+    axiosInstance?: AxiosInstance,
     page?: number,
     pages?: number
 ) => {
@@ -16,13 +17,13 @@ export const useInfiniteScroll = <Data>(
     let infiniteUrl = currentPage <= totalPages && url;
 
     if (infiniteUrl) {
-        let dataUrl = new URL(infiniteUrl);
+        let dataUrl = new URL(infiniteUrl as string);
         dataUrl.searchParams.set("page", String(currentPage));
 
         infiniteUrl = dataUrl.href;
     }
 
-    let { data, error, loading } = useFetch<Data>(infiniteUrl);
+    let { data, error, loading } = useFetch<Data>(infiniteUrl, axiosInstance);
 
     // this might be in case of search page where there is no search url
     if (!infiniteUrl) loading = false;
@@ -47,10 +48,11 @@ export const useInfiniteScroll = <Data>(
         setCurrentPage(page || 1);
         setTotalPages(pages || 1);
         setTotalData([]);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [url]);
 
     useEffect(() => {
-        if (!data) return;
+        if (!data || !infiniteUrl) return;
 
         let newData = data as unknown as {
             num_of_pages: number;

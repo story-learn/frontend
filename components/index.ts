@@ -11,6 +11,7 @@ export { default as LoadingIndicator } from "./Indicators/LoadingIndicator";
 export { default as Button } from "./Button/Index";
 export { default as OutlineButton } from "./Button/OutlineButton";
 export { default as ProtectRoute } from "./ProtectRoute";
+export { default as StoryInstanceOption } from "./StoryInstanceOption";
 export { default as ModeToggle } from "./ModeToggle/Index";
 export { default as Notifications } from "./Notifications/Index";
 export { default as Notification } from "./Notifications/Notification";

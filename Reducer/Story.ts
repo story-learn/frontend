@@ -24,6 +24,11 @@ type UploadNewStoryAction = {
     payload: HomeStory;
 };
 
+type StoryCreatorFollowedAction = {
+    type: "story_creator_followed_action";
+    payload: { creatorId: number; following_story_creator: boolean };
+};
+
 type StorySearch = {
     type: "search";
     payload: {
@@ -31,7 +36,11 @@ type StorySearch = {
     };
 };
 
-export type Action = FetchStoriesAction | UploadNewStoryAction | StorySearch;
+export type Action =
+    | FetchStoriesAction
+    | UploadNewStoryAction
+    | StorySearch
+    | StoryCreatorFollowedAction;
 
 export const InitialStoryState: CounterState = {
     status: "empty",
@@ -72,6 +81,19 @@ export const reducer = (state: CounterState, action: Action) => {
         let prevSearch = state.search;
 
         state = { ...state, search: { ...prevSearch, ...action.payload } };
+    }
+
+    if (action.type === "story_creator_followed_action") {
+        const { creatorId, following_story_creator } = action.payload;
+
+        prevStories = prevStories.map((story) => {
+            if (story.user.id === creatorId) {
+                story.following_story_creator = following_story_creator;
+            }
+
+            return story;
+        });
+        state = { ...state, data: prevStories };
     }
 
     return state;
