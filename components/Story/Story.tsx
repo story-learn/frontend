@@ -9,14 +9,18 @@ import { getTimeAgo } from "../../utilities/getTimeAgo";
 import { BsBookmark } from "react-icons/bs";
 import toast from "react-hot-toast";
 import { copyStoryLinkToClipBoard } from "../../utilities/Story";
+import { IStories } from "./Stories";
 
-const Story: FC<HomeStory> = ({
+interface IStory extends HomeStory, Pick<IStories, "handleFollowCreator"> {}
+
+const Story: FC<IStory> = ({
     user,
     created,
     frames: { image, text },
     id,
     likes,
     following_story_creator,
+    handleFollowCreator,
 }) => {
     let createdInMilliSeconds = new Date(created).getTime();
     let timeAgo = getTimeAgo(createdInMilliSeconds);
@@ -56,6 +60,7 @@ const Story: FC<HomeStory> = ({
                                 following_story_creator={
                                     following_story_creator
                                 }
+                                handleFollowCreator={handleFollowCreator}
                             />
                         </header>
                         <div className="story__main">

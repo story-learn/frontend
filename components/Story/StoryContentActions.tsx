@@ -1,6 +1,9 @@
+import Link from "next/link";
 import { useRouter } from "next/router";
 import { FC, MouseEventHandler, useRef, useState } from "react";
 import toast from "react-hot-toast";
+import { IconType } from "react-icons";
+import { BsPerson } from "react-icons/bs";
 import { useAuth } from "../../context/AuthContext";
 // import { useStories } from "../../context/StoriesContext";
 import { useStoryAction } from "../../Hooks/useStoryAction";
@@ -14,19 +17,31 @@ import {
     ThreeDotsHorizontalIcon,
     ViewIcon,
 } from "../SVGs";
+import { IStories } from "./Stories";
 import { StyledStoryContentActions } from "./StyledStoryContentActions";
 
 type StoryAction = Pick<HomeStory, "user" | "id" | "following_story_creator">;
 
-export interface IStoryAction extends StoryAction {
+export interface IStoryAction
+    extends StoryAction,
+        Pick<IStories, "handleFollowCreator"> {
     handleCopyStory: MouseEventHandler<HTMLButtonElement>;
 }
+
+type Actions = {
+    Icon: FC<{}> | IconType;
+    text: string;
+    action?: Function;
+    href?: string;
+    className?: string;
+}[];
 
 const StoryContentActions: FC<IStoryAction> = ({
     user: { username, id: creatorId },
     id,
     following_story_creator,
     handleCopyStory,
+    handleFollowCreator,
 }) => {
     const { push } = useRouter();
     const { user } = useAuth();
@@ -37,7 +52,7 @@ const StoryContentActions: FC<IStoryAction> = ({
     const contentRef = useRef<HTMLUListElement>(null);
     const [followActionSubmitted, setFollowActionSubmitted] = useState(false);
 
-    let actions = [
+    let actions: Actions = [
         {
             Icon: FollowUserIcon,
             text: `${
@@ -53,11 +68,13 @@ const StoryContentActions: FC<IStoryAction> = ({
                     );
 
                 setFollowActionSubmitted(true);
+
                 try {
                     await storyFollowProfile(
                         following_story_creator,
                         creatorId
                     );
+                    handleFollowCreator(following_story_creator, creatorId);
                 } catch (error) {
                     toast.custom(
                         <Notification
@@ -99,6 +116,15 @@ const StoryContentActions: FC<IStoryAction> = ({
         },
     ];
 
+    if (user.user_id === creatorId) {
+        actions[0] = {
+            Icon: BsPerson,
+            text: "Go to profile",
+            action: () => push(`/profiles/${user.user_id}`),
+            className: "story__contents-action--follow",
+        };
+    }
+
     const handleContentActions: MouseEventHandler<HTMLButtonElement> = (e) => {
         e.preventDefault();
 
@@ -116,27 +142,29 @@ const StoryContentActions: FC<IStoryAction> = ({
                 <ThreeDotsHorizontalIcon />
             </button>
             <ul ref={contentRef} className="story__contents-actions arrow">
-                {actions.map(({ action, Icon, text, className }, index) => (
-                    <li key={index} className={className || ""}>
-                        <button
-                            onClick={(e) => {
-                                // e.preventDefault();
-                                // e.stopPropagation();
-                                action(e);
-                                handleContentActions(e);
-                            }}
-                            disabled={
-                                (className ===
-                                    "story__contents-action--follow" &&
-                                    followActionSubmitted) ||
-                                false
-                            }
-                        >
-                            <Icon />
-                            <span>{text}</span>
-                        </button>
-                    </li>
-                ))}
+                {actions.map(
+                    ({ action, Icon, text, className, href }, index) => (
+                        <li key={index} className={className || ""}>
+                            <button
+                                onClick={(e) => {
+                                    // e.preventDefault();
+                                    // e.stopPropagation();
+                                    action?.(e);
+                                    handleContentActions(e);
+                                }}
+                                disabled={
+                                    (className ===
+                                        "story__contents-action--follow" &&
+                                        followActionSubmitted) ||
+                                    false
+                                }
+                            >
+                                <Icon />
+                                <span>{text}</span>
+                            </button>
+                        </li>
+                    )
+                )}
             </ul>
         </StyledStoryContentActions>
     );

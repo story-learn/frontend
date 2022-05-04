@@ -1,4 +1,6 @@
+import { FormEventHandler, useEffect, useState } from "react";
 import { NextPage } from "next";
+import { useRouter } from "next/router";
 import {
     InputSearch,
     Stories,
@@ -7,80 +9,53 @@ import {
 } from "../components";
 import { StyledSearchPage } from "../components/Styles/StyledSearchPage";
 import { StyledForm } from "../components/Form/FormStyles";
-import { FormEventHandler, useEffect, useState } from "react";
 import { useStories } from "../context/StoriesContext";
-import { BASE_URLS } from "../Constants";
-import { StoryRoutes } from "../configs/story";
-import { useRouter } from "next/router";
 import { useInfiniteScroll } from "../Hooks/useInfiniteScroll";
 import { HomeStory, Search as SearchInterface } from "../interfaces";
 import { searchStory } from "../utilities/Story";
 import { SearchCategories, SearchHeader } from "../modules/Search";
 import { IAccount } from "../components/Accounts/Account";
+import { HandleFollowCreator } from "../components/Story/Stories";
+import { useAuth } from "../context/AuthContext";
+import useStoryRequest from "../Hooks/useStoryRequest";
+import { determineSearchUrl } from "../utilities/Search";
 
 export type Category = "" | "story" | "username";
 
 const Search: NextPage = () => {
     const { query, push, pathname } = useRouter();
+    const { user, authenticating } = useAuth();
+    const { storyInstance } = useStoryRequest();
 
     let {
         stories: {
-            data: stories,
             search: { category, value },
         },
         dispatchStories,
     } = useStories();
 
-    let baseUrl = BASE_URLS.Story;
-    let searchUrl = "";
-
-    if (value) {
-        searchUrl = baseUrl;
-
-        if (category === "story") {
-            searchUrl += `${StoryRoutes.GET_STORIES}/?search=${value}&category=${category}`;
-        } else {
-            searchUrl += StoryRoutes.GET_USERS;
-
-            let useUserNameAsCategory = false,
-                currentSearch = value; // save it in a new variable so as the preserve the real one
-
-            // remove @ because we're going to use username as the category
-            if (currentSearch.startsWith("@")) {
-                currentSearch = currentSearch.slice(1);
-                useUserNameAsCategory = true;
-            }
-
-            // this searches for username, firstName and lastName
-            searchUrl += `/?search=${currentSearch}`;
-
-            // this limits search to username only
-            if (useUserNameAsCategory) searchUrl += `&category=${category}`;
-        }
-    }
+    let searchUrl = determineSearchUrl(value, category, authenticating);
 
     let { currentPage, error, loading, totalData, totalPages } =
-        useInfiniteScroll<HomeStory | IAccount>(searchUrl);
+        useInfiniteScroll<HomeStory | IAccount>(
+            searchUrl,
+            Boolean(user) ? storyInstance : undefined
+        );
 
     const [search, setSearch] = useState("");
-    const [initialRender, setInitialRender] = useState(true);
+    const [searchData, setSearchData] = useState<(HomeStory | IAccount)[]>([]);
 
-    // only show maximum of 15 stories from homepage
-    stories = stories.slice(0, 15);
+    useEffect(() => {
+        if (totalData) setSearchData(totalData);
+    }, [totalData]);
 
     const handleChangeCategory = (category: string) => {
         // totalData = []; // ! this is not working!!
 
         totalData.length = 0; // + this works
+        setSearchData([]);
         dispatchStories({ type: "search", payload: { category } });
     };
-
-    useEffect(() => {
-        if (!value) return;
-
-        if (!loading) setInitialRender(false);
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [loading]);
 
     // update path url when search/category changes
     useEffect(() => {
@@ -109,11 +84,22 @@ const Search: NextPage = () => {
         e.preventDefault();
 
         if (!search) return;
-        setInitialRender(false);
 
         searchStory(search, dispatchStories);
     };
-    // console.log("totalData", totalData);
+
+    const handleFollowCreator: HandleFollowCreator = (
+        following_story_creator,
+        creatorId
+    ) => {
+        let newData = [...searchData] as HomeStory[];
+        newData.forEach((story) => {
+            if (story.user.id === creatorId) {
+                story.following_story_creator = !following_story_creator;
+            }
+        });
+        setSearchData(newData);
+    };
 
     return (
         <>
@@ -134,26 +120,27 @@ const Search: NextPage = () => {
                         handleChangeCategory={handleChangeCategory}
                     />
                     <section className="search__result">
-                        {!loading && initialRender && stories.length > 0 && (
-                            <Stories stories={stories} />
-                        )}
-
-                        {!initialRender && (
+                        {!value ? (
+                            <h2>Search for a word</h2>
+                        ) : (
                             <>
-                                {!loading && totalData.length === 0 ? (
+                                {!loading && searchData.length === 0 ? (
                                     <div>No result found</div>
                                 ) : (
                                     <>
                                         {category === "story" && (
                                             <Stories
                                                 stories={
-                                                    totalData as HomeStory[]
+                                                    searchData as HomeStory[]
+                                                }
+                                                handleFollowCreator={
+                                                    handleFollowCreator
                                                 }
                                             />
                                         )}
                                         {category === "username" && (
                                             <Accounts
-                                                users={totalData as IAccount[]}
+                                                users={searchData as IAccount[]}
                                                 className="search__profiles"
                                             />
                                         )}

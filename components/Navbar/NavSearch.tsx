@@ -18,6 +18,8 @@ const NavSearch: FC = () => {
     const handleSearchStories: FormEventHandler<HTMLFormElement> = (e) => {
         e.preventDefault();
 
+        if (!search) return;
+
         // searchStory(search, dispatchStories);
 
         // go to search page if user is not on search page

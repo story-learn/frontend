@@ -2,6 +2,7 @@ import type { NextPage } from "next";
 import { useEffect, useState } from "react";
 import { CustomLink, LoadingIndicator, Modal, Stories } from "../components";
 import { HeadTag } from "../components/head";
+import { HandleFollowCreator } from "../components/Story/Stories";
 import { BASE_URLS } from "../Constants";
 import { useAuth } from "../context/AuthContext";
 import { useStories } from "../context/StoriesContext";
@@ -13,6 +14,7 @@ import { StoryRoutes } from "./../configs/story";
 const Home: NextPage = () => {
     const { user, authenticating } = useAuth();
     const { storyInstance } = useStoryRequest();
+
     const [promptUserToLogin, setPromptUserToLogin] = useState(false);
 
     let {
@@ -58,11 +60,27 @@ const Home: NextPage = () => {
         };
     }, [user]);
 
+    const handleFollowCreator: HandleFollowCreator = (
+        following_story_creator,
+        creatorId
+    ) => {
+        dispatchStories({
+            type: "story_creator_followed_action",
+            payload: {
+                creatorId,
+                following_story_creator: !following_story_creator,
+            },
+        });
+    };
+
     return (
         <>
             <HeadTag title="Storylearn - Home" />
             <main>
-                <Stories stories={stories} />
+                <Stories
+                    stories={stories}
+                    handleFollowCreator={handleFollowCreator}
+                />
                 {loading && <LoadingIndicator />}
                 {error && <p>Error loading stories</p>}
             </main>

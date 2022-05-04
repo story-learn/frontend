@@ -15,13 +15,13 @@ export const useStoryAction = () => {
             following_story_creator
                 ? await unFollowProfile(storyInstance, creatorId)
                 : await followProfile(storyInstance, creatorId);
-            dispatchStories({
-                type: "story_creator_followed_action",
-                payload: {
-                    creatorId,
-                    following_story_creator: !following_story_creator,
-                },
-            });
+            // dispatchStories({
+            //     type: "story_creator_followed_action",
+            //     payload: {
+            //         creatorId,
+            //         following_story_creator: !following_story_creator,
+            //     },
+            // });
         } catch (error) {
             console.log("error");
             throw error;

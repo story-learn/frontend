@@ -24,7 +24,7 @@ const StoriesLikes: FC<{ id: number }> = ({ id }) => {
     let storiesUrl = `${BASE_URLS.Story}${StoryRoutes.GET_PROFILE_LIKES}?user_id=${id}`;
 
     let { totalData, loading, error, currentPage, totalPages } =
-        useInfiniteScroll<HomeStory[]>(storiesUrl, page, pages);
+        useInfiniteScroll<HomeStory[]>(storiesUrl, undefined, page, pages);
 
     useEffect(() => {
         if (!totalData) return;
@@ -44,7 +44,11 @@ const StoriesLikes: FC<{ id: number }> = ({ id }) => {
     return (
         <section className="profile__stories">
             {data.length > 0 ? (
-                <StoriesComponent stories={data} />
+                <StoriesComponent
+                    stories={data}
+                    // FIXME: handle this in another pull request
+                    handleFollowCreator={(e) => {}}
+                />
             ) : data.length === 0 && !loading ? (
                 <p className="profile__stories--other profile__stories--other-no">
                     No Stories
