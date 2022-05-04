@@ -116,7 +116,7 @@ const StoryContentActions: FC<IStoryAction> = ({
         },
     ];
 
-    if (user.user_id === creatorId) {
+    if (user?.user_id === creatorId) {
         actions[0] = {
             Icon: BsPerson,
             text: "Go to profile",

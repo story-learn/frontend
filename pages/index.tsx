@@ -12,7 +12,7 @@ import { HomeStory } from "../interfaces";
 import { StoryRoutes } from "./../configs/story";
 
 const Home: NextPage = () => {
-    const { user, authenticating } = useAuth();
+    const { user } = useAuth();
     const { storyInstance } = useStoryRequest();
 
     const [promptUserToLogin, setPromptUserToLogin] = useState(false);
@@ -27,14 +27,12 @@ const Home: NextPage = () => {
     } = useStories();
 
     // wait for authenticated status before calling hook. This is to prevent the useInfiniteScroll hook from calling the API before knowing if the user is authenticated.
-    let storiesUrl = authenticating
-        ? false
-        : `${BASE_URLS.Story}${StoryRoutes.GET_STORIES}`;
+    let storiesUrl = `${BASE_URLS.Story}${StoryRoutes.GET_STORIES}`;
 
     let { totalData, loading, error, currentPage, totalPages } =
         useInfiniteScroll<HomeStory[]>(
             storiesUrl,
-            Boolean(user) ? storyInstance : undefined,
+            storyInstance,
             storiesPage,
             totalStoriesPages
         );

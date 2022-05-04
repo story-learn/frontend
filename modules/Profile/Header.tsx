@@ -56,9 +56,10 @@ const Header: FC = () => {
             },
         });
         try {
+            // storyInstance will be available because the button for this action is only rendered if the user is logged in
             followBtnText === "Unfollow"
-                ? await unFollowProfile(storyInstance, profileId)
-                : await followProfile(storyInstance, profileId);
+                ? await unFollowProfile(storyInstance!, profileId)
+                : await followProfile(storyInstance!, profileId);
         } catch (error) {
             console.log("there was error");
             // console.log(error);

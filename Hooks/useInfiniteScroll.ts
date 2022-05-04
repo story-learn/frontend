@@ -6,7 +6,7 @@ import { AxiosInstance } from "axios";
 
 export const useInfiniteScroll = <Data>(
     url: string | boolean,
-    axiosInstance?: AxiosInstance,
+    axiosInstance?: AxiosInstance | null,
     page?: number,
     pages?: number
 ) => {

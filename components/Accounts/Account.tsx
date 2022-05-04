@@ -35,6 +35,8 @@ const Account: FC<IAccount> = (props) => {
         setFollowBtnText((prev) => (prev === "Follow" ? "Unfollow" : "Follow")); // update UI immediately
         props.dispatchFollowAction?.();
         try {
+            if (!storyInstance) return;
+
             followBtnText === "Unfollow"
                 ? await unFollowProfile(storyInstance, props.id)
                 : await followProfile(storyInstance, props.id);

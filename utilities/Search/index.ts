@@ -11,13 +11,13 @@ import { Search } from "../../interfaces";
 
 export const determineSearchUrl = (
     value: Search["value"],
-    category: Search["category"],
-    authenticating: boolean
+    category: Search["category"]
 ) => {
     let baseUrl = BASE_URLS.Story;
     let searchUrl = "";
 
-    if (value && !authenticating) {
+    // if (value && !authenticating) {
+    if (value) {
         searchUrl = baseUrl;
 
         if (category === "story") {

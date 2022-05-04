@@ -12,6 +12,8 @@ export const useStoryAction = () => {
         creatorId: IStoryAction["user"]["id"]
     ) => {
         try {
+            if (!storyInstance) return;
+
             following_story_creator
                 ? await unFollowProfile(storyInstance, creatorId)
                 : await followProfile(storyInstance, creatorId);

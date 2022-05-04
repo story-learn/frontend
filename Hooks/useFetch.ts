@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 
 export const useFetch = <Data>(
     url: string | boolean,
-    axiosInstance?: AxiosInstance
+    axiosInstance?: AxiosInstance | null
 ) => {
     const fetcher = async () => {
         try {
@@ -31,6 +31,7 @@ export const useFetch = <Data>(
     const [error, setError] = useState<null | string>(null);
 
     useEffect(() => {
+        // if (!url || axiosInstance === null) return;
         if (!url) return;
 
         const fetchData = async () => {

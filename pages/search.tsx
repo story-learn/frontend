@@ -16,7 +16,6 @@ import { searchStory } from "../utilities/Story";
 import { SearchCategories, SearchHeader } from "../modules/Search";
 import { IAccount } from "../components/Accounts/Account";
 import { HandleFollowCreator } from "../components/Story/Stories";
-import { useAuth } from "../context/AuthContext";
 import useStoryRequest from "../Hooks/useStoryRequest";
 import { determineSearchUrl } from "../utilities/Search";
 
@@ -24,7 +23,6 @@ export type Category = "" | "story" | "username";
 
 const Search: NextPage = () => {
     const { query, push, pathname } = useRouter();
-    const { user, authenticating } = useAuth();
     const { storyInstance } = useStoryRequest();
 
     let {
@@ -34,13 +32,10 @@ const Search: NextPage = () => {
         dispatchStories,
     } = useStories();
 
-    let searchUrl = determineSearchUrl(value, category, authenticating);
+    let searchUrl = determineSearchUrl(value, category);
 
     let { currentPage, error, loading, totalData, totalPages } =
-        useInfiniteScroll<HomeStory | IAccount>(
-            searchUrl,
-            Boolean(user) ? storyInstance : undefined
-        );
+        useInfiniteScroll<HomeStory | IAccount>(searchUrl, storyInstance);
 
     const [search, setSearch] = useState("");
     const [searchData, setSearchData] = useState<(HomeStory | IAccount)[]>([]);
