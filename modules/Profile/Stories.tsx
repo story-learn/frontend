@@ -25,7 +25,9 @@ const Stories: FC<{ id: number }> = ({ id }) => {
         dispatchProfile,
     } = useProfileContext()!;
 
-    let storiesUrl = `${BASE_URLS.Story}${StoryRoutes.GET_PROFILE_STORIES}&search=${id}`;
+    let storiesUrl =
+        storyInstance &&
+        `${BASE_URLS.Story}${StoryRoutes.GET_PROFILE_STORIES}&search=${id}`;
 
     let { totalData, loading, error, currentPage, totalPages } =
         useInfiniteScroll<HomeStory[]>(storiesUrl, storyInstance, page, pages);

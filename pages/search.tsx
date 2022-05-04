@@ -32,7 +32,7 @@ const Search: NextPage = () => {
         dispatchStories,
     } = useStories();
 
-    let searchUrl = determineSearchUrl(value, category);
+    let searchUrl = storyInstance && determineSearchUrl(value, category);
 
     let { currentPage, error, loading, totalData, totalPages } =
         useInfiniteScroll<HomeStory | IAccount>(searchUrl, storyInstance);

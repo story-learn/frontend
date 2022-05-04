@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 // import useSWR from "swr";
 
 export const useFetch = <Data>(
-    url: string | boolean,
+    url: string | boolean | null,
     axiosInstance?: AxiosInstance | null
 ) => {
     const fetcher = async () => {
