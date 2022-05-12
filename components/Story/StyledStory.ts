@@ -1,7 +1,10 @@
 import styled from "styled-components";
 import { device } from "../../styles/breakpoints";
+import { IStory } from "./Story";
 
-export const StyledStory = styled.li`
+interface StyledStoryProps extends Pick<IStory, "user_liked_story"> {}
+
+export const StyledStory = styled.li<StyledStoryProps>`
     width: 100%;
     border-bottom: 0.1rem solid var(--box-border);
     padding-bottom: 1.6rem;
@@ -76,6 +79,10 @@ export const StyledStory = styled.li`
                 svg {
                     margin-right: 0.5rem;
                 }
+
+                &:hover {
+                    opacity: 0.5s;
+                }
             }
 
             &-bookmark,
@@ -92,7 +99,9 @@ export const StyledStory = styled.li`
             }
 
             &-like {
-                background-color: var(--primary);
+                /* background-color: var(--primary); */
+                color: ${({ user_liked_story }) =>
+                    user_liked_story ? "var(--primary)" : "var(--general-fg)"};
             }
 
             &-share {

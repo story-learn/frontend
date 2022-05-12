@@ -10,9 +10,14 @@ export type HandleFollowCreator = (
 export interface IStories {
     stories: HomeStory[];
     handleFollowCreator: HandleFollowCreator;
+    handleLikeStory: (storyId: number, userLikedStory: boolean) => void;
 }
 
-const Stories: FC<IStories> = ({ stories, handleFollowCreator }) => {
+const Stories: FC<IStories> = ({
+    stories,
+    handleFollowCreator,
+    handleLikeStory,
+}) => {
     // use this in testing mode to remove stories that have neither image or text
     stories = stories.filter(({ frames: { image, text } }) => image || text);
 
@@ -23,6 +28,7 @@ const Stories: FC<IStories> = ({ stories, handleFollowCreator }) => {
                     {...story}
                     key={story.id}
                     handleFollowCreator={handleFollowCreator}
+                    handleLikeStory={handleLikeStory}
                 />
             ))}
         </ul>

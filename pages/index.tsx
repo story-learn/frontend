@@ -72,6 +72,13 @@ const Home: NextPage = () => {
         });
     };
 
+    const handleLikeStory = (storyId: number, userLikedStory: boolean) => {
+        dispatchStories({
+            type: "story_liked_or_unliked",
+            payload: { storyId, userLikedStory },
+        });
+    };
+
     return (
         <>
             <HeadTag title="Storylearn - Home" />
@@ -79,6 +86,7 @@ const Home: NextPage = () => {
                 <Stories
                     stories={stories}
                     handleFollowCreator={handleFollowCreator}
+                    handleLikeStory={handleLikeStory}
                 />
                 {loading && <LoadingIndicator />}
                 {error && <p>Error loading stories</p>}

@@ -29,6 +29,11 @@ type StoryCreatorFollowedAction = {
     payload: { creatorId: number; following_story_creator: boolean };
 };
 
+type StoryLikedOrUnliked = {
+    type: "story_liked_or_unliked";
+    payload: { storyId: number; userLikedStory: boolean };
+};
+
 type StorySearch = {
     type: "search";
     payload: {
@@ -40,7 +45,8 @@ export type Action =
     | FetchStoriesAction
     | UploadNewStoryAction
     | StorySearch
-    | StoryCreatorFollowedAction;
+    | StoryCreatorFollowedAction
+    | StoryLikedOrUnliked;
 
 export const InitialStoryState: CounterState = {
     status: "empty",
@@ -93,6 +99,28 @@ export const reducer = (state: CounterState, action: Action) => {
 
             return story;
         });
+        state = { ...state, data: prevStories };
+    }
+
+    if (action.type === "story_liked_or_unliked") {
+        const { storyId, userLikedStory } = action.payload;
+
+        prevStories = prevStories.map((story) => {
+            if (story.id === storyId) {
+                let { likes, user_liked_story } = story;
+
+                likes = userLikedStory ? likes - 1 : likes + 1;
+                user_liked_story = !userLikedStory;
+
+                story = {
+                    ...story,
+                    likes,
+                    user_liked_story,
+                };
+            }
+            return story;
+        });
+
         state = { ...state, data: prevStories };
     }
 

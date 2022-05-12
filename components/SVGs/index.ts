@@ -17,6 +17,7 @@ export { default as ProfileIcon } from "./ProfileIcon";
 export { default as UploadIcon } from "./UploadIcon";
 export { default as ViewIcon } from "./ViewIcon";
 export { default as LoveIcon } from "./LoveIcon";
+export { default as LoveIconOutline } from "./LoveIconOutline";
 export { default as ShareIcon } from "./ShareIcon";
 export { default as ThreeDotsHorizontalIcon } from "./ThreeDotsHorizontalIcon";
 export { default as FollowUserIcon } from "./FollowUserIcon";

@@ -2,16 +2,20 @@ import Link from "next/link";
 import Image from "next/image";
 import { FC, MouseEventHandler } from "react";
 import { HomeStory } from "../../interfaces";
-import { LoveIcon, ShareIcon } from "../SVGs";
+import { LoveIcon, ShareIcon, LoveIconOutline } from "../SVGs";
 import { Profile, StoryContentActions, Notification } from "./../../components";
 import { StyledStory } from "./StyledStory";
 import { getTimeAgo } from "../../utilities/getTimeAgo";
 import { BsBookmark } from "react-icons/bs";
 import toast from "react-hot-toast";
-import { copyStoryLinkToClipBoard } from "../../utilities/Story";
+import { copyStoryLinkToClipBoard, likeStory } from "../../utilities/Story";
 import { IStories } from "./Stories";
+import useStoryRequest from "../../Hooks/useStoryRequest";
+import { useAuth } from "../../context/AuthContext";
 
-interface IStory extends HomeStory, Pick<IStories, "handleFollowCreator"> {}
+export interface IStory
+    extends HomeStory,
+        Pick<IStories, "handleFollowCreator" | "handleLikeStory"> {}
 
 const Story: FC<IStory> = ({
     user,
@@ -21,7 +25,11 @@ const Story: FC<IStory> = ({
     likes,
     following_story_creator,
     handleFollowCreator,
+    handleLikeStory,
+    user_liked_story,
 }) => {
+    const { user: loggdInUser } = useAuth();
+    const { storyInstance } = useStoryRequest();
     let createdInMilliSeconds = new Date(created).getTime();
     let timeAgo = getTimeAgo(createdInMilliSeconds);
 
@@ -36,8 +44,28 @@ const Story: FC<IStory> = ({
         }
     };
 
+    const onLikeOrUnlikeStory = async () => {
+        if (!storyInstance) return;
+
+        if (!loggdInUser) {
+            return toast.custom(
+                <Notification type="error" shortText="You are not logged In" />
+            );
+        }
+
+        try {
+            // update UI immediately
+            handleLikeStory(id, user_liked_story);
+            await likeStory(storyInstance, id, user_liked_story);
+        } catch (error) {
+            // revert UI if there is an error
+            handleLikeStory(id, !user_liked_story);
+            console.log(error);
+        }
+    };
+
     return (
-        <StyledStory>
+        <StyledStory user_liked_story={user_liked_story}>
             <article className="story">
                 <Link href={`/stories/${id}`}>
                     <a className="story__link story__contents">
@@ -85,8 +113,11 @@ const Story: FC<IStory> = ({
                     <button className="story__actions-bookmark">
                         <BsBookmark />
                     </button>
-                    <button className="story__actions-like">
-                        <LoveIcon />
+                    <button
+                        className="story__actions-like"
+                        onClick={onLikeOrUnlikeStory}
+                    >
+                        {user_liked_story ? <LoveIcon /> : <LoveIconOutline />}
                         {likes}
                     </button>
                     <button

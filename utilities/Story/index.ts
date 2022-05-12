@@ -66,3 +66,30 @@ export const copyStoryLinkToClipBoard = async (storyPath: string) => {
         throw error;
     }
 };
+
+/**
+ * @description send a request to like or unlike a story
+ * @async
+ * @param {AxiosInstance} storyInstance axios story instance
+ * @param {number} story_id id of the story to like/unlike
+ * @param {boolean} liked whether story is liked/not
+ */
+export const likeStory = async (
+    storyInstance: AxiosInstance,
+    story_id: number,
+    liked: boolean
+) => {
+    let route = StoryRoutes.LIKE_STORY;
+
+    if (liked) route += `${story_id}/`; // this means user wants to unlike
+
+    try {
+        let result = liked
+            ? await storyInstance.delete(route)
+            : await storyInstance.post(route, { story_id });
+
+        // console.log(result);
+    } catch (error) {
+        throw error;
+    }
+};
