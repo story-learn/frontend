@@ -131,6 +131,7 @@ const Search: NextPage = () => {
                                                 handleFollowCreator={
                                                     handleFollowCreator
                                                 }
+                                                handleLikeStory={() => {}} // FIXME: update to normal function
                                             />
                                         )}
                                         {category === "username" && (
