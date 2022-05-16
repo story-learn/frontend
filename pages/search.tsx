@@ -96,6 +96,22 @@ const Search: NextPage = () => {
         setSearchData(newData);
     };
 
+    const handleLikeStory = (storyId: number, userLikedStory: boolean) => {
+        let stories = ([...searchData] as HomeStory[]).map((story) => {
+            if (story.id === storyId) {
+                story = {
+                    ...story,
+                    user_liked_story: !userLikedStory,
+                    likes: userLikedStory ? story.likes - 1 : story.likes + 1,
+                };
+            }
+
+            return story;
+        });
+
+        setSearchData(stories);
+    };
+
     return (
         <>
             <StyledSearchPage>
@@ -131,7 +147,9 @@ const Search: NextPage = () => {
                                                 handleFollowCreator={
                                                     handleFollowCreator
                                                 }
-                                                handleLikeStory={() => {}} // FIXME: update to normal function
+                                                handleLikeStory={
+                                                    handleLikeStory
+                                                } // FIXME: update to normal function
                                             />
                                         )}
                                         {category === "username" && (
