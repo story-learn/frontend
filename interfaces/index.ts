@@ -70,6 +70,13 @@ export interface HomeStory {
     user_liked_story: boolean;
 }
 
+export interface LikedStories {
+    created: string;
+    id: number;
+    user_id: number;
+    story: HomeStory;
+}
+
 export interface Search {
     value: string;
     category: SearchCategroy;

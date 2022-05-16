@@ -27,7 +27,7 @@ export const StoryRoutes = {
     // profile
     GET_PROFILE: "/auth/users",
     GET_PROFILE_STORIES: "/story/storylist/?category=userid",
-    GET_PROFILE_LIKES: "/story/likes/",
+    GET_PROFILE_LIKES: "/story/userlikes/",
 
     // followers/following
     GET_FOLLOWERS: "/userprofile/follow",

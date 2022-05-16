@@ -59,7 +59,7 @@ const Story: FC<IStory> = ({
             await likeStory(storyInstance, id, user_liked_story);
         } catch (error) {
             // revert UI if there is an error
-            handleLikeStory(id, !user_liked_story);
+            handleLikeStory(id, !user_liked_story, true);
             console.log(error);
         }
     };

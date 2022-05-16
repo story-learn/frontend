@@ -149,7 +149,7 @@ const Search: NextPage = () => {
                                                 }
                                                 handleLikeStory={
                                                     handleLikeStory
-                                                } // FIXME: update to normal function
+                                                }
                                             />
                                         )}
                                         {category === "username" && (

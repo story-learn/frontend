@@ -10,7 +10,11 @@ export type HandleFollowCreator = (
 export interface IStories {
     stories: HomeStory[];
     handleFollowCreator: HandleFollowCreator;
-    handleLikeStory: (storyId: number, userLikedStory: boolean) => void;
+    handleLikeStory: (
+        storyId: number,
+        userLikedStory: boolean,
+        isError?: boolean
+    ) => void;
 }
 
 const Stories: FC<IStories> = ({
