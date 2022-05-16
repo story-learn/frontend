@@ -72,6 +72,7 @@ const StoriesLikes: FC<{ id: number }> = ({ id }) => {
                 <StoriesComponent
                     stories={data}
                     handleFollowCreator={handleFollowCreator}
+                    handleLikeStory={() => {}} // FIXME: UPDATE to normal function
                 />
             ) : data.length === 0 && !loading ? (
                 <p className="profile__stories--other profile__stories--other-no">

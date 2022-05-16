@@ -1,10 +1,16 @@
-import axios from "axios";
+import axios, { AxiosInstance } from "axios";
 import useSWR from "swr";
 
-export const useSWRFetch = <Data>(url: string | boolean | undefined) => {
+export const useSWRFetch = <Data>(
+    url: string | boolean | undefined,
+    axiosInstance?: AxiosInstance | null
+) => {
     const fetcher = async (url: string) => {
         try {
-            let req = await axios.get<Data>(url);
+            // let req = await axios.get<Data>(url);
+            let req = axiosInstance
+                ? await axiosInstance.get<Data>(url)
+                : await axios.get<Data>(url);
             let data = await req.data;
 
             return data;
@@ -15,10 +21,15 @@ export const useSWRFetch = <Data>(url: string | boolean | undefined) => {
         }
     };
 
-    let { data, error } = useSWR((url as string) || null, fetcher, {
-        revalidateIfStale: false,
-        revalidateOnFocus: false,
-    });
+    // let { data, error } = useSWR((url as string) || null, fetcher, {
+    let { data, error } = useSWR(
+        axiosInstance !== null ? (url as string) : null,
+        fetcher,
+        {
+            revalidateIfStale: false,
+            revalidateOnFocus: false,
+        }
+    );
 
     let loading = !data && !error;
 
