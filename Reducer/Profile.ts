@@ -34,6 +34,14 @@ export type ProfileStories = {
     payload: { data: HomeStory[]; page: number; pages: number };
 };
 
+export type StoriesLikedUnliked = {
+    type: "stories_liked_or_unliked";
+    payload: {
+        data: HomeStory[];
+        type: "profileStories" | "profileStoriesLikes"; // handles stories/likes tab
+    };
+};
+
 export type ProfileStoriesLikes = {
     type: "profile_stories_likes";
     payload: { data: HomeStory[]; page: number; pages: number };
@@ -43,7 +51,8 @@ export type Action =
     | MainProfile
     | ProfileTabs
     | ProfileStories
-    | ProfileStoriesLikes;
+    | ProfileStoriesLikes
+    | StoriesLikedUnliked;
 
 export const InitialProfileState: ProfileState = {
     main: {
@@ -127,6 +136,30 @@ export const reducer = (state: ProfileState, action: Action) => {
         ) as HomeStory[];
 
         state = { ...state, likes: { data, page, pages } };
+    }
+
+    if (type === "stories_liked_or_unliked") {
+        let {
+            payload: { data, type },
+        } = action as StoriesLikedUnliked;
+
+        if (type === "profileStories") {
+            state = {
+                ...state,
+                stories: {
+                    ...state.stories,
+                    data,
+                },
+            };
+        } else if (type === "profileStoriesLikes") {
+            state = {
+                ...state,
+                likes: {
+                    ...state.likes,
+                    data,
+                },
+            };
+        }
     }
 
     // console.log(state);

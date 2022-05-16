@@ -9,6 +9,7 @@ import { Tabs } from "../../pages/profiles/[id]";
 import { useProfileContext } from "../../context/pages/Profile";
 import useStoryRequest from "../../Hooks/useStoryRequest";
 import { HandleFollowCreator } from "../../components/Story/Stories";
+import { IStory } from "../../components/Story/Story";
 
 type IStories = Pick<Tabs, "selected">;
 type IProfile = Pick<Profile, "id">;
@@ -66,12 +67,39 @@ const Stories: FC<{ id: number }> = ({ id }) => {
         });
     };
 
+    const handleLikeStory: IStory["handleLikeStory"] = (
+        storyId,
+        userLikedStory
+    ) => {
+        let newData = [...data].map((story) => {
+            if (story.id === storyId) {
+                let { likes, user_liked_story } = story;
+
+                likes = userLikedStory ? likes - 1 : likes + 1;
+                user_liked_story = !userLikedStory;
+
+                story = {
+                    ...story,
+                    likes,
+                    user_liked_story,
+                };
+            }
+            return story;
+        });
+
+        dispatchProfile({
+            type: "stories_liked_or_unliked",
+            payload: { data: newData, type: "profileStories" },
+        });
+    };
+
     return (
         <section className="profile__stories">
             {data.length > 0 ? (
                 <StoriesComponent
                     stories={data}
                     handleFollowCreator={handleFollowCreator}
+                    handleLikeStory={handleLikeStory}
                 />
             ) : data.length === 0 && !loading ? (
                 <p className="profile__stories--other profile__stories--other-no">
