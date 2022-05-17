@@ -12,6 +12,7 @@ import { copyStoryLinkToClipBoard, likeStory } from "../../utilities/Story";
 import { IStories } from "./Stories";
 import useStoryRequest from "../../Hooks/useStoryRequest";
 import { useAuth } from "../../context/AuthContext";
+import { TOAST_IDS } from "../../Constants";
 
 export interface IStory
     extends HomeStory,
@@ -36,10 +37,13 @@ const Story: FC<IStory> = ({
     const handleShareStory: MouseEventHandler<HTMLButtonElement> = async () => {
         try {
             await copyStoryLinkToClipBoard(`/stories/${id}`);
-            toast.custom(<Notification type="success" shortText="Copied" />);
+            toast.custom(<Notification type="success" shortText="Copied" />, {
+                id: String(TOAST_IDS.ClipBoard),
+            });
         } catch (error) {
             toast.custom(
-                <Notification type="error" shortText="Error copying link" />
+                <Notification type="error" shortText="Error copying link" />,
+                { id: String(TOAST_IDS.ClipBoard) }
             );
         }
     };
@@ -49,7 +53,8 @@ const Story: FC<IStory> = ({
 
         if (!loggdInUser) {
             return toast.custom(
-                <Notification type="error" shortText="You are not logged In" />
+                <Notification type="error" shortText="You are not logged In" />,
+                { id: String(TOAST_IDS.Auth) }
             );
         }
 

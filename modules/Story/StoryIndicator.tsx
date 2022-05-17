@@ -4,6 +4,7 @@ import toast from "react-hot-toast";
 import { Notification } from "../../components";
 import { StyledStoryIndicator } from "../../components/Styles/StyledStoryPage";
 import { ShareIcon } from "../../components/SVGs";
+import { TOAST_IDS } from "../../Constants";
 import { copyStoryLinkToClipBoard } from "../../utilities/Story";
 
 interface IStoryIndicator {
@@ -17,10 +18,13 @@ const StoryIndicator: FC<IStoryIndicator> = ({ active, stories }) => {
     const shareStoryUrl: MouseEventHandler<HTMLButtonElement> = async () => {
         try {
             await copyStoryLinkToClipBoard(asPath);
-            toast.custom(<Notification type="success" shortText="Copied" />);
+            toast.custom(<Notification type="success" shortText="Copied" />, {
+                id: String(TOAST_IDS.ClipBoard),
+            });
         } catch (error) {
             toast.custom(
-                <Notification type="error" shortText="Error copying link" />
+                <Notification type="error" shortText="Error copying link" />,
+                { id: String(TOAST_IDS.ClipBoard) }
             );
         }
     };

@@ -4,6 +4,7 @@ import { FC, MouseEventHandler, useRef, useState } from "react";
 import toast from "react-hot-toast";
 import { IconType } from "react-icons";
 import { BsPerson } from "react-icons/bs";
+import { TOAST_IDS } from "../../Constants";
 import { useAuth } from "../../context/AuthContext";
 // import { useStories } from "../../context/StoriesContext";
 import { useStoryAction } from "../../Hooks/useStoryAction";
@@ -64,7 +65,8 @@ const StoryContentActions: FC<IStoryAction> = ({
                         <Notification
                             type="error"
                             shortText="You are not currently signed in!"
-                        />
+                        />,
+                        { id: String(TOAST_IDS.Auth) }
                     );
 
                 setFollowActionSubmitted(true);
@@ -98,7 +100,8 @@ const StoryContentActions: FC<IStoryAction> = ({
                     <Notification
                         type="success"
                         shortText={`Story saved successfully!`}
-                    />
+                    />,
+                    { id: String(TOAST_IDS.Bookmark) }
                 );
             },
         },
