@@ -30,6 +30,8 @@ export const StoryRoutes = {
     GET_PROFILE_LIKES: "/story/userlikes/",
 
     // followers/following
-    GET_FOLLOWERS: "/userprofile/follow",
-    GET_FOLLOWING: "/userprofile/following",
+    GET_FOLLOWERS: "/userprofile/follower-list",
+    GET_FOLLOWING: "/userprofile/following-list",
+    FOLLOW_PROFILE: "/userprofile/follow/",
+    UNFOLLOW_PROFILE: "/userprofile/unfollow",
 };

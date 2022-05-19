@@ -1,4 +1,5 @@
 import { AxiosInstance } from "axios";
+import { StoryRoutes } from "../../configs/story";
 import { BASE_URLS } from "../../Constants";
 
 /**
@@ -10,7 +11,7 @@ export const followProfile = async (
     storyInstance: AxiosInstance,
     profileId: number
 ) => {
-    let followUrl = `${BASE_URLS.Story}/userprofile/follow/`;
+    let followUrl = `${BASE_URLS.Story}${StoryRoutes.FOLLOW_PROFILE}`;
 
     try {
         await storyInstance.post(followUrl, {
@@ -30,7 +31,7 @@ export const unFollowProfile = async (
     storyInstance: AxiosInstance,
     profileId: number
 ) => {
-    let unFollowUrl = `${BASE_URLS.Story}/userprofile/follow/${profileId}/`;
+    let unFollowUrl = `${BASE_URLS.Story}${StoryRoutes.UNFOLLOW_PROFILE}/${profileId}/`;
 
     try {
         await storyInstance.delete(unFollowUrl);
