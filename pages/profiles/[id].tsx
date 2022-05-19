@@ -3,6 +3,7 @@ import { useRouter } from "next/router";
 import { createContext, FC, useContext, useEffect, useState } from "react";
 import { LoadingIndicator } from "../../components";
 import { StyledProfilePage } from "../../components/Styles/StyledProfilePage";
+import { useAuth } from "../../context/AuthContext";
 import {
     ProfileProvider,
     useProfileContext,
@@ -24,11 +25,30 @@ export interface Tabs {
 export type HandleTabChanged = (selected: Tab["tab"]) => void;
 
 const ProfileFC: FC = () => {
-    let { query, push } = useRouter();
+    const { user, authenticating } = useAuth();
+    let { query, push, replace } = useRouter();
     let userId = query.id as string | undefined;
-    let { data, error, loading } = useProfileFetch<IProfile>(userId);
+    // do not fetch if authenticating is true
+    // user needs to be authenticated if route is "/profiles/me" -- don not fetch if user is not authenticated
+    //
+    let { data, error, loading } = useProfileFetch<IProfile>(
+        authenticating ? "" : userId === "me" ? (!user ? "" : userId) : userId
+    );
     const { dispatchProfile, profile } = useProfileContext();
     const { main } = profile;
+
+    useEffect(() => {
+        if (Object.keys(query).length === 0 || authenticating) return;
+
+        if (userId === "me" && !user) {
+            push("/signin"); // user needs to be authenticated if route is "/profiles/me"
+        } else if (+user.user_id === Number(userId)) {
+            // change route name to "me"
+            // push("/profiles/me", undefined, { shallow: true });
+            replace("/profiles/me", undefined, { shallow: true });
+        }
+        console.log(user);
+    }, [query, user]);
 
     useEffect(() => {
         dispatchProfile({
@@ -37,6 +57,8 @@ const ProfileFC: FC = () => {
         });
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [data, loading, error]);
+
+    if (authenticating) return null;
 
     return (
         <>

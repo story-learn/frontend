@@ -9,8 +9,10 @@ import {
     UploadIcon,
     ProfileIcon,
 } from "./../SVGs";
+import { useAuth } from "../../context/AuthContext";
 
 const AsideNav: FC = () => {
+    const { user } = useAuth();
     let router = useRouter();
     let asideLinks = [
         {
@@ -33,12 +35,16 @@ const AsideNav: FC = () => {
             href: "/bookmark",
             label: "bookmark",
         },
-        {
-            Icon: ProfileIcon,
-            href: "/profile",
-            label: "profile",
-        },
     ];
+
+    if (user) {
+        asideLinks.push({
+            Icon: ProfileIcon,
+            href: `/profiles/me`,
+            label: "profile",
+        });
+    }
+    // console.log(router);
 
     return (
         <StyledAsideNav>
@@ -47,9 +53,11 @@ const AsideNav: FC = () => {
                     {asideLinks.map(({ href, Icon, label }, i) => {
                         let className = "";
 
-                        className += href === router.pathname ? "active" : "";
+                        className += href === router.asPath ? "active" : "";
                         className += href === "/upload" ? " upload" : "";
                         className = className.trim();
+
+                        // console.log({ href, pathname: router.pathname });
 
                         return (
                             <li key={`${href} - ${i}`}>
