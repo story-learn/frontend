@@ -33,8 +33,8 @@ const AsideNav: FC = () => {
         },
         {
             Icon: BookmarkIcon,
-            href: "/bookmark",
-            label: "bookmark",
+            href: "/bookmarks",
+            label: "bookmarks",
         },
     ];
 
