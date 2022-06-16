@@ -95,6 +95,8 @@ export interface Profile {
         person_user_follows_id: number;
     }[];
     following_count: number;
+    liked_stories_count: number;
+    created_stories_count: number;
     id: number;
     last_name: string;
     profile_picture: string | null;

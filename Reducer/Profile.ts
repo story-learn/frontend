@@ -86,10 +86,10 @@ export const InitialProfileState: ProfileState = {
     stories: { data: [], page: 1, pages: 1 },
     tabs: {
         lists: [
-            { tab: "Stories", value: 0 },
-            { tab: "Likes", value: null },
-            { tab: "Followers", value: 0 },
-            { tab: "Following", value: 0 },
+            { tab: "Stories", value: 0, key: "created_stories_count" },
+            { tab: "Likes", value: null, key: "created_stories_count" },
+            { tab: "Followers", value: 0, key: "created_stories_count" },
+            { tab: "Following", value: 0, key: "created_stories_count" },
         ],
         selected: "",
     },
@@ -113,6 +113,10 @@ export const reducer = (state: ProfileState, action: Action) => {
                 list.value = payload.data?.followers_count || 0;
             } else if (list.tab === "Following") {
                 list.value = payload.data?.following_count || 0;
+            } else if (list.tab === "Likes") {
+                list.value = payload.data?.liked_stories_count || 0;
+            } else if (list.tab === "Stories") {
+                list.value = payload.data?.created_stories_count || 0;
             }
             return list;
         });

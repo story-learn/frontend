@@ -16,6 +16,7 @@ import { Main, MetaHead, ProfileHeader } from "../../modules/Profile";
 export interface Tab {
     tab: string;
     value: number | null;
+    key: string;
 }
 
 export interface Tabs {
