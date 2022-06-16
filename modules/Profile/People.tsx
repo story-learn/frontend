@@ -4,7 +4,9 @@ import { StoryRoutes } from "../../configs/story";
 import { BASE_URLS } from "../../Constants";
 import { useProfileContext } from "../../context/pages/Profile";
 import { useInfiniteScroll } from "../../Hooks/useInfiniteScroll";
+import { useSWRFetch } from "../../Hooks/useSwrFetch";
 import { HomeStory } from "../../interfaces";
+import { IAccount } from "../../components/Accounts/Account";
 
 import { Tabs } from "../../pages/profiles/[id]";
 
@@ -12,44 +14,44 @@ type IPeople = Pick<Tabs, "selected">;
 
 interface TPeople extends IPeople {}
 
-// const People: FC<TPeople> = ({ selected }) => {
-const People: FC = () => {
-    let {
-        profile: {
-            tabs: { selected },
-        },
-        // dispatchProfile,
-    } = useProfileContext()!;
+interface NPeople {
+    url: string;
+    dispatchFollowAction: (status?: "failed" | undefined) => void;
+}
 
-    let peopleUrl =
-        selected === "Followers"
-            ? `${BASE_URLS.Story}${StoryRoutes.GET_FOLLOWERS}`
-            : `${BASE_URLS.Story}${StoryRoutes.GET_FOLLOWING}`;
+const People: FC<NPeople> = ({ url, dispatchFollowAction }) => {
+    let { data, error, loading } = useSWRFetch<{
+        num_of_pages: number;
+        object_count: number;
+        previous: null | string;
+        results: {
+            created: string;
+            id: number;
+            user_id: IAccount;
+            person_user_follows_id: IAccount;
+        }[];
+    }>(url);
 
-    // storiesUrl += `/?search=Acel`;
-    // // const [page, setPage] = useState(1)
-
-    // let { totalData, loading, error, currentPage, totalPages } =
-    //     useInfiniteScroll<HomeStory[]>(peopleUrl);
-    // console.log(totalData);
-
-    console.log("profile page");
-    console.log({ peopleUrl });
+    let accounts: IAccount[] = [];
+    if (data) {
+        console.log(data);
+        accounts = [...data.results].map(
+            ({ user_id, person_user_follows_id }) =>
+                user_id || person_user_follows_id
+        );
+    }
 
     return (
         <section>
-            {selected} page
-            {/* {totalData.length > 0 ? (
-                <Accounts users={totalData} className="search__profiles" />
-            ) : totalData.length === 0 && !loading ? (
-                <p>
-                    {selected === "Followers"
-                        ? "No followers"
-                        : "Not Following anyone"}
-                </p>
-            ) : null}
-            {loading && <LoadingIndicator />}
-            {error && <p>There is an error...</p>} */}
+            {loading ? (
+                <LoadingIndicator />
+            ) : error ? (
+                <p>error</p>
+            ) : accounts.length > 0 ? (
+                <Accounts users={accounts} dispatch={dispatchFollowAction} />
+            ) : (
+                <p>0 followers</p>
+            )}
         </section>
     );
 };

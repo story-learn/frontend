@@ -8,6 +8,7 @@ import { useFetch } from "../../Hooks/useFetch";
 import { useInfiniteScroll } from "../../Hooks/useInfiniteScroll";
 import { useSWRFetch } from "../../Hooks/useSwrFetch";
 import { HomeStory } from "../../interfaces";
+import People from "./People";
 
 const Followers: FC = () => {
     // console.log("followers rendered...");
@@ -21,17 +22,6 @@ const Followers: FC = () => {
 
     let followersUrl = `${BASE_URLS.Story}${StoryRoutes.GET_FOLLOWERS}/?user_id=${id}`;
 
-    // let { data, error, loading } = useSWRFetch<IAccount[]>(followersUrl);
-    let { data, error, loading } =
-        useSWRFetch<{ created: string; id: number; user_id: IAccount }[]>(
-            followersUrl
-        );
-
-    let accounts: IAccount[] = [];
-    if (data) {
-        accounts = [...data].map(({ user_id }) => user_id);
-    }
-
     const dispatchFollowersAction: IAccount["dispatchFollowAction"] = (
         status
     ) => {
@@ -43,18 +33,49 @@ const Followers: FC = () => {
     };
 
     return (
-        <section>
-            {loading ? (
-                <LoadingIndicator />
-            ) : error ? (
-                <p>error</p>
-            ) : accounts.length > 0 ? (
-                <Accounts users={accounts} dispatch={dispatchFollowersAction} />
-            ) : (
-                <p>0 followers</p>
-            )}
-        </section>
+        <People
+            url={followersUrl}
+            dispatchFollowAction={dispatchFollowersAction}
+        />
     );
+
+    // let { data, error, loading } = useSWRFetch<IAccount[]>(followersUrl);
+    // let { data, error, loading } = useSWRFetch<{
+    //     num_of_pages: number;
+    //     object_count: number;
+    //     previous: null | string;
+    //     results: { created: string; id: number; user_id: IAccount }[];
+    // }>(followersUrl);
+
+    // let accounts: IAccount[] = [];
+    // if (data) {
+    //     console.log(data);
+    //     accounts = [...data.results].map(({ user_id }) => user_id);
+    // }
+
+    // const dispatchFollowersAction: IAccount["dispatchFollowAction"] = (
+    //     status
+    // ) => {
+    //     if (status) {
+    //         console.log("action failed followers");
+    //     } else {
+    //         console.log("action successful followers");
+    //     }
+    // };
+
+    // return (
+    //     <section>
+    //         {loading ? (
+    //             <LoadingIndicator />
+    //         ) : error ? (
+    //             <p>error</p>
+    //         ) : accounts.length > 0 ? (
+    //             <Accounts users={accounts} dispatch={dispatchFollowersAction} />
+    //         ) : (
+    //             <p>0 followers</p>
+    //         )}
+    //     </section>
+    // );
 };
 
 export default Followers;
