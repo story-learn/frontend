@@ -3,11 +3,12 @@ import { useRouter } from "next/router";
 import { createContext, FC, useContext, useEffect, useState } from "react";
 import { LoadingIndicator } from "../../components";
 import { StyledProfilePage } from "../../components/Styles/StyledProfilePage";
-import { useAuth } from "../../context/AuthContext";
+// import { useAuth } from "../../context/AuthContext";
 import {
     ProfileProvider,
     useProfileContext,
 } from "../../context/pages/Profile";
+import { useAuth } from "../../Hooks/useAuth";
 import { useProfile as useProfileFetch } from "../../Hooks/useProfile";
 import { Profile as IProfile } from "../../interfaces";
 import { Main, MetaHead, ProfileHeader } from "../../modules/Profile";

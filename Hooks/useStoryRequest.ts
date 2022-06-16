@@ -1,8 +1,10 @@
 import axios, { AxiosInstance } from "axios";
 import jwtDecode from "jwt-decode";
 import { BASE_URLS } from "../Constants";
-import { useAuth } from "../context/AuthContext";
+// import { useAuth } from "../context/AuthContext";
 import { AuthTokens, AuthUserToken } from "../interfaces";
+import { useAuth } from "./useAuth";
+import { STORY } from "./../configs/story";
 
 // this should only be used in a protected route because tokens are needed
 const useStoryRequest = () => {
@@ -48,13 +50,15 @@ const useStoryRequest = () => {
     const { user, authTokens, setAuthTokens, setUser, authenticating } =
         useAuth();
 
-    let storyInstance: null | AxiosInstance = null;
+    // let storyInstance: null | AxiosInstance = null;
 
-    if (authenticating) return { storyInstance };
+    // // if (authenticating) return { storyInstance };
 
-    storyInstance = axios.create({
-        baseURL,
-    });
+    // storyInstance = axios.create({
+    //     baseURL,
+    // });
+
+    let storyInstance: AxiosInstance = STORY;
 
     if (!authTokens || !Boolean(user)) return { storyInstance };
 
@@ -86,7 +90,7 @@ const useStoryRequest = () => {
         setAuthTokens(newTokens);
         setUser(jwtDecode(newTokens.access));
 
-        // fix this!!!
+        // FIXME!!!
         req!.headers!.Authorization = `JWT ${newTokens.access}`;
         return req;
     });

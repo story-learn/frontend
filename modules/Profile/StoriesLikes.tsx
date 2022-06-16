@@ -10,8 +10,9 @@ import { useProfileContext } from "../../context/pages/Profile";
 import useStoryRequest from "../../Hooks/useStoryRequest";
 import { HandleFollowCreator } from "../../components/Story/Stories";
 import { IStories as StoriesList } from "../../components/Story/Stories";
-import { useAuth } from "../../context/AuthContext";
+// import { useAuth } from "../../context/AuthContext";
 import { returnUniqueArrayObject } from "../../utilities/returnUniqueArrayObject";
+import { useAuth } from "../../Hooks/useAuth";
 
 type IStories = Pick<Tabs, "selected">;
 type IProfile = Pick<Profile, "id">;
@@ -28,9 +29,7 @@ const StoriesLikes: FC<{ id: number }> = ({ id }) => {
         dispatchProfile,
     } = useProfileContext()!;
 
-    let storiesUrl =
-        storyInstance &&
-        `${BASE_URLS.Story}${StoryRoutes.GET_PROFILE_LIKES}?user_id=${id}`;
+    let storiesUrl = `${BASE_URLS.Story}${StoryRoutes.GET_PROFILE_LIKES}?user_id=${id}`;
 
     let { totalData, loading, error, currentPage, totalPages } =
         useInfiniteScroll<LikedStories[]>(

@@ -1,5 +1,6 @@
 import { FC, useEffect } from "react";
-import { useAuth } from "../context/AuthContext";
+import { useAuth } from "../Hooks/useAuth";
+// import { useAuth } from "../context/AuthContext";
 
 type withAuthenticatedUser = (Component: FC) => FC;
 

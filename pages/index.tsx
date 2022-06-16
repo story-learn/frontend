@@ -4,8 +4,9 @@ import { CustomLink, LoadingIndicator, Modal, Stories } from "../components";
 import { HeadTag } from "../components/head";
 import { HandleFollowCreator } from "../components/Story/Stories";
 import { BASE_URLS } from "../Constants";
-import { useAuth } from "../context/AuthContext";
+// import { useAuth } from "../context/AuthContext";
 import { useStories } from "../context/StoriesContext";
+import { useAuth } from "../Hooks/useAuth";
 import { useInfiniteScroll } from "../Hooks/useInfiniteScroll";
 import useStoryRequest from "../Hooks/useStoryRequest";
 import { HomeStory } from "../interfaces";
@@ -27,8 +28,7 @@ const Home: NextPage = () => {
     } = useStories();
 
     // wait for authenticated status before calling hook. This is to prevent the useInfiniteScroll hook from calling the API before knowing if the user is authenticated.
-    let storiesUrl =
-        storyInstance && `${BASE_URLS.Story}${StoryRoutes.GET_STORIES}`;
+    let storiesUrl = `${BASE_URLS.Story}${StoryRoutes.GET_STORIES}`;
 
     let { totalData, loading, error, currentPage, totalPages } =
         useInfiniteScroll<HomeStory[]>(

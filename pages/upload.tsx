@@ -112,7 +112,8 @@ const Upload: NextPage = () => {
         try {
             setUploading((prev) => ({ ...prev, loading: true }));
             // storyInstance is available cause this page is available only to logged in users
-            let newStory = await createStory(frames, storyInstance!);
+            // let newStory = await createStory(frames, storyInstance!);
+            let newStory = await createStory(frames, storyInstance);
 
             // update global stories
             dispatchStories({ type: "upload_new_story", payload: newStory });

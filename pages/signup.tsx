@@ -26,10 +26,11 @@ import {
     usernameExists,
 } from "../utilities/Auth";
 import router from "next/router";
-import { useAuth } from "../context/AuthContext";
+// import { useAuth } from "../context/AuthContext";
 import { HeadTag } from "../components/head";
 import { PersonIcon, MessageIcon } from "./../components/SVGs";
 import { toast } from "react-hot-toast";
+import { useAuth } from "../Hooks/useAuth";
 
 const Signup: NextPage = () => {
     let { user } = useAuth();

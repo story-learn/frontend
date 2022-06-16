@@ -3,7 +3,8 @@ import useSWR from "swr";
 
 export const useSWRFetch = <Data>(
     url: string | boolean | undefined,
-    axiosInstance?: AxiosInstance | null
+    // axiosInstance?: AxiosInstance | null
+    axiosInstance?: AxiosInstance
 ) => {
     const fetcher = async (url: string) => {
         try {

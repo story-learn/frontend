@@ -9,7 +9,8 @@ import {
     UploadIcon,
     ProfileIcon,
 } from "./../SVGs";
-import { useAuth } from "../../context/AuthContext";
+import { useAuth } from "../../Hooks/useAuth";
+// import { useAuth } from "../../context/AuthContext";
 
 const AsideNav: FC = () => {
     const { user } = useAuth();

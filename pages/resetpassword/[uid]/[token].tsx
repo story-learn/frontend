@@ -10,7 +10,8 @@ import {
 } from "../../../components";
 import { StyledAuthPage } from "../../../components/Auth/AuthPageStyles";
 import { StyledForm } from "../../../components/Form/FormStyles";
-import { useAuth } from "../../../context/AuthContext";
+import { useAuth } from "../../../Hooks/useAuth";
+// import { useAuth } from "../../../context/AuthContext";
 import { ResetPassword as IResetPassword } from "../../../interfaces";
 import { resetPassword } from "../../../utilities/Auth";
 

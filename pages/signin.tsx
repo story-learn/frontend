@@ -20,11 +20,12 @@ import { Authentication, AuthenticationError } from "../interfaces";
 import { validateSignInInfo } from "../utilities/validateSignInInfo";
 import { logIn } from "../utilities/Auth";
 import router from "next/router";
-import { useAuth } from "../context/AuthContext";
+// import { useAuth } from "../context/AuthContext";
 import jwtDecode from "jwt-decode";
 import { HeadTag } from "../components/head";
 import { PersonIcon } from "./../components/SVGs";
 import { toast } from "react-hot-toast";
+import { useAuth } from "../Hooks/useAuth";
 
 export type Auth = Pick<Authentication, "userName" | "password">;
 export type AuthError = Pick<AuthenticationError, "userName" | "password">;

@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { FC, MouseEvent, useState } from "react";
-import { useAuth } from "../../context/AuthContext";
+import { useAuth } from "../../Hooks/useAuth";
+// import { useAuth } from "../../context/AuthContext";
 import useStoryRequest from "../../Hooks/useStoryRequest";
 import { followProfile, unFollowProfile } from "../../utilities/Profile";
 import { IProfile } from "../Profile";
@@ -35,7 +36,7 @@ const Account: FC<IAccount> = (props) => {
         setFollowBtnText((prev) => (prev === "Follow" ? "Unfollow" : "Follow")); // update UI immediately
         props.dispatchFollowAction?.();
         try {
-            if (!storyInstance) return;
+            // if (!storyInstance) return;
 
             followBtnText === "Unfollow"
                 ? await unFollowProfile(storyInstance, props.id)

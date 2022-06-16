@@ -11,9 +11,10 @@ import toast from "react-hot-toast";
 import { copyStoryLinkToClipBoard, likeStory } from "../../utilities/Story";
 import { IStories } from "./Stories";
 import useStoryRequest from "../../Hooks/useStoryRequest";
-import { useAuth } from "../../context/AuthContext";
+// import { useAuth } from "../../context/AuthContext";
 import { TOAST_IDS } from "../../Constants";
 import { bookmarkStory } from "./../../utilities/Story/index";
+import { useAuth } from "../../Hooks/useAuth";
 
 export interface IStory
     extends HomeStory,
@@ -55,7 +56,7 @@ const Story: FC<IStory> = ({
     };
 
     const onLikeOrUnlikeStory = async () => {
-        if (!storyInstance) return;
+        // if (!storyInstance) return;
 
         if (!loggdInUser) {
             return toast.custom(
@@ -76,7 +77,7 @@ const Story: FC<IStory> = ({
     };
 
     const onBookmarkStory = async () => {
-        if (!storyInstance) return;
+        // if (!storyInstance) return;
 
         if (!loggdInUser) {
             return toast.custom(

@@ -7,10 +7,11 @@ import {
     CustomLink,
 } from "./../../components";
 import { StyledNav } from "./StyledNav";
-import { useAuth } from "../../context/AuthContext";
+// import { useAuth } from "../../context/AuthContext";
 import { ThreeDotsVerticalIcon } from "../SVGs";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { useRouter } from "next/router";
+import { useAuth } from "../../Hooks/useAuth";
 
 const Index: FC = () => {
     const { pathname } = useRouter();

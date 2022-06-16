@@ -1,12 +1,5 @@
 import jwtDecode from "jwt-decode";
-import {
-    createContext,
-    Dispatch,
-    FC,
-    useContext,
-    useEffect,
-    useState,
-} from "react";
+import { createContext, Dispatch, FC, useEffect, useState } from "react";
 import { AuthTokens } from "../interfaces";
 
 interface IAuth {
@@ -19,7 +12,7 @@ interface IAuth {
     logout: () => void;
 }
 
-const AuthContext = createContext<IAuth | undefined>(undefined);
+export const AuthContext = createContext<IAuth | undefined>(undefined);
 
 export const AuthProvider: FC = ({ children }) => {
     const [authenticating, setAuthenticating] = useState(true);
@@ -51,6 +44,10 @@ export const AuthProvider: FC = ({ children }) => {
         setUser(null);
     };
 
+    console.log("authenticating", authenticating);
+
+    if (authenticating) return null; // decide authentication right away
+
     // console.log("user", user);
     return (
         <AuthContext.Provider
@@ -67,14 +64,4 @@ export const AuthProvider: FC = ({ children }) => {
             {children}
         </AuthContext.Provider>
     );
-};
-
-export const useAuth = () => {
-    let context = useContext(AuthContext);
-
-    if (context === undefined) {
-        throw new Error("useauth must be within AuthProvider");
-    }
-
-    return context;
 };
