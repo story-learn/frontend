@@ -3,7 +3,7 @@ import { LoadingIndicator } from "../../components";
 import { StoryRoutes } from "../../configs/story";
 import { BASE_URLS } from "../../Constants";
 import { useInfiniteScroll } from "../../Hooks/useInfiniteScroll";
-import { LikedStories, Profile } from "../../interfaces";
+import { HomeStory, LikedStories, Profile } from "../../interfaces";
 import { Stories as StoriesComponent } from "../../components";
 import { Tabs } from "../../pages/profiles/[id]";
 import { useProfileContext } from "../../context/pages/Profile";
@@ -11,6 +11,7 @@ import useStoryRequest from "../../Hooks/useStoryRequest";
 import { HandleFollowCreator } from "../../components/Story/Stories";
 import { IStories as StoriesList } from "../../components/Story/Stories";
 import { useAuth } from "../../context/AuthContext";
+import { returnUniqueArrayObject } from "../../utilities/returnUniqueArrayObject";
 
 type IStories = Pick<Tabs, "selected">;
 type IProfile = Pick<Profile, "id">;
@@ -114,6 +115,24 @@ const StoriesLikes: FC<{ id: number }> = ({ id }) => {
         });
     };
 
+    const handleBookmarkStory = (storyId: number, bookmarked: boolean) => {
+        let newData = returnUniqueArrayObject([...data], "id").map((story) => {
+            if (story.id === storyId) {
+                story.user_bookmarked_story = bookmarked;
+            }
+
+            return story;
+        });
+
+        dispatchProfile({
+            type: "stories_updated",
+            payload: {
+                data: newData as HomeStory[],
+                type: "profileStoriesLikes",
+            },
+        });
+    };
+
     return (
         <section className="profile__stories">
             {data.length > 0 ? (
@@ -121,6 +140,7 @@ const StoriesLikes: FC<{ id: number }> = ({ id }) => {
                     stories={data}
                     handleFollowCreator={handleFollowCreator}
                     handleLikeStory={handleLike}
+                    handleBookmarkStory={handleBookmarkStory}
                 />
             ) : data.length === 0 && !loading ? (
                 <p className="profile__stories--other profile__stories--other-no">

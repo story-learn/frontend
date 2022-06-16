@@ -112,6 +112,18 @@ const Search: NextPage = () => {
         setSearchData(stories);
     };
 
+    const handleBookmarkStory = (storyId: number, bookmarked: boolean) => {
+        let stories = ([...searchData] as HomeStory[]).map((story) => {
+            if (story.id === storyId) {
+                story.user_bookmarked_story = bookmarked;
+            }
+
+            return story;
+        });
+
+        setSearchData(stories);
+    };
+
     return (
         <>
             <StyledSearchPage>
@@ -149,6 +161,9 @@ const Search: NextPage = () => {
                                                 }
                                                 handleLikeStory={
                                                     handleLikeStory
+                                                }
+                                                handleBookmarkStory={
+                                                    handleBookmarkStory
                                                 }
                                             />
                                         )}

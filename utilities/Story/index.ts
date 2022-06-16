@@ -93,3 +93,20 @@ export const likeStory = async (
         throw error;
     }
 };
+
+export const bookmarkStory = async (
+    storyInstance: AxiosInstance,
+    story_id: number,
+    bookmarked: boolean
+) => {
+    let route = StoryRoutes.BOOKMARK_STORY;
+
+    // FIXME: removing of bookmark is not working(from server side)
+    try {
+        bookmarked
+            ? await storyInstance.delete(`${route}delete/${story_id}/`)
+            : await storyInstance.post(route, { story_id });
+    } catch (error) {
+        throw error;
+    }
+};

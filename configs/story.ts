@@ -20,6 +20,7 @@ export const StoryRoutes = {
     GET_STORY: "/story/singlestory",
     LIKE_STORY: "/story/like/",
     // UNLIKE_STORY: "/story/like/",
+    BOOKMARK_STORY: "/bookmark/",
 
     // accounts
     GET_USERS: "/auth/accounts/userlist",

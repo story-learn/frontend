@@ -6,17 +6,21 @@ import { LoveIcon, ShareIcon, LoveIconOutline } from "../SVGs";
 import { Profile, StoryContentActions, Notification } from "./../../components";
 import { StyledStory } from "./StyledStory";
 import { getTimeAgo } from "../../utilities/getTimeAgo";
-import { BsBookmark } from "react-icons/bs";
+import { BsBookmark, BsFillBookmarkFill } from "react-icons/bs";
 import toast from "react-hot-toast";
 import { copyStoryLinkToClipBoard, likeStory } from "../../utilities/Story";
 import { IStories } from "./Stories";
 import useStoryRequest from "../../Hooks/useStoryRequest";
 import { useAuth } from "../../context/AuthContext";
 import { TOAST_IDS } from "../../Constants";
+import { bookmarkStory } from "./../../utilities/Story/index";
 
 export interface IStory
     extends HomeStory,
-        Pick<IStories, "handleFollowCreator" | "handleLikeStory"> {}
+        Pick<
+            IStories,
+            "handleFollowCreator" | "handleLikeStory" | "handleBookmarkStory"
+        > {}
 
 const Story: FC<IStory> = ({
     user,
@@ -28,6 +32,8 @@ const Story: FC<IStory> = ({
     handleFollowCreator,
     handleLikeStory,
     user_liked_story,
+    user_bookmarked_story,
+    handleBookmarkStory,
 }) => {
     const { user: loggdInUser } = useAuth();
     const { storyInstance } = useStoryRequest();
@@ -69,6 +75,38 @@ const Story: FC<IStory> = ({
         }
     };
 
+    const onBookmarkStory = async () => {
+        if (!storyInstance) return;
+
+        if (!loggdInUser) {
+            return toast.custom(
+                <Notification type="error" shortText="You are not logged In" />,
+                { id: String(TOAST_IDS.Auth) }
+            );
+        }
+
+        try {
+            // update UI immediately
+            handleBookmarkStory(id, !user_bookmarked_story);
+
+            await bookmarkStory(storyInstance, id, user_bookmarked_story);
+            toast.custom(
+                <Notification
+                    type="success"
+                    shortText={`Story ${
+                        user_bookmarked_story
+                            ? "removed from bookmarks"
+                            : "bookmarked"
+                    } successfully!`}
+                />,
+                { id: String(TOAST_IDS.Bookmark) }
+            );
+        } catch (error) {
+            // revert UI if there is an error
+            handleBookmarkStory(id, user_bookmarked_story);
+        }
+    };
+
     return (
         <StyledStory user_liked_story={user_liked_story}>
             <article className="story">
@@ -94,6 +132,7 @@ const Story: FC<IStory> = ({
                                     following_story_creator
                                 }
                                 handleFollowCreator={handleFollowCreator}
+                                handleBookmarkStory={onBookmarkStory}
                             />
                         </header>
                         <div className="story__main">
@@ -115,8 +154,15 @@ const Story: FC<IStory> = ({
                     </a>
                 </Link>
                 <div className="story__actions">
-                    <button className="story__actions-bookmark">
-                        <BsBookmark />
+                    <button
+                        className={`story__actions-bookmark`}
+                        onClick={onBookmarkStory}
+                    >
+                        {user_bookmarked_story ? (
+                            <BsFillBookmarkFill />
+                        ) : (
+                            <BsBookmark />
+                        )}
                     </button>
                     <button
                         className="story__actions-like"

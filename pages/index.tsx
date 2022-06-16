@@ -79,6 +79,13 @@ const Home: NextPage = () => {
         });
     };
 
+    const handleBookmarkStory = (storyId: number, bookmarked: boolean) => {
+        dispatchStories({
+            type: "story_bookmarked_or_unbookmarked",
+            payload: { storyId, bookmarked },
+        });
+    };
+
     return (
         <>
             <HeadTag title="Storylearn - Home" />
@@ -87,6 +94,7 @@ const Home: NextPage = () => {
                     stories={stories}
                     handleFollowCreator={handleFollowCreator}
                     handleLikeStory={handleLikeStory}
+                    handleBookmarkStory={handleBookmarkStory}
                 />
                 {loading && <LoadingIndicator />}
                 {error && <p>Error loading stories</p>}

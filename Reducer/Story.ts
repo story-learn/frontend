@@ -34,6 +34,11 @@ type StoryLikedOrUnliked = {
     payload: { storyId: number; userLikedStory: boolean };
 };
 
+type StoryBookmarked = {
+    type: "story_bookmarked_or_unbookmarked";
+    payload: { storyId: number; bookmarked: boolean };
+};
+
 type StorySearch = {
     type: "search";
     payload: {
@@ -46,7 +51,8 @@ export type Action =
     | UploadNewStoryAction
     | StorySearch
     | StoryCreatorFollowedAction
-    | StoryLikedOrUnliked;
+    | StoryLikedOrUnliked
+    | StoryBookmarked;
 
 export const InitialStoryState: CounterState = {
     status: "empty",
@@ -117,6 +123,19 @@ export const reducer = (state: CounterState, action: Action) => {
                     likes,
                     user_liked_story,
                 };
+            }
+            return story;
+        });
+
+        state = { ...state, data: prevStories };
+    }
+
+    if (action.type === "story_bookmarked_or_unbookmarked") {
+        const { storyId, bookmarked } = action.payload;
+
+        prevStories = prevStories.map((story) => {
+            if (story.id === storyId) {
+                story.user_bookmarked_story = bookmarked;
             }
             return story;
         });

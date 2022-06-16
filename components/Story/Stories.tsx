@@ -15,12 +15,14 @@ export interface IStories {
         userLikedStory: boolean,
         isError?: boolean
     ) => void;
+    handleBookmarkStory: (storyId: number, isBookmarked: boolean) => void;
 }
 
 const Stories: FC<IStories> = ({
     stories,
     handleFollowCreator,
     handleLikeStory,
+    handleBookmarkStory,
 }) => {
     // use this in testing mode to remove stories that have neither image or text
     stories = stories.filter(({ frames: { image, text } }) => image || text);
@@ -33,6 +35,7 @@ const Stories: FC<IStories> = ({
                     key={story.id}
                     handleFollowCreator={handleFollowCreator}
                     handleLikeStory={handleLikeStory}
+                    handleBookmarkStory={handleBookmarkStory}
                 />
             ))}
         </ul>

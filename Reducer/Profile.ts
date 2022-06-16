@@ -47,12 +47,33 @@ export type ProfileStoriesLikes = {
     payload: { data: HomeStory[]; page: number; pages: number };
 };
 
+// this covers update for stories/likes tab
+type StoriesTypeUpdated = {
+    type: "stories_updated";
+    payload: {
+        data: HomeStory[];
+        type: "profileStories" | "profileStoriesLikes";
+    };
+};
+
+// TODO: Refactor other types to use this
+type StoriesTypeFetched = {
+    type: "stories_fetched";
+    payload: {
+        data: HomeStory[];
+        type: "profileStories" | "profileStoriesLikes";
+        page: number;
+        pages: number;
+    };
+};
+
 export type Action =
     | MainProfile
     | ProfileTabs
     | ProfileStories
     | ProfileStoriesLikes
-    | StoriesLikedUnliked;
+    | StoriesLikedUnliked
+    | StoriesTypeUpdated;
 
 export const InitialProfileState: ProfileState = {
     main: {
@@ -162,6 +183,29 @@ export const reducer = (state: ProfileState, action: Action) => {
         }
     }
 
+    if (type === "stories_updated") {
+        let {
+            payload: { data, type },
+        } = action as StoriesTypeUpdated;
+
+        if (type === "profileStories") {
+            state = {
+                ...state,
+                stories: {
+                    ...state.stories,
+                    data,
+                },
+            };
+        } else if (type === "profileStoriesLikes") {
+            state = {
+                ...state,
+                likes: {
+                    ...state.likes,
+                    data,
+                },
+            };
+        }
+    }
     // console.log(state);
 
     return state;

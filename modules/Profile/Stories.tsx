@@ -10,6 +10,7 @@ import { useProfileContext } from "../../context/pages/Profile";
 import useStoryRequest from "../../Hooks/useStoryRequest";
 import { HandleFollowCreator } from "../../components/Story/Stories";
 import { IStory } from "../../components/Story/Story";
+import { returnUniqueArrayObject } from "../../utilities/returnUniqueArrayObject";
 
 type IStories = Pick<Tabs, "selected">;
 type IProfile = Pick<Profile, "id">;
@@ -93,6 +94,24 @@ const Stories: FC<{ id: number }> = ({ id }) => {
         });
     };
 
+    const handleBookmarkStory = (storyId: number, bookmarked: boolean) => {
+        let newData = returnUniqueArrayObject([...data], "id").map((story) => {
+            if (story.id === storyId) {
+                story.user_bookmarked_story = bookmarked;
+            }
+
+            return story;
+        });
+
+        dispatchProfile({
+            type: "stories_updated",
+            payload: {
+                data: newData as HomeStory[],
+                type: "profileStories",
+            },
+        });
+    };
+
     return (
         <section className="profile__stories">
             {data.length > 0 ? (
@@ -100,6 +119,7 @@ const Stories: FC<{ id: number }> = ({ id }) => {
                     stories={data}
                     handleFollowCreator={handleFollowCreator}
                     handleLikeStory={handleLikeStory}
+                    handleBookmarkStory={handleBookmarkStory}
                 />
             ) : data.length === 0 && !loading ? (
                 <p className="profile__stories--other profile__stories--other-no">

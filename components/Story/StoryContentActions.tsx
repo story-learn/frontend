@@ -27,6 +27,7 @@ export interface IStoryAction
     extends StoryAction,
         Pick<IStories, "handleFollowCreator"> {
     handleCopyStory: MouseEventHandler<HTMLButtonElement>;
+    handleBookmarkStory: MouseEventHandler<HTMLButtonElement>;
 }
 
 type Actions = {
@@ -43,6 +44,7 @@ const StoryContentActions: FC<IStoryAction> = ({
     following_story_creator,
     handleCopyStory,
     handleFollowCreator,
+    handleBookmarkStory,
 }) => {
     const { push } = useRouter();
     const { user } = useAuth();
@@ -95,15 +97,10 @@ const StoryContentActions: FC<IStoryAction> = ({
         {
             Icon: BookmarkIcon,
             text: "Save Story",
-            action: () => {
-                toast.custom(
-                    <Notification
-                        type="success"
-                        shortText={`Story saved successfully!`}
-                    />,
-                    { id: String(TOAST_IDS.Bookmark) }
-                );
-            },
+            // action: () => {
+            //     handleBookmarkStory
+            // },
+            action: handleBookmarkStory,
         },
         {
             Icon: ViewIcon,
