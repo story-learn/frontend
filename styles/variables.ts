@@ -5,6 +5,7 @@ export const VariablesStyle = createGlobalStyle`
         --primary: #FF9F06;
         --primary-10: rgba(255, 159, 6, 0.1);
         --primary-20: rgba(255, 159, 6, 0.2);
+        --primary-50: rgba(255, 159, 6, 0.5);
         --primary-80: rgba(255, 159, 6, 0.8);
 
         --secondary: #7DBC0F;

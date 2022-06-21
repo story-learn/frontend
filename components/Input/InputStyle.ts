@@ -73,3 +73,75 @@ const InputStyle = styled.input<StyleProp>`
 `;
 
 export default InputStyle;
+
+export const StyledRadio = styled.input`
+    -webkit-appearance: none;
+    appearance: none;
+    width: 1.5rem;
+    height: 1.5rem;
+    border: 0.1rem solid var(--primary);
+    border-radius: 50%;
+    cursor: pointer;
+    position: relative;
+    margin-right: 0.5rem;
+    margin-top: 0.2rem;
+
+    &::after {
+        content: "";
+        display: block;
+        position: absolute;
+        top: 48%;
+        left: 48%;
+        transform: translate(-50%, -50%) scale(0);
+        /* transform: translate(-50%, -50%); */
+        width: 50%;
+        height: 50%;
+        border-radius: 50%;
+        background-color: var(--primary);
+        transition: all 0.2s linear;
+    }
+
+    &:focus,
+    &:hover {
+        &::after {
+            transform: translate(-50%, -50%) scale(0.5);
+        }
+    }
+
+    &:checked {
+        &::after {
+            transform: translate(-46%, -49%) scale(1);
+        }
+
+        &:hover {
+            &::after {
+                background-color: var(--secondary);
+            }
+        }
+    }
+
+    & + label {
+        font-size: 1.4rem;
+        transition: all 0.3s ease-in-out;
+        font-weight: 500;
+    }
+
+    &:disabled {
+        &,
+        & + label {
+            cursor: not-allowed;
+        }
+
+        &::after {
+            background-color: var(--disabled);
+            opacity: 0;
+        }
+
+        &:checked {
+            &::after {
+                background-color: var(--disabled);
+                opacity: 1;
+            }
+        }
+    }
+`;

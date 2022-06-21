@@ -9,6 +9,10 @@ export const StyledForm = styled.form`
             align-items: center;
             justify-content: center;
             max-width: 36rem;
+
+            &--inline {
+                flex-direction: row;
+            }
         }
 
         &__input {
