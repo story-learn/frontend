@@ -12,6 +12,7 @@ import { ThreeDotsVerticalIcon } from "../SVGs";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { useRouter } from "next/router";
 import { useAuth } from "../../Hooks/useAuth";
+import NavAvatar from "./NavAvatar";
 
 const Index: FC = () => {
     const { pathname } = useRouter();
@@ -45,7 +46,8 @@ const Index: FC = () => {
                         className="nav__login nav__large"
                     />
                 )}
-                <div className="nav__auth-cont">
+                {userIsLoggedIn && <NavAvatar />}
+                {/* <div className="nav__auth-cont">
                     <button
                         ref={navAuthButton}
                         className="nav__auth-btn"
@@ -61,7 +63,7 @@ const Index: FC = () => {
                         <li>Following</li>
                         <li>About</li>
                     </ul>
-                </div>
+                </div> */}
             </div>
         </StyledNav>
     );

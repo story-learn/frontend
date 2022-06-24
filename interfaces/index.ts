@@ -28,6 +28,12 @@ export interface AuthUserToken {
     user_id: number;
 }
 
+export interface AuthUser extends AuthUserToken {
+    email: string;
+    username: string;
+    profile_picture: string;
+}
+
 export interface ActivateAccountDetail {
     uid: string;
     token: string;

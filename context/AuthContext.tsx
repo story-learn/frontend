@@ -1,10 +1,10 @@
 import jwtDecode from "jwt-decode";
 import { createContext, Dispatch, FC, useEffect, useState } from "react";
-import { AuthTokens } from "../interfaces";
+import { AuthTokens, AuthUser } from "../interfaces";
 
 interface IAuth {
     authenticating: boolean;
-    user: any;
+    user: null | AuthUser;
     authTokens: AuthTokens | null;
     setUser: Dispatch<any>;
     setAuthTokens: Dispatch<any>;
