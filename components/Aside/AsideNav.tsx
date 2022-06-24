@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { FC } from "react";
+import { FiLogOut } from "react-icons/fi";
 import { StyledAsideNav } from "./StyledAsideNav";
 import {
     HomeIcon,
@@ -11,9 +12,11 @@ import {
 } from "./../SVGs";
 import { useAuth } from "../../Hooks/useAuth";
 // import { useAuth } from "../../context/AuthContext";
+import useStoryRequest from "./../../Hooks/useStoryRequest";
 
 const AsideNav: FC = () => {
-    const { user } = useAuth();
+    const { user, logout } = useAuth();
+    const { storyInstance } = useStoryRequest();
     let router = useRouter();
     let asideLinks = [
         {
@@ -45,7 +48,6 @@ const AsideNav: FC = () => {
             label: "profile",
         });
     }
-    // console.log(router);
 
     return (
         <StyledAsideNav>
@@ -73,6 +75,16 @@ const AsideNav: FC = () => {
                             </li>
                         );
                     })}
+                    {user && (
+                        <li>
+                            <button
+                                className="btn__icon logout"
+                                onClick={() => logout(storyInstance)}
+                            >
+                                <FiLogOut />
+                            </button>
+                        </li>
+                    )}
                 </ul>
             </div>
         </StyledAsideNav>

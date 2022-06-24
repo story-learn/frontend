@@ -38,6 +38,19 @@ export const StyledAsideNav = styled.nav`
         }
     }
 
+    .logout {
+        font-size: 3rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--primary);
+
+        &:hover {
+            background-color: transparent;
+            color: var(--secondary);
+        }
+    }
+
     @media screen and (${device.tablet}) {
         position: static;
         padding: 0rem;

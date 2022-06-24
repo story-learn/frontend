@@ -1,4 +1,4 @@
-import axios, { AxiosError, AxiosResponse } from "axios";
+import axios, { AxiosError, AxiosInstance, AxiosResponse } from "axios";
 import { STORY, StoryRoutes } from "../../configs/story";
 import {
     ActivateAccountDetail,
@@ -86,6 +86,25 @@ export const resendVerification = async (email: string) => {
         await STORY.post(StoryRoutes.RESEND_VERIFICATION_LINK, { email });
     } catch (error) {
         console.log(error);
+    }
+};
+
+/**
+ * logs out a user
+ * @param refresh token to log out
+//  * @returns detail of newly created user if successful
+//  * @throws log in error
+ */
+
+export const signout = async (
+    storyInstance: AxiosInstance,
+    refresh: string
+) => {
+    try {
+        let route = StoryRoutes.LOGOUT;
+        await storyInstance.post(route, { refresh });
+    } catch (error) {
+        throw error;
     }
 };
 
