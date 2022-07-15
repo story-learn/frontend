@@ -36,6 +36,7 @@ export const StyledStoryContentActions = styled.div`
             width: 0;
             height: 0;
             transition: all 0.2s ease-out;
+            z-index: 1;
 
             &.show {
                 height: max-content;
