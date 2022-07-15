@@ -5,6 +5,7 @@ import {
     ChangeEventHandler,
     FormEventHandler,
     useEffect,
+    useRef,
     useState,
 } from "react";
 import {
@@ -20,6 +21,7 @@ import { StyledBookMarkPage } from "../components/Styles/StyledBookmarkPage";
 import { StoryRoutes } from "../configs/story";
 import { BASE_URLS } from "../Constants";
 import { useInfiniteScroll } from "../Hooks/useInfiniteScroll";
+import { useSwrInfiniteScroll } from "../Hooks/useSwrInfinite";
 import { HomeStory } from "../interfaces";
 import { returnUniqueArrayObject } from "../utilities/returnUniqueArrayObject";
 import useStoryRequest from "./../Hooks/useStoryRequest";
@@ -38,6 +40,7 @@ interface Data {
 }
 
 const Bookmarks: NextPage = () => {
+    const loadMoreRef = useRef<HTMLDivElement>(null);
     const router = useRouter();
     const { storyInstance } = useStoryRequest();
     const [search, setSearch] = useState<{
@@ -104,19 +107,36 @@ const Bookmarks: NextPage = () => {
         setStoriesUrl(url.href);
     }, [router]);
 
-    let { totalData, loading, error, currentPage, totalPages } =
-        useInfiniteScroll<BookMarkResults[]>(
-            storiesUrl,
-            storyInstance,
-            data.page,
-            data.pages
-        );
+    // let { totalData, loading, error, currentPage, totalPages } =
+    //     useInfiniteScroll<BookMarkResults[]>(
+    //         storiesUrl,
+    //         storyInstance,
+    //         data.page,
+    //         data.pages
+    //     );
+
+    let {
+        loading,
+        error,
+        results: totalData,
+        page: currentPage,
+        pages: totalPages,
+    } = useSwrInfiniteScroll<BookMarkResults>(
+        loadMoreRef,
+        storiesUrl,
+        storyInstance,
+        data.page,
+        data.pages
+    );
 
     useEffect(() => {
-        if (loading || error) return;
+        if (loading || error || !totalData) return;
 
         let bookmarks = (
-            returnUniqueArrayObject(totalData, "id") as BookMarkResults[]
+            returnUniqueArrayObject(
+                totalData as any[],
+                "id"
+            ) as BookMarkResults[]
         ).map(({ story }) => story) as HomeStory[];
         setData((prev) => ({ ...prev, bookmarks }));
     }, [totalData, loading, error, currentPage, totalPages]);
@@ -229,6 +249,14 @@ const Bookmarks: NextPage = () => {
                         ) : null}
                     </div>
                 </div>
+                <div
+                    ref={loadMoreRef}
+                    aria-hidden
+                    style={{
+                        width: "100%",
+                        height: "0.1rem",
+                    }}
+                ></div>
             </StyledBookMarkPage>
         </>
     );

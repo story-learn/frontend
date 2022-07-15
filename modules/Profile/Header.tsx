@@ -36,7 +36,7 @@ const Header: FC = () => {
     const userIsLoggedIn = Boolean(user);
     let fullName = `${first_name} ${last_name}`;
 
-    const showFollowButton = userIsLoggedIn && profileId !== user.user_id;
+    const showFollowButton = userIsLoggedIn && profileId !== user?.user_id;
 
     const handleFollow: MouseEventHandler<HTMLButtonElement> = async (e) => {
         let currentFollowText = followBtnText;

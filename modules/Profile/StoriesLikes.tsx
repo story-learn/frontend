@@ -1,4 +1,4 @@
-import { FC, useEffect } from "react";
+import { FC, useEffect, useRef } from "react";
 import { LoadingIndicator } from "../../components";
 import { StoryRoutes } from "../../configs/story";
 import { BASE_URLS } from "../../Constants";
@@ -13,6 +13,7 @@ import { IStories as StoriesList } from "../../components/Story/Stories";
 // import { useAuth } from "../../context/AuthContext";
 import { returnUniqueArrayObject } from "../../utilities/returnUniqueArrayObject";
 import { useAuth } from "../../Hooks/useAuth";
+import { useSwrInfiniteScroll } from "../../Hooks/useSwrInfinite";
 
 type IStories = Pick<Tabs, "selected">;
 type IProfile = Pick<Profile, "id">;
@@ -20,6 +21,7 @@ type IProfile = Pick<Profile, "id">;
 interface Stories extends IStories, IProfile {}
 
 const StoriesLikes: FC<{ id: number }> = ({ id }) => {
+    const loadMoreRef = useRef<HTMLDivElement>(null);
     const { storyInstance } = useStoryRequest();
     const { user } = useAuth();
     let {
@@ -31,13 +33,27 @@ const StoriesLikes: FC<{ id: number }> = ({ id }) => {
 
     let storiesUrl = `${BASE_URLS.Story}${StoryRoutes.GET_PROFILE_LIKES}?user_id=${id}`;
 
-    let { totalData, loading, error, currentPage, totalPages } =
-        useInfiniteScroll<LikedStories[]>(
-            storiesUrl,
-            storyInstance,
-            page,
-            pages
-        );
+    // let { totalData, loading, error, currentPage, totalPages } =
+    //     useInfiniteScroll<LikedStories[]>(
+    //         storiesUrl,
+    //         storyInstance,
+    //         page,
+    //         pages
+    //     );
+
+    let {
+        loading,
+        error,
+        results: totalData,
+        page: currentPage,
+        pages: totalPages,
+    } = useSwrInfiniteScroll<LikedStories>(
+        loadMoreRef,
+        storiesUrl,
+        storyInstance,
+        page,
+        pages
+    );
 
     useEffect(() => {
         if (!totalData || loading) return;
@@ -152,6 +168,14 @@ const StoriesLikes: FC<{ id: number }> = ({ id }) => {
                     There is an error...
                 </p>
             )}
+            <div
+                ref={loadMoreRef}
+                aria-hidden
+                style={{
+                    width: "100%",
+                    height: "0.1rem",
+                }}
+            ></div>
         </section>
     );
 };

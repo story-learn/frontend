@@ -44,7 +44,7 @@ const ProfileFC: FC = () => {
 
         if (userId === "me" && !user) {
             push("/signin"); // user needs to be authenticated if route is "/profiles/me"
-        } else if (+user.user_id === Number(userId)) {
+        } else if (+user!.user_id === Number(userId)) {
             // change route name to "me"
             // push("/profiles/me", undefined, { shallow: true });
             replace("/profiles/me", undefined, { shallow: true });

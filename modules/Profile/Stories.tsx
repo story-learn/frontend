@@ -1,4 +1,4 @@
-import { FC, useEffect } from "react";
+import { FC, useEffect, useRef } from "react";
 import { LoadingIndicator } from "../../components";
 import { StoryRoutes } from "../../configs/story";
 import { BASE_URLS } from "../../Constants";
@@ -11,6 +11,7 @@ import useStoryRequest from "../../Hooks/useStoryRequest";
 import { HandleFollowCreator } from "../../components/Story/Stories";
 import { IStory } from "../../components/Story/Story";
 import { returnUniqueArrayObject } from "../../utilities/returnUniqueArrayObject";
+import { useSwrInfiniteScroll } from "../../Hooks/useSwrInfinite";
 
 type IStories = Pick<Tabs, "selected">;
 type IProfile = Pick<Profile, "id">;
@@ -19,6 +20,7 @@ interface Stories extends IStories, IProfile {}
 
 const Stories: FC<{ id: number }> = ({ id }) => {
     const { storyInstance } = useStoryRequest();
+    const loadMoreRef = useRef<HTMLDivElement>(null);
 
     let {
         profile: {
@@ -29,8 +31,22 @@ const Stories: FC<{ id: number }> = ({ id }) => {
 
     let storiesUrl = `${BASE_URLS.Story}${StoryRoutes.GET_PROFILE_STORIES}&search=${id}`;
 
-    let { totalData, loading, error, currentPage, totalPages } =
-        useInfiniteScroll<HomeStory[]>(storiesUrl, storyInstance, page, pages);
+    // let { totalData, loading, error, currentPage, totalPages } =
+    //     useInfiniteScroll<HomeStory[]>(storiesUrl, storyInstance, page, pages);
+
+    let {
+        loading,
+        error,
+        results: totalData,
+        page: currentPage,
+        pages: totalPages,
+    } = useSwrInfiniteScroll<HomeStory>(
+        loadMoreRef,
+        storiesUrl,
+        storyInstance,
+        page,
+        pages
+    );
 
     useEffect(() => {
         if (!totalData || loading) return;
@@ -130,6 +146,16 @@ const Stories: FC<{ id: number }> = ({ id }) => {
                     There is an error...
                 </p>
             )}
+            <div
+                ref={loadMoreRef}
+                aria-hidden
+                style={
+                    {
+                        // width: "100%",
+                        // height: "0.1rem",
+                    }
+                }
+            ></div>
         </section>
     );
 };

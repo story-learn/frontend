@@ -17,7 +17,7 @@ const Account: FC<IAccount> = (props) => {
     const { user } = useAuth();
     const { storyInstance } = useStoryRequest();
     const userIsLoggedIn = Boolean(user);
-    const showFollowButton = userIsLoggedIn && props.id !== user.user_id;
+    const showFollowButton = userIsLoggedIn && props.id !== user?.user_id;
 
     const [followBtnText, setFollowBtnText] = useState<"Follow" | "Unfollow">(
         props.followers!.findIndex(

@@ -69,7 +69,7 @@ export const useSwrInfiniteScroll = <Data>(
             url = searchUrl.href;
             let result;
 
-            console.log({ url });
+            // console.log({ url });
 
             try {
                 isFetching.current = true;
@@ -84,7 +84,8 @@ export const useSwrInfiniteScroll = <Data>(
             }
 
             return result;
-        }
+        },
+        { revalidateOnFocus: false }
     );
 
     useEffect(() => {
@@ -111,7 +112,7 @@ export const useSwrInfiniteScroll = <Data>(
         //     cond: !isVisible || isFetching.current,
         // });
 
-        // console.log({ isVisible, fetching: isFetching.current });
+        console.log({ isVisible, fetching: isFetching.current });
 
         if (isFetching.current || !isVisible) return;
 
