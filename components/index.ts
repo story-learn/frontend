@@ -1,3 +1,4 @@
+export { default as InfiniteComponent } from "./InfiniteComponent";
 export { default as HomeLogo } from "./HomeLogo";
 export { default as Navbar } from "./Navbar/Index";
 export { default as NavAuth } from "./Navbar/NavAuth";

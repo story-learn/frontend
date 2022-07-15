@@ -1,6 +1,12 @@
 import type { NextPage } from "next";
-import { useEffect, useState } from "react";
-import { CustomLink, LoadingIndicator, Modal, Stories } from "../components";
+import { useEffect, useRef, useState } from "react";
+import {
+    CustomLink,
+    InfiniteComponent,
+    LoadingIndicator,
+    Modal,
+    Stories,
+} from "../components";
 import { HeadTag } from "../components/head";
 import { HandleFollowCreator } from "../components/Story/Stories";
 import { BASE_URLS } from "../Constants";
@@ -9,10 +15,12 @@ import { useStories } from "../context/StoriesContext";
 import { useAuth } from "../Hooks/useAuth";
 import { useInfiniteScroll } from "../Hooks/useInfiniteScroll";
 import useStoryRequest from "../Hooks/useStoryRequest";
+import { useSwrInfiniteScroll } from "../Hooks/useSwrInfinite";
 import { HomeStory } from "../interfaces";
 import { StoryRoutes } from "./../configs/story";
 
 const Home: NextPage = () => {
+    const loadRef = useRef<HTMLDivElement>(null);
     const { user } = useAuth();
     const { storyInstance } = useStoryRequest();
 
@@ -30,8 +38,17 @@ const Home: NextPage = () => {
     // wait for authenticated status before calling hook. This is to prevent the useInfiniteScroll hook from calling the API before knowing if the user is authenticated.
     let storiesUrl = `${BASE_URLS.Story}${StoryRoutes.GET_STORIES}`;
 
-    let { totalData, loading, error, currentPage, totalPages } =
-        useInfiniteScroll<HomeStory[]>(
+    // let { totalData, loading, error, currentPage, totalPages } =
+    //     useInfiniteScroll<HomeStory[]>(
+    //         storiesUrl,
+    //         storyInstance,
+    //         storiesPage,
+    //         totalStoriesPages
+    //     );
+
+    let { results, error, loading, page, pages } =
+        useSwrInfiniteScroll<HomeStory>(
+            loadRef,
             storiesUrl,
             storyInstance,
             storiesPage,
@@ -39,14 +56,25 @@ const Home: NextPage = () => {
         );
 
     useEffect(() => {
-        if (!totalData) return;
+        if (!results) return;
 
         dispatchStories({
             type: "fetch_stories",
-            payload: { stories: totalData, currentPage, totalPages },
+            payload: { stories: results, currentPage: page, totalPages: pages },
         });
+
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [totalData]);
+    }, [results]);
+
+    // useEffect(() => {
+    //     if (!totalData) return;
+
+    //     dispatchStories({
+    //         type: "fetch_stories",
+    //         payload: { stories: totalData, currentPage, totalPages },
+    //     });
+    //     // eslint-disable-next-line react-hooks/exhaustive-deps
+    // }, [totalData]);
 
     useEffect(() => {
         let promptId = setTimeout(() => {
@@ -58,6 +86,8 @@ const Home: NextPage = () => {
             clearTimeout(promptId);
         };
     }, [user]);
+
+    console.log({ loading });
 
     const handleFollowCreator: HandleFollowCreator = (
         following_story_creator,
@@ -98,6 +128,7 @@ const Home: NextPage = () => {
                 />
                 {loading && <LoadingIndicator />}
                 {error && <p>Error loading stories</p>}
+                <div ref={loadRef} aria-hidden></div>
             </main>
             <Modal
                 showModal={promptUserToLogin}

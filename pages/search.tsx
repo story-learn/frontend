@@ -1,4 +1,4 @@
-import { FormEventHandler, useEffect, useState } from "react";
+import { FormEventHandler, useEffect, useRef, useState } from "react";
 import { NextPage } from "next";
 import { useRouter } from "next/router";
 import {
@@ -18,12 +18,14 @@ import { IAccount } from "../components/Accounts/Account";
 import { HandleFollowCreator } from "../components/Story/Stories";
 import useStoryRequest from "../Hooks/useStoryRequest";
 import { determineSearchUrl } from "../utilities/Search";
+import { useSwrInfiniteScroll } from "../Hooks/useSwrInfinite";
 
 export type Category = "" | "story" | "username";
 
 const Search: NextPage = () => {
     const { query, push, pathname } = useRouter();
     const { storyInstance } = useStoryRequest();
+    const loadRef = useRef<HTMLDivElement>(null);
 
     let {
         stories: {
@@ -35,20 +37,36 @@ const Search: NextPage = () => {
     // let searchUrl = storyInstance && determineSearchUrl(value, category);
     let searchUrl = determineSearchUrl(value, category);
 
-    let { currentPage, error, loading, totalData, totalPages } =
-        useInfiniteScroll<HomeStory | IAccount>(searchUrl, storyInstance);
+    // let { currentPage, error, loading, totalData, totalPages } =
+    //     useInfiniteScroll<HomeStory | IAccount>(searchUrl, storyInstance);
+
+    let {
+        results: totalData,
+        error,
+        loading,
+    } = useSwrInfiniteScroll<HomeStory | IAccount>(
+        loadRef,
+        searchUrl,
+        storyInstance,
+        1,
+        1
+    );
 
     const [search, setSearch] = useState("");
     const [searchData, setSearchData] = useState<(HomeStory | IAccount)[]>([]);
 
     useEffect(() => {
+        // console.log({ totalData, loading });
+
+        if (loading && !totalData) setSearchData([]);
+
         if (totalData) setSearchData(totalData);
-    }, [totalData]);
+    }, [totalData, loading]);
 
     const handleChangeCategory = (category: string) => {
-        // totalData = []; // ! this is not working!!
+        totalData = []; // ! this is not working!!
 
-        totalData.length = 0; // + this works
+        // totalData.length = 0; // + this works
         setSearchData([]);
         dispatchStories({ type: "search", payload: { category } });
     };
@@ -180,6 +198,7 @@ const Search: NextPage = () => {
                                 {error && <div>There is an Error</div>}
                             </>
                         )}
+                        <div ref={loadRef} data-ref="loading"></div>
                     </section>
                 </div>
             </StyledSearchPage>
