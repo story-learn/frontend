@@ -37,7 +37,7 @@ interface LoginError {
 
 export const usernameExists = async (username: string) => {
     try {
-        let response = await STORY.post(`/auth/checkifexists/user/`, {
+        let response = await STORY.post(`/auth/checkifexists/username/`, {
             username,
         });
 
