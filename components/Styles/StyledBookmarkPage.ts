@@ -5,6 +5,10 @@ export const StyledBookMarkPage = styled.main`
     .bookmark {
         &__header {
             padding-left: 2rem;
+
+            h1 {
+                margin-bottom: 0;
+            }
         }
     }
 
