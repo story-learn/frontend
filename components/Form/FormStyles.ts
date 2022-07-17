@@ -1,12 +1,6 @@
 import styled from "styled-components";
 
 export const StyledForm = styled.form`
-    position: sticky;
-    top: 0rem;
-    padding-top: 2rem;
-    background-color: var(--general-bg);
-    z-index: 90;
-
     .form {
         &__control {
             position: relative;

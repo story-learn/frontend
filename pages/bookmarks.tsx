@@ -14,6 +14,7 @@ import {
     ProtectRoute,
     InputSearch,
     InputRadio,
+    Button,
 } from "../components";
 import { StyledForm } from "../components/Form/FormStyles";
 import { HandleFollowCreator } from "../components/Story/Stories";
@@ -64,7 +65,7 @@ const Bookmarks: NextPage = () => {
         let current = search.current.trim();
         let prev = search.prev?.trim();
 
-        if (prev === current) return;
+        if (prev === current) return; // search term hasn't changed
         setSearch((old) => ({ ...old, prev: current }));
 
         let { pathname, query, push } = router;
@@ -99,21 +100,14 @@ const Bookmarks: NextPage = () => {
         }
 
         setSearch((old) => ({
+            ...old,
             prev: main as string | undefined,
-            current: "",
-            filter: filter as string,
+            // current: "",
+            filter: (filter || "username") as string,
         }));
 
         setStoriesUrl(url.href);
     }, [router]);
-
-    // let { totalData, loading, error, currentPage, totalPages } =
-    //     useInfiniteScroll<BookMarkResults[]>(
-    //         storiesUrl,
-    //         storyInstance,
-    //         data.page,
-    //         data.pages
-    //     );
 
     let {
         loading,
@@ -130,6 +124,8 @@ const Bookmarks: NextPage = () => {
     );
 
     useEffect(() => {
+        if (loading && !totalData)
+            setData((prev) => ({ ...prev, bookmarks: [] }));
         if (loading || error || !totalData) return;
 
         let bookmarks = (
@@ -171,19 +167,15 @@ const Bookmarks: NextPage = () => {
     };
 
     const handleBookmarkStory = (storyId: number, bookmarked: boolean) => {
-        // let bookmarks = ([...data.bookmarks] as HomeStory[]).map((story) => {
-        //     if (story.id === storyId) {
-        //         story.user_bookmarked_story = bookmarked;
-        //     }
-
-        //     return story;
-        // });
-
         let bookmarks = ([...data.bookmarks] as HomeStory[]).filter(
             ({ id }) => id !== storyId
         );
 
         setData((prev) => ({ ...prev, bookmarks: bookmarks }));
+    };
+
+    const clearSearch = () => {
+        setSearch((old) => ({ ...old, current: "" }));
     };
 
     return (
@@ -233,15 +225,27 @@ const Bookmarks: NextPage = () => {
                                 disabled={search.prev === undefined}
                                 cheked={search.filter === "story"}
                             />
+                            {search.prev && (
+                                <Button text="clear" onClick={clearSearch} />
+                            )}
                         </div>
                     </StyledForm>
-                    <div>
-                        <Stories
-                            stories={data.bookmarks}
-                            handleFollowCreator={handleFollowCreator}
-                            handleLikeStory={handleLikeStory}
-                            handleBookmarkStory={handleBookmarkStory}
-                        />
+                    <div className="bookmark__result">
+                        {data?.bookmarks && data.bookmarks.length > 0 ? (
+                            <Stories
+                                stories={data.bookmarks}
+                                handleFollowCreator={handleFollowCreator}
+                                handleLikeStory={handleLikeStory}
+                                handleBookmarkStory={handleBookmarkStory}
+                            />
+                        ) : (
+                            !loading &&
+                            !error && (
+                                <p className="bookmark__result--empty">
+                                    No bookmarks found
+                                </p>
+                            )
+                        )}
                         {loading ? (
                             <LoadingIndicator />
                         ) : error ? (

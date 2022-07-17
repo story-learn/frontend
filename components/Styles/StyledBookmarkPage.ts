@@ -10,6 +10,13 @@ export const StyledBookMarkPage = styled.main`
                 margin-bottom: 0;
             }
         }
+
+        &__result {
+            &--empty {
+                padding: 2rem;
+                font-size: 1.5rem;
+            }
+        }
     }
 
     form {
@@ -46,11 +53,26 @@ export const StyledBookMarkPage = styled.main`
             &--para {
                 font-size: 1.6rem;
             }
+
+            & > button {
+                padding: 0.2rem 1.3rem 0.3rem;
+                margin-right: 0;
+                font-size: 1.2rem;
+                border-radius: 0.5rem;
+                font-weight: 500;
+                background-color: var(--primary-80);
+                border: 0.1rem solid transparent;
+
+                &:focus {
+                    border-color: currentColor;
+                }
+            }
         }
     }
 
     @media screen and (${device.tablet}) {
         padding-right: 2rem;
+        /* background-color: orange !important; */
         .bookmark {
             &__cont {
                 display: flex;
@@ -61,6 +83,14 @@ export const StyledBookMarkPage = styled.main`
 
                 & > * {
                     flex: 1 1 35rem;
+                }
+            }
+
+            &__result {
+                padding-top: 2rem;
+
+                &--empty {
+                    padding-top: 0rem;
                 }
             }
         }
