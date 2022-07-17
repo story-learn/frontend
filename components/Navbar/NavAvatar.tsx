@@ -29,7 +29,6 @@ const NavAvatar: FC = () => {
 
     useEffect(() => {
         const handleClickOutside = (e: MouseEvent) => {
-            console.log("clicked body");
             if (
                 navAuthOptions.current &&
                 !navAuthOptions.current.contains(e.target as Node)

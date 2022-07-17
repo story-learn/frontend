@@ -48,11 +48,17 @@ export type TabDataUpdated = {
     };
 };
 
+type ProfileRouteChanged = {
+    type: "profile_route_changed";
+    // payload: {};
+};
+
 export type Action =
     | MainProfile
     | ProfileTabs
     | TabDataFetched
-    | TabDataUpdated;
+    | TabDataUpdated
+    | ProfileRouteChanged;
 
 export const InitialProfileState: ProfileState = {
     main: {
@@ -104,6 +110,12 @@ export const reducer = (state: ProfileState, action: Action) => {
         tabs = { ...tabs, lists };
 
         state = { ...state, main };
+    }
+
+    if (type === "profile_route_changed") {
+        let selected = state.tabs.selected;
+        state = { ...InitialProfileState };
+        // state = { ...state, tabs: { ...state.tabs, selected } };
     }
 
     if (type === "profile_tab_selected") {

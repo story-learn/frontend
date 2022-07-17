@@ -28,7 +28,7 @@ export type HandleTabChanged = (selected: Tab["tab"]) => void;
 
 const ProfileFC: FC = () => {
     const { user, authenticating } = useAuth();
-    let { query, push, replace } = useRouter();
+    let { query, push, replace, isReady } = useRouter();
     let userId = query.id as string | undefined;
     // do not fetch if authenticating is true
     // user needs to be authenticated if route is "/profiles/me" -- don not fetch if user is not authenticated
@@ -40,7 +40,6 @@ const ProfileFC: FC = () => {
     const { main } = profile;
 
     useEffect(() => {
-        console.log({ user, userId });
         if (Object.keys(query).length === 0 || authenticating) return;
 
         if (userId === "me" && !user) {
@@ -53,7 +52,17 @@ const ProfileFC: FC = () => {
             replace("/profiles/me", undefined, { shallow: true });
             return;
         }
+
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [query, user]);
+
+    useEffect(() => {
+        if (!isReady) return;
+        dispatchProfile({
+            type: "profile_route_changed",
+        });
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [userId]);
 
     useEffect(() => {
         dispatchProfile({

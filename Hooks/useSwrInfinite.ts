@@ -112,7 +112,7 @@ export const useSwrInfiniteScroll = <Data>(
         //     cond: !isVisible || isFetching.current,
         // });
 
-        console.log({ isVisible, fetching: isFetching.current });
+        // console.log({ isVisible, fetching: isFetching.current });
 
         if (isFetching.current || !isVisible) return;
 
