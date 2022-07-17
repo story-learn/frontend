@@ -57,7 +57,8 @@ const StoriesContainer: FC<Props> = ({ id, loadMoreRef, type }) => {
         }
 
         dispatchProfile({
-            type: "stories_fetched",
+            // type: "stories_fetched",
+            type: "profile_tab_data_fetched",
             payload: {
                 data,
                 page: currentPage,
@@ -79,7 +80,7 @@ const StoriesContainer: FC<Props> = ({ id, loadMoreRef, type }) => {
             return story;
         });
         dispatchProfile({
-            type: "stories_updated",
+            type: "profile_tab_data_updated",
             payload: { data, type },
         });
     };
@@ -88,7 +89,7 @@ const StoriesContainer: FC<Props> = ({ id, loadMoreRef, type }) => {
         let story = stories.find((story) => story.id === storyId)!;
         story.user_bookmarked_story = bookmarked;
         dispatchProfile({
-            type: "stories_updated",
+            type: "profile_tab_data_updated",
             payload: { data: stories, type },
         });
     };
@@ -103,7 +104,7 @@ const StoriesContainer: FC<Props> = ({ id, loadMoreRef, type }) => {
             story.user_liked_story = !userLikedStory;
         }
         dispatchProfile({
-            type: "stories_updated",
+            type: "profile_tab_data_updated",
             payload: { data, type },
         });
     };

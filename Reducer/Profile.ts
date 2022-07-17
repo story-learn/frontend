@@ -30,49 +30,29 @@ export type TabSelected = {
 
 export type ProfileTabs = TabSelected;
 
-export type StoriesFetched = {
-    type: "stories_fetched";
+export type TabDataFetched = {
+    type: "profile_tab_data_fetched";
     payload: {
-        data: HomeStory[];
+        data: (HomeStory | IAccount)[];
         page: number;
         pages: number;
-        type: "likes" | "stories";
+        type: "likes" | "stories" | "followers" | "following";
     };
 };
 
-export type PeopleFetched = {
-    type: "people_fetched";
+export type TabDataUpdated = {
+    type: "profile_tab_data_updated";
     payload: {
-        data: IAccount[];
-        page: number;
-        pages: number;
-        type: "followers" | "following";
-    };
-};
-
-export type StoriesUpdated = {
-    type: "stories_updated";
-    payload: {
-        data: HomeStory[];
-        type: "likes" | "stories";
-    };
-};
-
-export type PeopleUpdated = {
-    type: "people_updated";
-    payload: {
-        data: IAccount[];
-        type: "followers" | "following";
+        data: (HomeStory | IAccount)[];
+        type: "likes" | "stories" | "followers" | "following";
     };
 };
 
 export type Action =
     | MainProfile
     | ProfileTabs
-    | StoriesFetched
-    | StoriesUpdated
-    | PeopleUpdated
-    | PeopleFetched;
+    | TabDataFetched
+    | TabDataUpdated;
 
 export const InitialProfileState: ProfileState = {
     main: {
@@ -137,44 +117,23 @@ export const reducer = (state: ProfileState, action: Action) => {
         };
     }
 
-    if (type === "stories_fetched") {
+    if (type === "profile_tab_data_fetched") {
         let {
             payload: { data, page, pages, type },
-        } = action as StoriesFetched;
+        } = action as TabDataFetched;
 
         data = returnUniqueArrayObject(
             [...state[type].data, ...data],
             "id"
-        ) as HomeStory[];
+        ) as (HomeStory | IAccount)[];
 
         state = { ...state, [type]: { data, page, pages } };
     }
 
-    if (type === "stories_updated") {
+    if (type === "profile_tab_data_updated") {
         let {
             payload: { data, type },
-        } = action as StoriesUpdated;
-
-        state = { ...state, [type]: { ...state[type], data } };
-    }
-
-    if (type === "people_fetched") {
-        let {
-            payload: { data, page, pages, type },
-        } = action as PeopleFetched;
-
-        data = returnUniqueArrayObject(
-            [...state[type].data, ...data],
-            "id"
-        ) as IAccount[];
-
-        state = { ...state, [type]: { data, page, pages } };
-    }
-
-    if (type === "people_updated") {
-        let {
-            payload: { data, type },
-        } = action as PeopleUpdated;
+        } = action as TabDataUpdated;
 
         state = { ...state, [type]: { ...state[type], data } };
     }

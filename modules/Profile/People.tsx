@@ -69,7 +69,7 @@ const People: FC<NPeople> = ({ type, loadMoreRef }) => {
         data = returnUniqueArrayObject(data, "id") as IAccount[];
 
         dispatchProfile({
-            type: "people_fetched",
+            type: "profile_tab_data_fetched",
             payload: {
                 data,
                 page: currentPage,
