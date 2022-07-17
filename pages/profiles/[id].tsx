@@ -40,16 +40,19 @@ const ProfileFC: FC = () => {
     const { main } = profile;
 
     useEffect(() => {
+        console.log({ user, userId });
         if (Object.keys(query).length === 0 || authenticating) return;
 
         if (userId === "me" && !user) {
             push("/signin"); // user needs to be authenticated if route is "/profiles/me"
-        } else if (+user!.user_id === Number(userId)) {
-            // change route name to "me"
-            // push("/profiles/me", undefined, { shallow: true });
-            replace("/profiles/me", undefined, { shallow: true });
+            return;
         }
-        console.log(user);
+
+        if (user && +user.user_id === Number(userId)) {
+            // change route name to "me"
+            replace("/profiles/me", undefined, { shallow: true });
+            return;
+        }
     }, [query, user]);
 
     useEffect(() => {
