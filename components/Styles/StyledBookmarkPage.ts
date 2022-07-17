@@ -19,6 +19,11 @@ export const StyledBookMarkPage = styled.main`
         align-items: center;
         justify-content: flex-start;
         flex-wrap: wrap;
+        position: sticky;
+        top: 0rem;
+        padding-top: 2rem;
+        background-color: var(--general-bg);
+        z-index: 90;
 
         & > * {
             margin-bottom: 1rem;
