@@ -53,12 +53,23 @@ type ProfileRouteChanged = {
     // payload: {};
 };
 
+// use this when you want to update the state of the profile
+// e.g when user follows or unfollows a user, update following/followers count
+type UpdateTabDataCount = {
+    type: "profile_update_tab_data_count";
+    payload: {
+        tab: "Stories" | "Likes" | "Followers" | "Following";
+        value: number;
+    };
+};
+
 export type Action =
     | MainProfile
     | ProfileTabs
     | TabDataFetched
     | TabDataUpdated
-    | ProfileRouteChanged;
+    | ProfileRouteChanged
+    | UpdateTabDataCount;
 
 export const InitialProfileState: ProfileState = {
     main: {
@@ -72,10 +83,16 @@ export const InitialProfileState: ProfileState = {
     following: { data: [], page: 1, pages: 1 },
     tabs: {
         lists: [
+            // { tab: "Stories", value: 0, key: "created_stories_count" },
+            // { tab: "Likes", value: null, key: "created_stories_count" },
+            // { tab: "Followers", value: 0, key: "created_stories_count" },
+            // { tab: "Following", value: 0, key: "created_stories_count" },
+
             { tab: "Stories", value: 0, key: "created_stories_count" },
-            { tab: "Likes", value: null, key: "created_stories_count" },
-            { tab: "Followers", value: 0, key: "created_stories_count" },
-            { tab: "Following", value: 0, key: "created_stories_count" },
+            // { tab: "Likes", value: null, key: "liked_stories_count" },
+            { tab: "Likes", value: 0, key: "liked_stories_count" },
+            { tab: "Followers", value: 0, key: "followers_count" },
+            { tab: "Following", value: 0, key: "following_count" },
         ],
         selected: "",
     },
@@ -148,6 +165,22 @@ export const reducer = (state: ProfileState, action: Action) => {
         } = action as TabDataUpdated;
 
         state = { ...state, [type]: { ...state[type], data } };
+    }
+
+    if (type === "profile_update_tab_data_count") {
+        let {
+            payload: { tab, value },
+        } = action as UpdateTabDataCount;
+
+        let { lists } = state.tabs;
+
+        let newTab = lists.find((list) => list.tab === tab);
+        if (newTab) {
+            newTab.value = value;
+            // newTab = { ...newTab, value };
+        }
+
+        state = { ...state, tabs: { ...state.tabs, lists } };
     }
 
     return state;

@@ -3,6 +3,7 @@ import { useOnScreen } from "./useOnScreen";
 import useSWRInfinite from "swr/infinite";
 import axios, { AxiosInstance } from "axios";
 import useSWR from "swr";
+import type { SWRConfiguration } from "swr";
 import { returnUniqueArrayObject } from "../utilities/returnUniqueArrayObject";
 
 const getKey = (
@@ -50,7 +51,8 @@ export const useSwrInfiniteScroll = <Data>(
     baseUrl: string,
     axiosInstance?: AxiosInstance,
     page?: number,
-    pages?: number
+    pages?: number,
+    useSwrConfig?: SWRConfiguration
 ) => {
     const isVisible = useOnScreen(ref);
     const isFetching = useRef(false);
@@ -85,7 +87,7 @@ export const useSwrInfiniteScroll = <Data>(
 
             return result;
         },
-        { revalidateOnFocus: false }
+        { ...(useSwrConfig || {}) }
     );
 
     useEffect(() => {

@@ -1,5 +1,6 @@
 import { useRouter } from "next/router";
 import { ElementType, FC, MouseEventHandler } from "react";
+import { useAuth } from "../Hooks/useAuth";
 import { Avatar, Button } from "./../components";
 import { IAvatar } from "./Avatar";
 import { StyledProfile } from "./Styles/StyledProfile";
@@ -50,13 +51,16 @@ const Profile: FC<IProfile> = ({
     followBtnText = "Follow",
 }) => {
     const { push } = useRouter();
+    let { user: loggedInUserDetail } = useAuth();
     let fullName = `${first_name} ${last_name}`.trim();
 
     if (!imgSrc) imgSrc = "/assests/jpgs/profile.jfif"; // default image
 
     const handleGoToProfile: MouseEventHandler<HTMLButtonElement> = (e) => {
         e.preventDefault();
-        push(`/profiles/${id}`);
+        let profileId =
+            loggedInUserDetail && loggedInUserDetail.user_id === id ? "me" : id;
+        push(`/profiles/${profileId}`);
     };
 
     return (

@@ -11,7 +11,10 @@ const Header: FC = () => {
     const { user } = useAuth();
     const { storyInstance } = useStoryRequest();
     const {
-        profile: { main },
+        profile: {
+            main,
+            tabs: { lists },
+        },
         dispatchProfile,
     } = useProfileContext();
 

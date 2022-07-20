@@ -1,7 +1,7 @@
 import { FC, RefObject, useEffect, useRef } from "react";
 import { LoadingIndicator, Stories } from "../../components";
 import { useProfileContext } from "../../context/pages/Profile";
-import { HomeStory, LikedStories } from "../../interfaces";
+import { HomeStory, LikedStories, Profile } from "../../interfaces";
 import { returnUniqueArrayObject } from "../../utilities/returnUniqueArrayObject";
 import { IStory } from "../../components/Story/Story";
 import { HandleFollowCreator } from "../../components/Story/Stories";
@@ -23,6 +23,7 @@ const StoriesContainer: FC<Props> = ({ id, loadMoreRef, type }) => {
         dispatchProfile,
         profile: {
             [type]: { data: stories, page, pages },
+            tabs: { lists },
         },
     } = useProfileContext()!;
 
@@ -82,6 +83,20 @@ const StoriesContainer: FC<Props> = ({ id, loadMoreRef, type }) => {
         dispatchProfile({
             type: "profile_tab_data_updated",
             payload: { data, type },
+        });
+
+        let followings = lists[3].value!;
+
+        // console.log({ type: typeof following_count, following_count });
+
+        dispatchProfile({
+            type: "profile_update_tab_data_count",
+            payload: {
+                tab: "Following",
+                value: following_story_creator
+                    ? followings - 1
+                    : followings + 1,
+            },
         });
     };
 

@@ -7,9 +7,13 @@ import { followProfile, unFollowProfile } from "../../utilities/Profile";
 import { IProfile } from "../Profile";
 import { Profile } from "./../index";
 import { StyledAccount } from "./Styles";
+import toast from "react-hot-toast";
+import { TOAST_IDS } from "../../Constants";
+import { Notification } from "./../../components";
 
 export interface IAccount extends IProfile {
     dispatchFollowAction?: (status?: "failed") => void;
+    handleOnFollow?: (followId: number, action?: "Follow" | "Unfollow") => void;
 }
 
 const Account: FC<IAccount> = (props) => {
@@ -31,7 +35,6 @@ const Account: FC<IAccount> = (props) => {
         e.preventDefault();
 
         let currentFollowText = followBtnText;
-        console.log(`trying to ${currentFollowText}`);
 
         setFollowBtnText((prev) => (prev === "Follow" ? "Unfollow" : "Follow")); // update UI immediately
         props.dispatchFollowAction?.();
@@ -42,8 +45,16 @@ const Account: FC<IAccount> = (props) => {
                 ? await unFollowProfile(storyInstance, props.id)
                 : await followProfile(storyInstance, props.id);
             // props.dispatchFollowSuccess?.();
+            props.handleOnFollow?.(props.id, followBtnText);
+            console.log(`${followBtnText} successful`);
         } catch (error) {
             console.log("there was error");
+            TOAST_IDS;
+            toast.custom(
+                <Notification type="error" shortText="There was an error" />,
+                { id: String(TOAST_IDS.Follow) }
+            );
+
             // console.log(error);
             setFollowBtnText(currentFollowText); // revert UI if there was an error
             // revert context

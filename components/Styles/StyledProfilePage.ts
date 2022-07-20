@@ -62,6 +62,7 @@ export const StyledProfilePage = styled.main`
                 padding: 1rem clamp(4rem, calc(0.5em + 1vw), 6.4rem);
                 font-size: clamp(1.3rem, calc(0.5em + 1vw), 1.6rem);
                 margin-top: 2.8rem;
+                border: 0.1rem solid;
             }
 
             &--bio {
