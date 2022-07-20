@@ -161,6 +161,8 @@ export const StyledStoryIndicator = styled.header<IStyledStoryIndicator>`
                 width: 3rem;
                 height: 3rem;
                 font-size: 3rem;
+                position: relative;
+                z-index: 51;
             }
         }
 
