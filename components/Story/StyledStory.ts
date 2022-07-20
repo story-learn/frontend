@@ -27,12 +27,19 @@ export const StyledStory = styled.li<StyledStoryProps>`
                 display: flex;
                 align-items: flex-end;
             }
+
+            &--data {
+                .profile__username {
+                    margin-right: 1rem;
+                }
+            }
         }
 
         &__posted {
             font-size: 1.4rem;
             opacity: 0.7;
-            margin-left: -2rem;
+            /* margin-left: -2rem; */
+            /* margin-left: 1rem; */
         }
 
         &__main {

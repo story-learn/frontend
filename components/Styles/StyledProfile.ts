@@ -25,6 +25,7 @@ export const StyledProfile = styled.div`
             font-weight: bolder;
             font-size: 1.8rem;
             text-transform: capitalize;
+            text-align: left;
 
             &:hover {
                 opacity: 0.7;
@@ -35,6 +36,7 @@ export const StyledProfile = styled.div`
             display: flex;
             align-items: center;
             justify-content: flex-start;
+            flex-wrap: wrap;
             margin-top: -0.5rem;
             font-size: 1.4rem;
             opacity: 0.7;

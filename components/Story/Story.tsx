@@ -114,7 +114,7 @@ const Story: FC<IStory> = ({
                 <Link href={`/stories/${id}`}>
                     <a className="story__link story__contents">
                         <header className="story__header">
-                            <div>
+                            <div className="story__header--data">
                                 <Profile
                                     id={user.id}
                                     first_name={user.first_name}
@@ -122,8 +122,8 @@ const Story: FC<IStory> = ({
                                     username={user.username}
                                     // wait for backend to include profile image in the user's object
                                     imgSrc=""
+                                    timeAgo={timeAgo}
                                 />
-                                <div className="story__posted">{timeAgo}</div>
                             </div>
                             <StoryContentActions
                                 user={user}

@@ -33,6 +33,7 @@ export interface IProfile extends IAvatar {
     followBtnText?: "Follow" | "Unfollow";
     as?: ElementType;
     profileClassName?: string;
+    timeAgo?: string;
 }
 
 const Profile: FC<IProfile> = ({
@@ -49,6 +50,7 @@ const Profile: FC<IProfile> = ({
     profileClassName = "",
     showFollowBtn = false,
     followBtnText = "Follow",
+    timeAgo = "",
 }) => {
     const { push } = useRouter();
     let { user: loggedInUserDetail } = useAuth();
@@ -73,6 +75,7 @@ const Profile: FC<IProfile> = ({
                 </button>
                 <div className="profile__userFollow">
                     <p className="profile__username">{username}</p>
+                    {timeAgo && <div className="story__posted">{timeAgo}</div>}
                     {followers && (
                         <p className="profile__followers">
                             {followers_count} followers
