@@ -30,3 +30,4 @@ export { default as MarkIcon } from "./MarkIcon";
 export { default as HelpIcon } from "./HelpIcon";
 export { default as LeftArrow } from "./LeftArrow";
 export { default as RightArrow } from "./RightArrow";
+export { default as EditPen } from "./EditPen";

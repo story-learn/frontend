@@ -33,6 +33,8 @@ export const ModeVariables = createGlobalStyle`
 
         --text-col-1: #ffffff;
 
+        --input-bg-1: #F6F2F4;
+        --input-fg-1: #0A0601;
         
         &[data-theme="dark"] {
             --disabled-fg: #C2C2C2;
@@ -64,6 +66,9 @@ export const ModeVariables = createGlobalStyle`
             --box-border: #232326;
 
             --text-col-1: #0A0601;
+
+            --input-bg-1: #0A0601;
+            --input-fg-1: #FFFFFF;
         }
     }
 `;

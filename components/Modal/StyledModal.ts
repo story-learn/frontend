@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { device } from "../../styles/breakpoints";
+import { device, size } from "../../styles/breakpoints";
 
 export const StyledModal = styled.div`
     background-color: transparent;
@@ -255,17 +255,113 @@ export const StyledModal = styled.div`
         }
     }
 
+    &.modalEditProfile {
+        .modal {
+            &__cont {
+            }
+
+            &__content {
+                opacity: 1;
+            }
+        }
+
+        .form {
+            &__control {
+                margin-bottom: 2rem;
+                margin: 0 auto 2rem;
+            }
+
+            &__input,
+            &__textarea {
+                /* background-color: var(--input-bg-1); */
+            }
+
+            &--action {
+                margin-top: 4rem;
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+                gap: 1.5rem;
+                justify-items: center;
+
+                button {
+                    padding: 0.9rem 4rem 1rem;
+                    margin: 0rem;
+                }
+            }
+
+            &__submit {
+                color: var(--color-6);
+            }
+
+            &__cancel {
+                background-color: transparent;
+                color: var(--primary-80);
+            }
+        }
+    }
+
+    @media screen and (max-width: ${size.tablet}) {
+        &.modalEditProfile {
+            background-color: var(--general-bg);
+            bottom: 7rem;
+
+            .modal {
+                &__cont {
+                    height: 100%;
+                    background-color: var(--general-bg);
+                    width: 100%;
+                    max-width: none;
+                    border: 0;
+                    border-radius: 0;
+                }
+
+                &__content {
+                    opacity: 1;
+                    max-height: 90%;
+                }
+            }
+
+            .form {
+                &__control {
+                    max-width: 40rem;
+                }
+            }
+        }
+    }
+
     @media screen and (${device.tablet}) {
         top: 7rem;
         bottom: 0;
         left: 7.5rem;
 
-        &.modalUpload {
-            left: 0;
-
+        &.modalEditProfile {
             .modal {
+                &__cont {
+                    max-width: 50rem;
+                    /* max-height: none; */
+                }
+
                 &__content {
-                    max-height: 88vh;
+                    opacity: 1;
+                }
+            }
+
+            .form {
+                &__control {
+                    max-width: 52rem;
+                }
+
+                &__input,
+                &__textarea {
+                    background-color: var(--input-bg-1);
+                    font-size: 1.2rem;
+                }
+
+                &__textarea {
+                    max-height: 7rem;
+                    padding-top: 0.5rem;
+                    padding-bottom: 0.5rem;
+                    overflow-y: auto;
                 }
             }
         }

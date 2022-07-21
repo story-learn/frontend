@@ -39,3 +39,19 @@ export const unFollowProfile = async (
         throw error;
     }
 };
+
+interface Data {
+    profile_picture: string | null;
+    username: string;
+    bio: string | null;
+    first_name: string;
+    last_name: string;
+}
+
+export const editProfile = async (data: Data) => {
+    try {
+        console.log(data);
+    } catch (error) {
+        throw error;
+    }
+};

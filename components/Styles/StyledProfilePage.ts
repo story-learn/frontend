@@ -58,7 +58,8 @@ export const StyledProfilePage = styled.main`
                 color: var(--color-12);
             }
 
-            &--follow {
+            &--follow,
+            &--edit {
                 padding: 1rem clamp(4rem, calc(0.5em + 1vw), 6.4rem);
                 font-size: clamp(1.3rem, calc(0.5em + 1vw), 1.6rem);
                 margin-top: 2.8rem;
@@ -69,6 +70,10 @@ export const StyledProfilePage = styled.main`
                 font-size: clamp(1.4rem, calc(0.5em + 1vw), 1.6rem);
                 color: var(--color-11);
                 max-width: 35rem;
+            }
+
+            &--edit {
+                margin-top: 1rem;
             }
         }
 

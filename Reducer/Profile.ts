@@ -63,13 +63,22 @@ type UpdateTabDataCount = {
     };
 };
 
+type EditProfile = {
+    type: "edit_profile";
+    payload: Pick<
+        Profile,
+        "first_name" | "last_name" | "profile_picture" | "username" | "bio"
+    >;
+};
+
 export type Action =
     | MainProfile
     | ProfileTabs
     | TabDataFetched
     | TabDataUpdated
     | ProfileRouteChanged
-    | UpdateTabDataCount;
+    | UpdateTabDataCount
+    | EditProfile;
 
 export const InitialProfileState: ProfileState = {
     main: {
@@ -183,5 +192,19 @@ export const reducer = (state: ProfileState, action: Action) => {
         state = { ...state, tabs: { ...state.tabs, lists } };
     }
 
+    if (type === "edit_profile") {
+        let { payload } = action as EditProfile;
+
+        let { main } = state;
+        main = {
+            ...main,
+            data: {
+                ...main.data!,
+                ...payload,
+            },
+        };
+
+        state = { ...state, main };
+    }
     return state;
 };

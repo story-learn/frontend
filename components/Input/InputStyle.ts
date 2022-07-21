@@ -145,3 +145,34 @@ export const StyledRadio = styled.input`
         }
     }
 `;
+
+export const StyledInputImage = styled.div`
+    input {
+        width: 0.01rem;
+        height: 0.01rem;
+        opacity: 0;
+        overflow: hidden;
+        position: absolute;
+        z-index: -1;
+
+        &:focus + label {
+            border-color: var(--primary-80);
+        }
+    }
+
+    label {
+        background-color: var(--general-bg);
+        border-radius: 50%;
+        padding: 1.2rem;
+        border: 0.15rem solid var(--box-border);
+        cursor: pointer;
+
+        &:hover {
+            border-color: var(--primary-80);
+        }
+
+        & > * {
+            pointer-events: none;
+        }
+    }
+`;

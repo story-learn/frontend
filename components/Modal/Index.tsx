@@ -4,7 +4,7 @@ import { AiOutlineClose } from "react-icons/ai";
 import { StyledModal } from "./StyledModal";
 import { CSSTransition } from "react-transition-group";
 
-interface ModalProps {
+export interface ModalProps {
     closeModal?: () => void;
     showModal: boolean;
     extraClassName?: string;

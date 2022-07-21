@@ -1,3 +1,4 @@
+import { useRouter } from "next/router";
 import { FC, MouseEventHandler, useState } from "react";
 import { Button } from "../../components";
 // import { useAuth } from "../../context/AuthContext";
@@ -5,11 +6,12 @@ import { useProfileContext } from "../../context/pages/Profile";
 import { useAuth } from "../../Hooks/useAuth";
 import useStoryRequest from "../../Hooks/useStoryRequest";
 import { followProfile, unFollowProfile } from "../../utilities/Profile";
-import { ProfileImage } from "./index";
+import { ProfileImage, EditProfileModal } from "./index";
 
 const Header: FC = () => {
     const { user } = useAuth();
     const { storyInstance } = useStoryRequest();
+    const { query } = useRouter();
     const {
         profile: {
             main,
@@ -80,25 +82,41 @@ const Header: FC = () => {
         }
     };
 
-    return (
-        <header className="flex profile__header">
-            <div className="profile__header--div-1 flex">
-                <ProfileImage profile_picture={profile_picture} />
-                <div className="profile__header--div-2">
-                    <h2 className="profile__header--name">{fullName}</h2>
-                    <p className="profile__header--username">@{username}</p>
+    const [showEditProfileModal, setShowEditProfileModal] = useState(false);
 
-                    {showFollowButton && (
-                        <Button
-                            text={followBtnText}
-                            className="profile__header--follow"
-                            onClick={handleFollow}
-                        />
-                    )}
+    return (
+        <>
+            <header className="flex profile__header">
+                <div className="profile__header--div-1 flex">
+                    <ProfileImage profile_picture={profile_picture} />
+                    <div className="profile__header--div-2">
+                        <h2 className="profile__header--name">{fullName}</h2>
+                        <p className="profile__header--username">@{username}</p>
+
+                        {showFollowButton && (
+                            <Button
+                                text={followBtnText}
+                                className="profile__header--follow"
+                                onClick={handleFollow}
+                            />
+                        )}
+                    </div>
                 </div>
-            </div>
-            <p className="profile__header--bio">{bio ? bio : "No bio"}</p>
-        </header>
+                <p className="profile__header--bio">{bio ? bio : "No bio"}</p>
+                {query?.id === "me" && (
+                    <Button
+                        text="Edit"
+                        className="profile__header--edit"
+                        onClick={() => setShowEditProfileModal(true)}
+                    />
+                )}
+            </header>
+            <EditProfileModal
+                showModal={showEditProfileModal}
+                closeModal={() => setShowEditProfileModal(false)}
+                // data={{ profile_picture, username, bio, first_name, last_name }}
+            />
+        </>
     );
 };
 

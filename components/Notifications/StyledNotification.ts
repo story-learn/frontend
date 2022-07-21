@@ -18,6 +18,7 @@ export const StyledNotification = styled.div`
     justify-content: space-between;
     /* border: 0.1rem solid var(--border-col); */
     border: 0.1rem solid var(--box-border);
+    font-size: 1.6rem;
 
     &.notification__info {
         .notification__content {
@@ -50,7 +51,7 @@ export const StyledNotification = styled.div`
         &__icon {
             flex: 0 0 auto;
             margin-right: 0.8rem;
-            margin-top: 0.2rem;
+            /* margin-top: 0.2rem; */
         }
 
         &__close {
